@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La mia Web App</title>
+  
+  <!-- Collegamento al file manifest per il logo e i colori -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/logo-192.png">
+  
+  <style>
+    /* Stile di base per la pagina */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #ffffff;
+      color: #000000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Qui inizia la parte visibile dell'app -->
+  <h1>Benvenuto nella mia App</h1>
+  <p>Questa è la pagina principale. Ora la web app è stabile e ha un logo.</p>
+  <!-- Qui finisce la parte visibile -->
+
+  <!-- Script per registrare il Service Worker per il funzionamento offline -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
