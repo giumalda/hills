@@ -310,3 +310,37 @@ function Home() {
     </main>
   );
 }
+
+import { useEffect } from 'react';
+import Head from 'next/head';
+
+export default function Home() {
+  
+  // Registrazione del Service Worker al caricamento della pagina
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker registrato'))
+        .catch((err) => console.error('Errore Service Worker:', err));
+    }
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title>App Ristorante</title>
+        <meta name="description" content="Ordina i nostri hamburger" />
+        {/* Richiamo al manifest per l'installazione PWA */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      
+      <main className="p-4">
+        <h1 className="text-2xl font-bold">Il Nostro Menu</h1>
+        <p>Hamburger e patatine fresche.</p>
+        {/* Inserisci qui il resto dell'interfaccia */}
+      </main>
+    </>
+  );
+}
