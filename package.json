@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "npx @tanstack/router-cli generate && vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -86,9 +86,6 @@
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
-"vite": "8.1.5"
-  },
-  "scripts": {
-    "build": "tsr generate && vinxi build"
+    "vite": "8.1.5"
   }
 }
