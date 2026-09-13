@@ -12,11 +12,24 @@ interface MenuCardProps {
 export function MenuCard({ item, index = 0, className = "" }: MenuCardProps) {
   const { add, setOpen } = useOrder();
 
-  const isChipsItem = item.name.toLowerCase().includes("patatine") || item.name.toLowerCase().includes("chips");
+  const nameUpper = item.name.toUpperCase();
+  const isMaxiTagliere = nameUpper.includes("MAXI TAGLIERE");
+  
+  const hasSizes = !isMaxiTagliere && (
+    nameUpper.includes("PATATINE") || 
+    nameUpper.includes("RIPPLE") || 
+    nameUpper.includes("CRISS")
+  );
+
   const [size, setSize] = useState<"piccola" | "grande">("piccola");
 
-  const effectivePrice = isChipsItem ? (size === "piccola" ? 5.0 : 10.0) : (typeof item.price === "number" ? item.price : parseFloat(String(item.price).replace(/[^0-9,.]/g, "").replace(",", ".")) || 0);
-  const effectiveName = isChipsItem ? `${item.name} (${size === "piccola" ? "Piccola" : "Grande"})` : item.name;
+  const effectivePrice = hasSizes 
+    ? (size === "piccola" ? 5.0 : 10.0) 
+    : (typeof item.price === "number" ? item.price : parseFloat(String(item.price).replace(/[^0-9,.]/g, "").replace(",", ".")) || 0);
+
+  const effectiveName = hasSizes 
+    ? `${item.name} (${size === "piccola" ? "Piccola" : "Grande"})` 
+    : item.name;
 
   const priceStr = `€ ${effectivePrice.toFixed(2).replace(".", ",")}`;
 
@@ -53,7 +66,7 @@ export function MenuCard({ item, index = 0, className = "" }: MenuCardProps) {
           </div>
         </div>
 
-        {isChipsItem ? (
+        {hasSizes ? (
           <div className="mt-4 flex items-center gap-1.5">
             <button
               type="button"
