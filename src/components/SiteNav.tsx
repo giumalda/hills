@@ -13,7 +13,11 @@ const links = [
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
-  const { count, setOpen: setOrderOpen } = useOrder();
+  const { total, count, setOpen: setOrderOpen } = useOrder();
+
+  // Calcola il totale compreso il coperto (se c'è almeno un elemento nel carrello)
+  const coperto = count > 0 ? 2 : 0;
+  const grandTotal = total + coperto;
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -50,11 +54,13 @@ export function SiteNav() {
             <button
               type="button"
               onClick={() => setOrderOpen(true)}
-              className="glass-chip flex items-center gap-2 rounded-full px-3 py-2 text-sm font-bold text-ink"
+              className="glass-chip flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-bold text-ink"
               aria-label="Apri il blocco ordini"
             >
               <Receipt className="size-4" />
-              <span className="tabular-nums">{count}</span>
+              <span className="tabular-nums">
+                {count > 0 ? `€ ${grandTotal.toFixed(2)} + bibite` : "€ 0,00"}
+              </span>
             </button>
             <button
               type="button"
