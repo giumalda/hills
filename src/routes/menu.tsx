@@ -237,7 +237,7 @@ function MenuPage() {
                       className="glass-card reveal flex items-center justify-between rounded-3xl px-6 py-5"
                       style={{ transitionDelay: `${i * 40}ms` }}
                     >
-                      <span className="text-sm font-bold text-ink/90">{chip.name}</span>
+                      <span className="font-display text-base font-bold text-ink/90">{chip.name}</span>
                       <span className="font-display text-base font-bold text-primary">{chip.price}</span>
                     </div>
                   ))}
@@ -247,25 +247,21 @@ function MenuPage() {
           ) : null}
 
           {tab === "carne" ? (
-            <div>
-              <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between px-1 gap-1">
-                <h3 className="font-display text-2xl uppercase text-ink">Piatti di carne</h3>
-                <span className="text-xs font-semibold uppercase text-ink/60">*prodotti a -20°C ove contrassegnati</span>
-              </div>
-              <div className="grid gap-5 sm:grid-cols-2">
-                {piattiCarne.map((item, i) => (
-                  <div
-                    key={i}
-                    className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
-                    style={{ transitionDelay: `${i * 40}ms` }}
-                  >
-                    <span className="text-sm font-bold leading-snug text-ink/90">{item.name}</span>
-                    <span className="mt-4 text-right font-display text-lg font-bold text-primary">
-                      {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {piattiCarne.map((item, i) => (
+                <div
+                  key={i}
+                  className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
+                  style={{ transitionDelay: `${i * 40}ms` }}
+                >
+                  <span className="font-display text-base font-bold uppercase leading-snug text-ink/90">
+                    {item.name}
+                  </span>
+                  <span className="mt-4 text-right font-display text-lg font-bold text-primary">
+                    {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
+                  </span>
+                </div>
+              ))}
             </div>
           ) : null}
 
