@@ -31,7 +31,7 @@ function ReviewsPage() {
   const googleTotalReviews = "2200+";
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-40">
+    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-32">
       <div className="blob blob-a" aria-hidden="true" />
       <div className="blob blob-b" aria-hidden="true" />
 
