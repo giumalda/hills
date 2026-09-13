@@ -59,7 +59,7 @@ function MenuPage() {
               onClick={() => setTab(t.id)}
               className={`whitespace-nowrap rounded-full px-4 py-2.5 font-display text-sm uppercase transition-colors md:text-base ${
                 tab === t.id ? "bg-ink text-sun" : "text-ink/70 hover:bg-paper/60"
-              }`}
+              } ${t.id === "allergeni" ? "ml-auto" : ""}`}
             >
               {t.label}
             </button>
