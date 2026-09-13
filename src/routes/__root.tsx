@@ -83,6 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
       { title: "Hill's Burger" },
       { name: "apple-mobile-web-app-title", content: "Hill's Burger" },
+      { name: "application-name", content: "Hill's Burger" },
       {
         name: "description",
         content: "Hill's Burger: panini, combo e special burger in stile Springfield a Mottola (TA).",
@@ -90,27 +91,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#fef39e" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "mobile-web-app-capable", content: "yes" },
-      { name: "author", content: "Hill's Burger" },
-      { property: "og:title", content: "Hill's Burger" },
-      {
-        property: "og:description",
-        content: "Panini, combo e special burger in stile Springfield a Mottola (TA).",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@400;500;600;800&display=swap",
       },
-      // { rel: "manifest", href: "/manifest.json" },
+      { rel: "manifest", href: "/manifest.json" },
       { rel: "apple-touch-icon", href: "/logo-192.png" },
       { rel: "icon", href: "/logo.png", type: "image/png" },
     ],
