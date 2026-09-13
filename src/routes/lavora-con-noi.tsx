@@ -115,7 +115,7 @@ function JobsPage() {
     "mt-1 w-full rounded-2xl border border-ink/15 bg-paper/70 px-4 py-3 text-sm font-semibold text-ink outline-none transition focus:border-ink/40 focus:ring-2 focus:ring-primary/40";
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28">
+    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-40">
       <div className="blob blob-a" aria-hidden="true" />
       <div className="blob blob-b" aria-hidden="true" />
 
