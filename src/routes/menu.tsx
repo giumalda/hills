@@ -72,7 +72,6 @@ function CircularAddButton({
 }
 
 function parseCarneItem(name: string) {
-  // Separa eventuali specifiche tra parentesi o note lunghe
   const parenIdx = name.indexOf("(");
   const plusIdx = name.indexOf(" + ");
   let mainName = name;
@@ -86,7 +85,6 @@ function parseCarneItem(name: string) {
     secondary = name.slice(plusIdx + 3).trim();
   }
 
-  // Se contiene dettagli come CONDITA CON / grammi lunghi, splitta pulito
   const conditaIdx = name.toUpperCase().indexOf(" CONDITA CON ");
   if (conditaIdx !== -1 && parenIdx === -1) {
     mainName = name.slice(0, conditaIdx).trim();
@@ -129,7 +127,6 @@ function MenuPage() {
   };
 
   const handleAddToCart = (name: string, price: number | string) => {
-    // Gestione mock post-it carrello
     window.dispatchEvent(
       new CustomEvent("hills-add-to-cart", {
         detail: { name, price },
@@ -137,10 +134,13 @@ function MenuPage() {
     );
   };
 
-  // Unisce fritture e chips in un'unica lista numerata progressiva
   const allFrittureList = [
-    ...fritture.items.map((item) => ({ label: item, price: "€ 6,00", type: "item" })),
-    ...fritture.chips.map((chip) => ({ label: chip.name, price: chip.price, type: "chip" })),
+    ...fritture.items.map((item) => ({ label: item, price: 6.0, type: "item" })),
+    ...fritture.chips.map((chip) => ({
+      label: chip.name,
+      price: chip.price,
+      type: "chip",
+    })),
   ];
 
   return (
@@ -231,40 +231,48 @@ function MenuPage() {
         <div className="mt-10">
           {tab === "burger" ? (
             <div className="space-y-6">
-              {/* Box sfida estesa in orizzontale */}
-              <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6 md:p-8">
-                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              {/* Box sfida ripristinata compatta */}
+              <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="flex items-start sm:items-center gap-4">
-                    <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
-                      <Flame className="size-7" />
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+                      <Flame className="size-6" />
                     </div>
                     <div>
                       <span className="inline-block rounded-full bg-primary/15 px-3 py-1 font-display text-xs uppercase text-primary font-bold">
-                        Challenge · N. 49 Big Simpson
+                        Challenge · La Sfida
                       </span>
-                      <h3 className="mt-1 font-display text-2xl uppercase text-ink">
+                      <h3 className="mt-1 font-display text-xl uppercase text-ink">
                         Il Panino Sfida Hill&apos;s
                       </h3>
-                      <p className="mt-1 text-sm font-semibold text-ink/75 max-w-2xl">
-                        3 Burger di bovino 100gr, porchetta, bombette, maxi uccelletto, cheddar, bacon e patatine. Se lo mangi in 20 minuti non lo paghi!
+                      <p className="mt-1 text-sm font-semibold text-ink/75">
+                        Chiudi la griglia o alza bandiera bianca: porzioni da record, zero scuse.
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={jumpToChallenge}
-                    className="shrink-0 rounded-full bg-primary px-6 py-3 font-display text-xs uppercase text-primary-foreground transition-transform hover:scale-105 active:scale-95 shadow-sm"
+                    className="shrink-0 rounded-full bg-primary px-5 py-2.5 font-display text-xs uppercase text-primary-foreground transition-transform hover:scale-105 active:scale-95 shadow-sm"
                   >
                     Vai al N. 49 Big Simpson ↓
                   </button>
                 </div>
               </div>
 
+              {/* Casella allungata per la sfida N.49 e griglia espansa sotto */}
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {burgers.map((b, i) => (
-                  <div key={b.name} id={b.n === 49 ? "item-49" : undefined}>
-                    <MenuCard item={b} index={i} />
-                  </div>
-                ))}
+                {burgers.map((b, i) => {
+                  const isChallengeCard = b.n === 49;
+                  return (
+                    <div
+                      key={b.name}
+                      id={isChallengeCard ? "item-49" : undefined}
+                      className={isChallengeCard ? "sm:col-span-2 lg:col-span-3" : ""}
+                    >
+                      <MenuCard item={b} index={i} />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ) : null}
@@ -296,23 +304,24 @@ function MenuPage() {
                 <div
                   key={p.name}
                   className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
-                  style={{ transitionDelay: `${i * 60}ms` }}
                 >
-                  <div>
-                    <div className="flex items-start justify-between gap-3">
-                      <span className="font-display text-xs font-bold text-ink/40">#{i + 1}</span>
-                      <div className="flex-1">
-                        <h3 className="font-display text-xl uppercase text-ink">{p.name}</h3>
-                        <p className="mt-2 text-sm font-semibold text-ink/75">{p.ingredients}</p>
-                      </div>
-                      <CircularAddButton
-                        onClick={() => handleAddToCart(p.name, p.price)}
-                        label={`Aggiungi ${p.name}`}
-                      />
+                  <div className="flex items-start gap-3">
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink">
+                      {i + 1}
+                    </span>
+                    <div className="flex-1">
+                      <h3 className="font-display text-xl uppercase text-ink">{p.name}</h3>
+                      <p className="mt-2 text-sm font-semibold text-ink/75">{p.ingredients}</p>
                     </div>
-                    <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
-                      <span className="font-display text-lg text-primary">€ {p.price.toFixed(2)}</span>
-                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
+                    <span className="font-display text-lg text-ink">
+                      € {p.price.toFixed(2)}
+                    </span>
+                    <CircularAddButton
+                      onClick={() => handleAddToCart(p.name, p.price)}
+                      label={`Aggiungi ${p.name}`}
+                    />
                   </div>
                 </div>
               ))}
@@ -327,15 +336,18 @@ function MenuPage() {
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {allFrittureList.map((item, i) => {
                   const { main, sub } = parseFritturaItem(item.label);
+                  const priceStr =
+                    typeof item.price === "number"
+                      ? `€ ${item.price.toFixed(2)}`
+                      : item.price;
                   return (
                     <div
                       key={i}
                       className="glass-card reveal flex flex-col justify-between rounded-3xl p-5"
-                      style={{ transitionDelay: `${i * 30}ms` }}
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <span className="font-display text-xs font-bold text-ink/40 mt-1">
-                          #{i + 1}
+                      <div className="flex items-start gap-3">
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink mt-0.5">
+                          {i + 1}
                         </span>
                         <div className="flex-1">
                           <span className="font-display text-lg uppercase text-ink block leading-tight">
@@ -347,15 +359,15 @@ function MenuPage() {
                             </p>
                           )}
                         </div>
+                      </div>
+                      <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
+                        <span className="font-display text-base font-bold text-ink">
+                          {priceStr}
+                        </span>
                         <CircularAddButton
-                          onClick={() => handleAddToCart(main, item.price)}
+                          onClick={() => handleAddToCart(main, priceStr)}
                           label={`Aggiungi ${main}`}
                         />
-                      </div>
-                      <div className="mt-4 text-right border-t border-ink/10 pt-2">
-                        <span className="font-display text-base font-bold text-primary">
-                          {item.price}
-                        </span>
                       </div>
                     </div>
                   );
@@ -374,14 +386,13 @@ function MenuPage() {
                   <div
                     key={i}
                     className="glass-card reveal flex flex-col justify-between rounded-3xl p-5"
-                    style={{ transitionDelay: `${i * 40}ms` }}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <span className="font-display text-xs font-bold text-ink/40 mt-1">
-                        #{i + 1}
+                    <div className="flex items-start gap-3">
+                      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink mt-0.5">
+                        {i + 1}
                       </span>
                       <div className="flex-1">
-                        <span className="font-display text-base font-bold uppercase leading-snug text-ink/90 block">
+                        <span className="font-display text-lg uppercase leading-snug text-ink block">
                           {mainName}
                         </span>
                         {secondary && (
@@ -390,15 +401,15 @@ function MenuPage() {
                           </p>
                         )}
                       </div>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
+                      <span className="font-display text-lg font-bold text-ink">
+                        {priceFormatted}
+                      </span>
                       <CircularAddButton
                         onClick={() => handleAddToCart(mainName, priceFormatted)}
                         label={`Aggiungi ${mainName}`}
                       />
-                    </div>
-                    <div className="mt-4 text-right border-t border-ink/10 pt-2">
-                      <span className="font-display text-lg font-bold text-primary">
-                        {priceFormatted}
-                      </span>
                     </div>
                   </div>
                 );
@@ -409,21 +420,26 @@ function MenuPage() {
           {tab === "insalate" ? (
             <div className="grid gap-5 md:grid-cols-2">
               {insalate.map((ins, i) => (
-                <div key={i} className="glass-card reveal flex flex-col justify-between rounded-3xl p-6">
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="font-display text-xs font-bold text-ink/40">#{i + 1}</span>
-                    <p className="text-sm font-semibold leading-relaxed text-ink/85 flex-1">
+                <div
+                  key={i}
+                  className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink mt-0.5">
+                      {i + 1}
+                    </span>
+                    <p className="font-display text-lg uppercase leading-relaxed text-ink flex-1">
                       {ins.ingredients}
                     </p>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
+                    <span className="font-display text-lg font-bold text-ink">
+                      € {ins.price.toFixed(2)}
+                    </span>
                     <CircularAddButton
                       onClick={() => handleAddToCart(`Insalata #${i + 1}`, ins.price)}
                       label={`Aggiungi insalata #${i + 1}`}
                     />
-                  </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
-                    <span className="font-display text-lg text-primary">
-                      € {ins.price.toFixed(2)}
-                    </span>
                   </div>
                 </div>
               ))}
