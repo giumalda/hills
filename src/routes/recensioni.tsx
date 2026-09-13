@@ -60,7 +60,7 @@ function ReviewsPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border-2 border-ink px-6 py-3 font-display text-sm uppercase text-ink transition-transform hover:scale-105"
             >
-              Vedi su Google
+              Vedi tutte
               <ExternalLink className="size-4" />
             </a>
             <a
