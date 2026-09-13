@@ -60,8 +60,6 @@ function MenuPage() {
     }, 100);
   };
 
-  // --- PARSERS PER ADATTARE I DATI AL MENU CARD FORMAT ---
-
   const piadineItems: MenuItem[] = piadine.map((p, i) => ({
     n: i + 1,
     name: p.name,
@@ -88,7 +86,6 @@ function MenuPage() {
   const carneItems: MenuItem[] = piattiCarne.map((c, i) => {
     let mainName = c.name;
     let desc = "";
-    // Intercetta grammi, parentesi, " + chips", e "CONDITA CON" per mandarli giù
     const match = c.name.match(/( 150g| 200g| 250g| 300| 600g|\(| \+ | CONDITA CON )/i);
     if (match) {
       mainName = c.name.substring(0, match.index).trim();
@@ -98,15 +95,21 @@ function MenuPage() {
     return { n: i + 1, name: mainName, desc, price: c.price };
   });
 
-  const insalateItems: MenuItem[] = insalate.map((ins, i) => ({
-    n: i + 1,
+  const insalateItems: MenuItem[] = insalate.map((ins) => ({
+    n: 1,
     name: "INSALATA",
     desc: ins.ingredients,
     price: ins.price,
   }));
 
   return (
- <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-32">
+    <main
+      className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28"
+      style={{
+        backgroundImage: `radial-gradient(rgba(30, 20, 10, 0.08) 1px, transparent 1px)`,
+        backgroundSize: "16px 16px",
+      }}
+    >
       <div className="blob blob-a" aria-hidden="true" />
       <div className="blob blob-b" aria-hidden="true" />
 
@@ -134,7 +137,6 @@ function MenuPage() {
           </div>
         </header>
 
-        {/* Barra categorie stretta (max-w-lg) con frecce */}
         <div className="sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-lg items-center gap-1.5 px-2">
           <button
             type="button"
@@ -175,7 +177,6 @@ function MenuPage() {
           </button>
         </div>
 
-        {/* Pulsante Allergeni separato */}
         <div className="relative z-30 mt-4 flex justify-center">
           <button
             type="button"
@@ -193,7 +194,6 @@ function MenuPage() {
         <div className="mt-10">
           {tab === "burger" ? (
             <div className="space-y-6">
-              {/* Box sfida ripristinata */}
               <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                   <div className="flex items-start sm:items-center gap-4">
@@ -223,9 +223,9 @@ function MenuPage() {
 
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {burgers.map((b, i) => (
-                  <MenuCard 
-                    key={b.name} 
-                    item={b} 
+                  <MenuCard
+                    key={b.name}
+                    item={b}
                     index={i}
                     className={b.n === 49 ? "sm:col-span-2 lg:col-span-3" : ""}
                   />
