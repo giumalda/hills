@@ -286,16 +286,20 @@ const chipsItems: MenuItem[] = [];
 
           {tab === "fritture" ? (
             <div className="space-y-12">
-              <div>
-                <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-primary">
-                  Speciale in evidenza
-                </h3>
-                <div className="max-w-md">
-                  <MenuCard
-                    item={maxiTagliereAlette as MenuItem}
-                    index={0}
-                    className="border-2 border-primary bg-primary/5"
-                  />
+             <div>
+                <h3 className="mb-4 font-display text-lg uppercase text-ink">Chips</h3>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
+                  {fritture.chips.map((chip, i) => (
+                    <MenuCard
+                      key={`chip-${chip.name}-${i}`}
+                      item={{
+                        name: chip.name,
+                        desc: "Porzione croccante",
+                        price: 5.0,
+                      }}
+                      index={i}
+                    />
+                  ))}
                 </div>
               </div>
 
