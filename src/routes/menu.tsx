@@ -1,8 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { ChevronLeft, ChevronRight, Flame } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { MenuCard } from "@/components/MenuCard";
-import { allergeni, burgers, combos, specials } from "@/data/menu";
+import {
+  allergeni,
+  burgers,
+  combos,
+  specials,
+  piadine,
+  fritture,
+  piattiCarne,
+  insalate,
+} from "@/data/menu";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -11,15 +21,8 @@ export const Route = createFileRoute("/menu")({
       {
         name: "description",
         content:
-          "Tutti i panini Hill's: 49 burger numerati, gli special dal 50 al 55, i menu combo a 10€ e la tabella allergeni.",
+          "Tutti i panini Hill's: 49 burger numerati, gli special, i menu combo a 10€, piadine, fritture, piatti di carne e insalate.",
       },
-      { property: "og:title", content: "Menu completo | Hill's Burger & Chips" },
-      {
-        property: "og:description",
-        content: "Burger, special, hot dog e combo a 10€. Aggiungi i panini al tuo blocchetto.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: MenuPage,
@@ -29,11 +32,25 @@ const tabs = [
   { id: "burger", label: "Burger" },
   { id: "special", label: "Special Burger" },
   { id: "combo", label: "Menu Combo" },
+  { id: "piadine", label: "Piadine" },
+  { id: "fritture", label: "Fritture & Chips" },
+  { id: "carne", label: "Piatti di carne" },
+  { id: "insalate", label: "Insalate" },
 ] as const;
 
 function MenuPage() {
   useReveal();
   const [tab, setTab] = useState<string>("burger");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollTabs = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -220 : 220,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28">
@@ -45,18 +62,14 @@ function MenuPage() {
           <h1 className="font-display text-4xl uppercase text-paper text-stroke-ink md:text-6xl">
             Il Menu
           </h1>
-          
-          {/* Box info e costi con gerarchia visiva */}
+
           <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-ink/10 bg-paper/50 p-5 text-center shadow-sm">
-            {/* LIVELLO 1: Regole di prezzo */}
             <p className="font-display text-lg uppercase text-ink md:text-xl">
               Coperto € 2,00
               <span className="mt-1 block font-sans text-sm font-semibold normal-case text-ink/80 md:ml-2 md:mt-0 md:inline">
                 (Aggiunte e varianti calcolate a parte)
               </span>
             </p>
-            
-            {/* LIVELLO 2 e 3: Info tecniche */}
             <div className="mt-3 flex flex-col gap-0.5">
               <p className="text-sm font-medium text-ink/70">
                 Numeri originali della carta.
@@ -68,20 +81,45 @@ function MenuPage() {
           </div>
         </header>
 
-        {/* Barra categorie principali */}
-        <div className="glass sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-2xl gap-1 overflow-x-auto rounded-full p-1.5">
-          {tabs.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setTab(t.id)}
-              className={`flex-1 whitespace-nowrap rounded-full px-4 py-2.5 font-display text-sm uppercase transition-colors md:text-base ${
-                tab === t.id ? "bg-ink text-sun" : "text-ink/70 hover:bg-paper/60"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
+        {/* Barra categorie con scorrimento e frecce compatte */}
+        <div className="sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-3xl items-center gap-1.5 px-2">
+          <button
+            type="button"
+            onClick={() => scrollTabs("left")}
+            aria-label="Scorri sinistra"
+            className="glass flex size-9 shrink-0 items-center justify-center rounded-full text-ink transition-transform hover:scale-105 active:scale-95"
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+
+          <div
+            ref={scrollRef}
+            className="glass flex flex-1 items-center gap-1 overflow-x-auto rounded-full p-1.5 scrollbar-none"
+          >
+            {tabs.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setTab(t.id)}
+                className={`whitespace-nowrap rounded-full px-4 py-2 font-display text-xs uppercase transition-colors md:text-sm ${
+                  tab === t.id
+                    ? "bg-ink text-sun shadow-sm"
+                    : "text-ink/70 hover:bg-paper/60"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => scrollTabs("right")}
+            aria-label="Scorri destra"
+            className="glass flex size-9 shrink-0 items-center justify-center rounded-full text-ink transition-transform hover:scale-105 active:scale-95"
+          >
+            <ChevronRight className="size-4" />
+          </button>
         </div>
 
         {/* Pulsante Allergeni separato */}
@@ -101,10 +139,32 @@ function MenuPage() {
 
         <div className="mt-10">
           {tab === "burger" ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {burgers.map((b, i) => (
-                <MenuCard key={b.name} item={b} index={i} />
-              ))}
+            <div className="space-y-6">
+              {/* Box sfida evidenziata */}
+              <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+                    <Flame className="size-6" />
+                  </div>
+                  <div>
+                    <span className="inline-block rounded-full bg-primary/15 px-3 py-1 font-display text-xs uppercase text-primary font-bold">
+                      Challenge · La Sfida
+                    </span>
+                    <h3 className="mt-1 font-display text-xl uppercase text-ink">
+                      Il Panino Sfida Hill&apos;s
+                    </h3>
+                    <p className="mt-1 text-sm font-semibold text-ink/75">
+                      Chiudi la griglia o alza bandiera bianca: porzioni da record, zero scuse. Chi lo finisce entra nella leggenda (e nello stomaco d&apos;acciaio).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {burgers.map((b, i) => (
+                  <MenuCard key={b.name} item={b} index={i} />
+                ))}
+              </div>
             </div>
           ) : null}
 
@@ -127,6 +187,86 @@ function MenuPage() {
                 ))}
               </div>
             </>
+          ) : null}
+
+          {tab === "piadine" ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {piadine.map((p, i) => (
+                <div
+                  key={p.name}
+                  className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
+                  style={{ transitionDelay: `${i * 60}ms` }}
+                >
+                  <div>
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-display text-xl uppercase text-ink">{p.name}</h3>
+                      <span className="font-display text-lg text-primary">€ {p.price.toFixed(2)}</span>
+                    </div>
+                    <p className="mt-2 text-sm font-semibold text-ink/75">{p.ingredients}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
+          {tab === "fritture" ? (
+            <div className="space-y-8">
+              <div className="glass-card reveal rounded-3xl p-6 md:p-8">
+                <h3 className="font-display text-2xl uppercase text-ink">Fritture</h3>
+                <p className="mt-1 text-xs font-semibold text-ink/60">{fritture.note}</p>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {fritture.items.map((item, i) => (
+                    <div key={i} className="rounded-2xl bg-paper/60 px-4 py-3 text-sm font-semibold text-ink/80">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="glass-card reveal rounded-3xl p-6 md:p-8">
+                <h3 className="font-display text-2xl uppercase text-ink">Patatine (Piccola / Grande)</h3>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {fritture.chips.map((chip, i) => (
+                    <div key={i} className="flex items-center justify-between rounded-2xl bg-paper/60 px-4 py-3">
+                      <span className="text-sm font-semibold text-ink/80">{chip.name}</span>
+                      <span className="font-display text-sm text-primary">{chip.price}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {tab === "carne" ? (
+            <div className="glass-card reveal rounded-3xl p-6 md:p-8">
+              <h3 className="font-display text-2xl uppercase text-ink">Piatti di carne</h3>
+              <p className="mt-1 text-xs font-semibold text-ink/60">
+                Prodotti a temperatura -20°C ove contrassegnati
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {piattiCarne.map((item, i) => (
+                  <div key={i} className="flex flex-col justify-between rounded-2xl bg-paper/60 p-4">
+                    <span className="text-sm font-semibold text-ink/90">{item.name}</span>
+                    <span className="mt-2 text-right font-display text-base text-primary">
+                      {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {tab === "insalate" ? (
+            <div className="grid gap-5 md:grid-cols-2">
+              {insalate.map((ins, i) => (
+                <div key={i} className="glass-card reveal flex flex-col justify-between rounded-3xl p-6">
+                  <p className="text-sm font-semibold text-ink/85">{ins.ingredients}</p>
+                  <p className="mt-4 text-right font-display text-lg text-primary">
+                    € {ins.price.toFixed(2)}
+                  </p>
+                </div>
+              ))}
+            </div>
           ) : null}
 
           {tab === "allergeni" ? (
