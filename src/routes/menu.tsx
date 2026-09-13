@@ -47,8 +47,7 @@ function MenuPage() {
             Il Menu
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm font-semibold text-ink/75 md:text-base">
-            Numeri originali della carta. Le immagini sono a scopo illustrativo. *prodotto a
-            temperatura -20°. Coperto € 2,00, aggiunte e varianti calcolate a parte.
+            Numeri originali della carta. *prodotto a temperatura -20°. Coperto € 2,00, aggiunte e varianti calcolate a parte.
           </p>
         </header>
 
