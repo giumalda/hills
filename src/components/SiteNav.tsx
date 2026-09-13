@@ -30,11 +30,11 @@ export function SiteNav() {
       <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-5">
         <nav className="glass mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full px-4 py-2.5 md:px-6">
           <Link to="/" className="flex items-center gap-2.5">
-            <img
-              src="/logoblack.png"
-              alt="Hill's Burger"
-              className="size-9 rounded-xl object-cover shadow-sm md:size-10"
-            />
+        <img
+  src="/logoblack.png"
+  alt="Hill's Burger"
+  className="size-9 object-contain md:size-10"
+/>
             <span className="font-display text-lg uppercase leading-none tracking-tight text-ink md:text-xl">
               Hill&apos;s Burger
             </span>
