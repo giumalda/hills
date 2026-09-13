@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef } from "react";
-import { ChevronLeft, ChevronRight, Flame } from "lucide-react";
+import { ChevronLeft, ChevronRight, Flame, Plus } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { MenuCard } from "@/components/MenuCard";
 import {
@@ -38,6 +38,31 @@ const tabs = [
   { id: "insalate", label: "Insalate" },
 ] as const;
 
+function CircularAddButton({ name, priceLabel }: { name: string; priceLabel: string }) {
+  const [added, setAdded] = useState(false);
+  return (
+    <button
+      onClick={() => {
+        setAdded(true);
+        setTimeout(() => setAdded(false), 1200);
+      }}
+      className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-sun transition-all duration-300 hover:w-28 active:scale-95"
+      title={`Aggiungi ${name} (${priceLabel})`}
+    >
+      {added ? (
+        <span className="font-display text-xs">✓</span>
+      ) : (
+        <>
+          <Plus className="size-5 shrink-0" />
+          <span className="max-w-0 overflow-hidden whitespace-nowrap font-display text-xs uppercase transition-all duration-300 group-hover:max-w-20 group-hover:ml-1.5">
+            Aggiungi
+          </span>
+        </>
+      )}
+    </button>
+  );
+}
+
 function MenuPage() {
   useReveal();
   const [tab, setTab] = useState<string>("burger");
@@ -50,6 +75,13 @@ function MenuPage() {
         behavior: "smooth",
       });
     }
+  };
+
+  const jumpToChallenge = () => {
+    setTab("burger");
+    setTimeout(() => {
+      document.getElementById("item-49")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 100);
   };
 
   return (
@@ -140,28 +172,39 @@ function MenuPage() {
         <div className="mt-10">
           {tab === "burger" ? (
             <div className="space-y-6">
+              {/* Box sfida evidenziata con jump button */}
               <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
-                    <Flame className="size-6" />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex items-start sm:items-center gap-4">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+                      <Flame className="size-6" />
+                    </div>
+                    <div>
+                      <span className="inline-block rounded-full bg-primary/15 px-3 py-1 font-display text-xs uppercase text-primary font-bold">
+                        Challenge · N. 49 Big Simpson
+                      </span>
+                      <h3 className="mt-1 font-display text-xl uppercase text-ink">
+                        Il Panino Sfida Hill&apos;s
+                      </h3>
+                      <p className="mt-1 text-sm font-semibold text-ink/75">
+                        Chiudi la griglia in 20 minuti o non lo paghi. Porzioni da record, zero scuse.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <span className="inline-block rounded-full bg-primary/15 px-3 py-1 font-display text-xs uppercase text-primary font-bold">
-                      Challenge · La Sfida
-                    </span>
-                    <h3 className="mt-1 font-display text-xl uppercase text-ink">
-                      Il Panino Sfida Hill&apos;s
-                    </h3>
-                    <p className="mt-1 text-sm font-semibold text-ink/75">
-                      Chiudi la griglia o alza bandiera bianca: porzioni da record, zero scuse. Chi lo finisce entra nella leggenda (e nello stomaco d&apos;acciaio).
-                    </p>
-                  </div>
+                  <button
+                    onClick={jumpToChallenge}
+                    className="shrink-0 rounded-full bg-primary px-5 py-2.5 font-display text-xs uppercase text-primary-foreground transition-transform hover:scale-105 active:scale-95 shadow-sm"
+                  >
+                    Vai alla sfida ↓
+                  </button>
                 </div>
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {burgers.map((b, i) => (
-                  <MenuCard key={b.name} item={b} index={i} />
+                  <div key={b.name} id={b.n === 49 ? "item-49" : undefined}>
+                    <MenuCard item={b} index={i} />
+                  </div>
                 ))}
               </div>
             </div>
@@ -197,11 +240,16 @@ function MenuPage() {
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
                   <div>
-                    <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-display text-xl uppercase text-ink">{p.name}</h3>
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h3 className="font-display text-xl uppercase text-ink">{p.name}</h3>
+                        <p className="mt-2 text-sm font-semibold text-ink/75">{p.ingredients}</p>
+                      </div>
+                      <CircularAddButton name={p.name} priceLabel={`€ ${p.price.toFixed(2)}`} />
+                    </div>
+                    <div className="mt-4 text-right">
                       <span className="font-display text-lg text-primary">€ {p.price.toFixed(2)}</span>
                     </div>
-                    <p className="mt-2 text-sm font-semibold text-ink/75">{p.ingredients}</p>
                   </div>
                 </div>
               ))}
@@ -213,16 +261,20 @@ function MenuPage() {
               <div>
                 <div className="mb-4 flex items-center justify-between px-1">
                   <h3 className="font-display text-2xl uppercase text-ink">Fritture</h3>
-                  <span className="text-xs font-semibold uppercase text-primary">6 PZ — € 6,00 (-20°C)</span>
+                  <span className="text-xs font-semibold uppercase text-primary">6 PZ — € 6,00</span>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {fritture.items.map((item, i) => (
                     <div
                       key={i}
-                      className="glass-card reveal flex items-center justify-center rounded-3xl px-5 py-5 text-center font-display text-base uppercase text-ink"
+                      className="glass-card reveal flex items-center justify-between rounded-3xl px-5 py-4"
                       style={{ transitionDelay: `${i * 30}ms` }}
                     >
-                      {item}
+                      <span className="font-display text-lg uppercase text-ink">{item}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="font-display text-base font-bold text-primary">€ 6,00</span>
+                        <CircularAddButton name={item} priceLabel="€ 6,00" />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -234,11 +286,14 @@ function MenuPage() {
                   {fritture.chips.map((chip, i) => (
                     <div
                       key={i}
-                      className="glass-card reveal flex items-center justify-between rounded-3xl px-6 py-5"
+                      className="glass-card reveal flex items-center justify-between rounded-3xl px-6 py-4"
                       style={{ transitionDelay: `${i * 40}ms` }}
                     >
-                      <span className="font-display text-base font-bold text-ink/90">{chip.name}</span>
-                      <span className="font-display text-base font-bold text-primary">{chip.price}</span>
+                      <span className="font-display text-lg font-bold uppercase text-ink/90">{chip.name}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="font-display text-base font-bold text-primary">{chip.price}</span>
+                        <CircularAddButton name={chip.name} priceLabel={chip.price} />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -247,21 +302,41 @@ function MenuPage() {
           ) : null}
 
           {tab === "carne" ? (
-            <div className="grid gap-5 sm:grid-cols-2">
-              {piattiCarne.map((item, i) => (
-                <div
-                  key={i}
-                  className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
-                  style={{ transitionDelay: `${i * 40}ms` }}
-                >
-                  <span className="font-display text-base font-bold uppercase leading-snug text-ink/90">
-                    {item.name}
-                  </span>
-                  <span className="mt-4 text-right font-display text-lg font-bold text-primary">
-                    {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
-                  </span>
-                </div>
-              ))}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {piattiCarne.map((item, i) => {
+                const parts = item.name.split(" CONDITA CON ");
+                const mainName = parts[0];
+                const desc = parts.length > 1 ? `CONDITA CON ${parts[1]}` : null;
+                return (
+                  <div
+                    key={i}
+                    className="glass-card reveal flex flex-col justify-between rounded-3xl p-5"
+                    style={{ transitionDelay: `${i * 30}ms` }}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <span className="font-display text-xl uppercase leading-snug text-ink/90 block">
+                          {mainName}
+                        </span>
+                        {desc && (
+                          <p className="mt-1 text-xs font-semibold leading-relaxed text-ink/65">
+                            {desc}
+                          </p>
+                        )}
+                      </div>
+                      <CircularAddButton
+                        name={mainName}
+                        priceLabel={typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
+                      />
+                    </div>
+                    <div className="mt-3 text-right">
+                      <span className="font-display text-lg font-bold text-primary">
+                        {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : null}
 
@@ -269,7 +344,10 @@ function MenuPage() {
             <div className="grid gap-5 md:grid-cols-2">
               {insalate.map((ins, i) => (
                 <div key={i} className="glass-card reveal flex flex-col justify-between rounded-3xl p-6">
-                  <p className="text-sm font-semibold leading-relaxed text-ink/85">{ins.ingredients}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-sm font-semibold leading-relaxed text-ink/85">{ins.ingredients}</p>
+                    <CircularAddButton name="Insalata" priceLabel={`€ ${ins.price.toFixed(2)}`} />
+                  </div>
                   <p className="mt-4 text-right font-display text-lg text-primary">
                     € {ins.price.toFixed(2)}
                   </p>
