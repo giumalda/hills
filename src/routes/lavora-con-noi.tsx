@@ -16,13 +16,6 @@ export const Route = createFileRoute("/lavora-con-noi")({
         content:
           "Vuoi entrare nella squadra di Hill's Burger & Chips a Mottola (TA)? Invia la tua candidatura: griglia, cucina, sala e consegne.",
       },
-      { property: "og:title", content: "Lavora con noi | Hill's Burger & Chips" },
-      {
-        property: "og:description",
-        content: "Invia la tua candidatura alla paninoteca Hill's Burger & Chips.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: JobsPage,
@@ -70,7 +63,7 @@ function JobsPage() {
         const filePath = `${fileName}`;
 
         const { error: uploadError } = await supabase.storage
-          .from("cvs") // Assicurati di avere un bucket Supabase chiamato 'cvs'
+          .from("cvs")
           .upload(filePath, cvFile);
 
         if (uploadError) throw uploadError;
@@ -115,7 +108,13 @@ function JobsPage() {
     "mt-1 w-full rounded-2xl border border-ink/15 bg-paper/70 px-4 py-3 text-sm font-semibold text-ink outline-none transition focus:border-ink/40 focus:ring-2 focus:ring-primary/40";
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-32">
+    <main
+      className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28"
+      style={{
+        backgroundImage: `radial-gradient(rgba(30, 20, 10, 0.08) 1px, transparent 1px)`,
+        backgroundSize: "16px 16px",
+      }}
+    >
       <div className="blob blob-a" aria-hidden="true" />
       <div className="blob blob-b" aria-hidden="true" />
 
