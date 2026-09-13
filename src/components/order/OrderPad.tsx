@@ -1,31 +1,43 @@
 import { useState } from "react";
-import { Minus, Plus, Trash2, X, MessageCircle, Clock } from "lucide-react";
+import { Minus, Plus, Trash2, X, MessageCircle, Clock, Store, Utensils, PhoneCall } from "lucide-react";
 import { useOrder } from "./OrderProvider";
 
 /** Post-it style order pad, docked on the side (desktop) or as a sheet (mobile). */
 export function OrderPad() {
   const { lines, add, remove, clear, total, count, open, setOpen } = useOrder();
+  const [orderType, setOrderType] = useState<"ritiro" | "locale">("ritiro");
   const [guests, setGuests] = useState(1);
   const [pickupTime, setPickupTime] = useState("20:30");
 
-  // Calcolo dinamico: (Costo dei piatti) + (Coperti * 2 euro)
-  const copertoCosto = guests * 2.0;
-  const totalWithCoperto = total + copertoCosto;
+  // Validazione orario apertura 18:00 - 00:30
+  const isTimeValid = (time: string) => {
+    if (!time) return true;
+    const [h, m] = time.split(":").map(Number);
+    const totalMinutes = h * 60 + m;
+    const startMin = 18 * 60; // 18:00
+    const endMin = 0 * 60 + 30; // 00:30 (il giorno dopo o notturno)
+    
+    // Tra 18:00 e 24:00 oppure tra 00:00 e 00:30
+    return (totalMinutes >= startMin && totalMinutes <= 24 * 60) || (totalMinutes >= 0 && totalMinutes <= endMin);
+  };
 
-  // Costruisce il messaggio per WhatsApp
+  const timeError = !isTimeValid(pickupTime);
+
+  // Coperto applicato solo se "mangia in locale"
+  const copertoCosto = orderType === "locale" ? guests * 2.0 : 0;
+  const finalTotal = total + copertoCosto;
+
+  // Costruisce il messaggio WhatsApp pulito solo con orario, piatti e totale
   const handleWhatsAppOrder = () => {
-    const phoneNumber = "393332968401"; // Inserisci il numero reale di Hill's Burger se diverso
+    const phoneNumber = "393332968401";
     const itemsText =
       lines.length > 0
-        ? lines.map((l) => `• ${l.qty}x ${l.name} — € ${(l.price * l.qty).toFixed(2)}`).join("\n")
-        : "Nessun piatto selezionato";
+        ? lines.map((l) => `${l.qty}x ${l.name} — € ${(l.price * l.qty).toFixed(2)}`).join("\n")
+        : "Nessun piatto";
 
-    const message = `🍔 *NUOVO ORDINE DA RITIRO IN NEGOZIO* — Hill's Burger & Chips\n\n` +
-      `🕒 *Orario ritiro:* ${pickupTime}\n` +
-      `👥 *Persone (coperto €2.00/uno):* ${guests} (tavolo/coperto: € ${copertoCosto.toFixed(2)})\n\n` +
-      `🛒 *Riepilogo Piatti:*\n${itemsText}\n\n` +
-      `ℹ️ _Note: Le bibite si calcolano a parte._\n` +
-      `💰 *TOTALE ESTIMATIVO:* € ${totalWithCoperto.toFixed(2)}`;
+    const message = `Orario di ritiro: ${pickupTime}\n\n` +
+      `Piatti:\n${itemsText}\n\n` +
+      `Totale: € ${finalTotal.toFixed(2)}`;
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
@@ -70,7 +82,35 @@ export function OrderPad() {
           </button>
         </div>
 
-        <div className="-mr-1 flex-1 overflow-y-auto py-3 pr-1">
+        {/* Selettore Modalità: Ritiro o Mangia in locale */}
+        <div className="my-3 grid grid-cols-2 gap-1.5 rounded-xl bg-ink/10 p-1">
+          <button
+            type="button"
+            onClick={() => setOrderType("ritiro")}
+            className={`flex items-center justify-center gap-1.5 rounded-lg py-2 font-display text-xs uppercase transition-all ${
+              orderType === "ritiro"
+                ? "bg-ink text-sun shadow-xs"
+                : "text-ink/75 hover:text-ink"
+            }`}
+          >
+            <Store className="size-3.5" />
+            Ritiro
+          </button>
+          <button
+            type="button"
+            onClick={() => setOrderType("locale")}
+            className={`flex items-center justify-center gap-1.5 rounded-lg py-2 font-display text-xs uppercase transition-all ${
+              orderType === "locale"
+                ? "bg-ink text-sun shadow-xs"
+                : "text-ink/75 hover:text-ink"
+            }`}
+          >
+            <Utensils className="size-3.5" />
+            In locale
+          </button>
+        </div>
+
+        <div className="-mr-1 flex-1 overflow-y-auto py-2 pr-1">
           {lines.length === 0 ? (
             <p className="py-6 text-center text-sm font-medium text-ink/60">
               Premi <span className="font-bold">Aggiungi</span> su un panino e finirà qui,
@@ -88,7 +128,6 @@ export function OrderPad() {
                   </span>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    {/* Tasti compatti +/- */}
                     <div className="flex items-center gap-1 rounded-full border border-ink/15 bg-white/60 px-1.5 py-0.5 shadow-2xs">
                       <button
                         type="button"
@@ -122,63 +161,85 @@ export function OrderPad() {
         </div>
 
         <div className="border-t-2 border-dashed border-ink/20 pt-3">
-          {/* Orario ritiro */}
-          <div className="mb-2.5 flex items-center justify-between rounded-xl bg-ink/5 px-3 py-2">
-            <div className="flex items-center gap-1.5 text-ink">
-              <Clock className="size-3.5 text-primary" />
-              <span className="font-display text-xs uppercase">Ritiro ore</span>
+          {/* Orario ritiro con check 18:00 - 00:30 (solo per ritiro o generale) */}
+          <div className="mb-2.5 flex flex-col gap-1 rounded-xl bg-ink/5 px-3 py-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-ink">
+                <Clock className="size-3.5 text-primary" />
+                <span className="font-display text-xs uppercase">Orario ritiro</span>
+              </div>
+              <input
+                type="time"
+                value={pickupTime}
+                onChange={(e) => setPickupTime(e.target.value)}
+                className={`rounded-lg border bg-white/80 px-2 py-1 font-display text-xs font-bold text-ink focus:outline-none focus:ring-1 ${
+                  timeError ? "border-red-500 focus:ring-red-500" : "border-ink/15 focus:ring-primary"
+                }`}
+              />
             </div>
-            <input
-              type="time"
-              value={pickupTime}
-              onChange={(e) => setPickupTime(e.target.value)}
-              className="rounded-lg border border-ink/15 bg-white/80 px-2 py-1 font-display text-xs font-bold text-ink focus:outline-none focus:ring-1 focus:ring-primary"
-            />
+            {timeError && (
+              <span className="text-[10px] font-semibold text-red-600">
+                Orario consentito 18:00 – 00:30
+              </span>
+            )}
           </div>
 
-          {/* Sezione Coperto (Gestione Persone) */}
-          <div className="mb-2.5 flex items-center justify-between rounded-xl bg-ink/5 px-3 py-2">
-            <div className="flex flex-col">
-              <span className="font-display text-xs uppercase text-ink">Persone (Ritiro/Tavolo)</span>
-              <span className="text-[10px] font-semibold text-ink/60">Coperto € 2,00 / p.</span>
+          {/* Sezione Coperto (attiva solo in locale) */}
+          {orderType === "locale" && (
+            <div className="mb-2.5 flex items-center justify-between rounded-xl bg-ink/5 px-3 py-2">
+              <div className="flex flex-col">
+                <span className="font-display text-xs uppercase text-ink">Persone al tavolo</span>
+                <span className="text-[10px] font-semibold text-ink/60">Coperto € 2,00 / p.</span>
+              </div>
+              
+              <div className="flex items-center gap-2 rounded-full border border-ink/10 bg-white/60 px-2 py-0.5 shadow-2xs">
+                <button
+                  type="button"
+                  onClick={() => setGuests(Math.max(1, guests - 1))}
+                  className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors disabled:opacity-30"
+                  disabled={guests <= 1}
+                >
+                  <Minus className="size-3" />
+                </button>
+                <span className="font-display text-xs font-bold w-3 text-center text-ink">{guests}</span>
+                <button
+                  type="button"
+                  onClick={() => setGuests(guests + 1)}
+                  className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
+                >
+                  <Plus className="size-3" />
+                </button>
+              </div>
             </div>
-            
-            <div className="flex items-center gap-2 rounded-full border border-ink/10 bg-white/60 px-2 py-0.5 shadow-2xs">
-              <button
-                type="button"
-                onClick={() => setGuests(Math.max(1, guests - 1))}
-                className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors disabled:opacity-30"
-                disabled={guests <= 1}
-              >
-                <Minus className="size-3" />
-              </button>
-              <span className="font-display text-xs font-bold w-3 text-center text-ink">{guests}</span>
-              <button
-                type="button"
-                onClick={() => setGuests(guests + 1)}
-                className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
-              >
-                <Plus className="size-3" />
-              </button>
-            </div>
-          </div>
+          )}
 
           {/* Totale Finale */}
           <div className="flex items-baseline justify-between font-display text-xl uppercase text-ink">
             <span>Totale</span>
-            <span className="text-primary tabular-nums">€ {totalWithCoperto.toFixed(2)}</span>
+            <span className="text-primary tabular-nums">€ {finalTotal.toFixed(2)}</span>
           </div>
 
           <div className="mt-3 flex gap-2">
-            <button
-              type="button"
-              onClick={handleWhatsAppOrder}
-              disabled={lines.length === 0}
-              className="flex-1 flex items-center justify-center gap-1.5 rounded-full bg-[#25D366] px-4 py-2.5 text-center font-display text-xs uppercase text-white shadow-sm transition-transform hover:scale-[1.03] disabled:opacity-50"
-            >
-              <MessageCircle className="size-4" />
-              Invia su WhatsApp
-            </button>
+            {orderType === "ritiro" ? (
+              <button
+                type="button"
+                onClick={handleWhatsAppOrder}
+                disabled={lines.length === 0 || timeError}
+                className="flex-1 flex items-center justify-center gap-1.5 rounded-full bg-[#25D366] px-4 py-2.5 text-center font-display text-xs uppercase text-white shadow-sm transition-transform hover:scale-[1.03] disabled:opacity-50"
+              >
+                <MessageCircle className="size-4" />
+                Invia su WhatsApp
+              </button>
+            ) : (
+              <a
+                href="tel:+393332968401"
+                className="flex-1 flex items-center justify-center gap-1.5 rounded-full bg-ink px-4 py-2.5 text-center font-display text-xs uppercase text-sun transition-transform hover:scale-[1.03]"
+              >
+                <PhoneCall className="size-4" />
+                Chiama per il tavolo
+              </a>
+            )}
+
             <button
               type="button"
               onClick={() => {
