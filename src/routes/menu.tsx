@@ -210,13 +210,15 @@ function MenuPage() {
           ) : null}
 
           {tab === "fritture" ? (
-            <div className="space-y-8">
+            <div className="space-y-6">
               <div className="glass-card reveal rounded-3xl p-6 md:p-8">
-                <h3 className="font-display text-2xl uppercase text-ink">Fritture</h3>
-                <p className="mt-1 text-xs font-semibold text-ink/60">{fritture.note}</p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                  <h3 className="font-display text-2xl uppercase text-ink">Fritture</h3>
+                  <span className="text-xs font-semibold uppercase text-primary">6 PZ — € 6,00 (-20°C)</span>
+                </div>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {fritture.items.map((item, i) => (
-                    <div key={i} className="rounded-2xl bg-paper/60 px-4 py-3 text-sm font-semibold text-ink/80">
+                    <div key={i} className="glass rounded-2xl px-4 py-3 text-sm font-semibold text-ink/85">
                       {item}
                     </div>
                   ))}
@@ -225,11 +227,11 @@ function MenuPage() {
 
               <div className="glass-card reveal rounded-3xl p-6 md:p-8">
                 <h3 className="font-display text-2xl uppercase text-ink">Patatine (Piccola / Grande)</h3>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <div className="mt-5 grid gap-3 sm:grid-cols-1 md:grid-cols-2">
                   {fritture.chips.map((chip, i) => (
-                    <div key={i} className="flex items-center justify-between rounded-2xl bg-paper/60 px-4 py-3">
-                      <span className="text-sm font-semibold text-ink/80">{chip.name}</span>
-                      <span className="font-display text-sm text-primary">{chip.price}</span>
+                    <div key={i} className="glass flex items-center justify-between rounded-2xl px-5 py-3.5">
+                      <span className="text-sm font-semibold text-ink/90">{chip.name}</span>
+                      <span className="font-display text-sm font-bold text-primary">{chip.price}</span>
                     </div>
                   ))}
                 </div>
@@ -239,15 +241,15 @@ function MenuPage() {
 
           {tab === "carne" ? (
             <div className="glass-card reveal rounded-3xl p-6 md:p-8">
-              <h3 className="font-display text-2xl uppercase text-ink">Piatti di carne</h3>
-              <p className="mt-1 text-xs font-semibold text-ink/60">
-                Prodotti a temperatura -20°C ove contrassegnati
-              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <h3 className="font-display text-2xl uppercase text-ink">Piatti di carne</h3>
+                <span className="text-xs font-semibold uppercase text-ink/60">*prodotti a -20°C ove contrassegnati</span>
+              </div>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {piattiCarne.map((item, i) => (
-                  <div key={i} className="flex flex-col justify-between rounded-2xl bg-paper/60 p-4">
-                    <span className="text-sm font-semibold text-ink/90">{item.name}</span>
-                    <span className="mt-2 text-right font-display text-base text-primary">
+                  <div key={i} className="glass reveal flex flex-col justify-between rounded-2xl p-5" style={{ transitionDelay: `${i * 40}ms` }}>
+                    <span className="text-sm font-semibold leading-snug text-ink/90">{item.name}</span>
+                    <span className="mt-3 text-right font-display text-base font-bold text-primary">
                       {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
                     </span>
                   </div>
@@ -260,7 +262,7 @@ function MenuPage() {
             <div className="grid gap-5 md:grid-cols-2">
               {insalate.map((ins, i) => (
                 <div key={i} className="glass-card reveal flex flex-col justify-between rounded-3xl p-6">
-                  <p className="text-sm font-semibold text-ink/85">{ins.ingredients}</p>
+                  <p className="text-sm font-semibold leading-relaxed text-ink/85">{ins.ingredients}</p>
                   <p className="mt-4 text-right font-display text-lg text-primary">
                     € {ins.price.toFixed(2)}
                   </p>
