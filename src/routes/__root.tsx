@@ -165,11 +165,11 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <OrderProvider>
         <div className="relative min-h-screen bg-sun text-ink selection:bg-primary selection:text-primary-foreground">
-          {/* Overlay texture stile puntinato carta/fumetto alleggerito */}
+          {/* Overlay texture stile puntinato carta/fumetto */}
           <div
             className="fixed inset-0 pointer-events-none z-0"
             style={{
-              backgroundImage: `radial-gradient(rgba(45, 27, 14, 0.07) 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(rgba(45, 27, 14, 0.12) 1px, transparent 1px)`,
               backgroundSize: "20px 20px",
             }}
           />
