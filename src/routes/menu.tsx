@@ -140,7 +140,6 @@ function MenuPage() {
         <div className="mt-10">
           {tab === "burger" ? (
             <div className="space-y-6">
-              {/* Box sfida evidenziata */}
               <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
@@ -210,28 +209,36 @@ function MenuPage() {
           ) : null}
 
           {tab === "fritture" ? (
-            <div className="space-y-6">
-              <div className="glass-card reveal rounded-3xl p-6 md:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+            <div className="space-y-8">
+              <div>
+                <div className="mb-4 flex items-center justify-between px-1">
                   <h3 className="font-display text-2xl uppercase text-ink">Fritture</h3>
                   <span className="text-xs font-semibold uppercase text-primary">6 PZ — € 6,00 (-20°C)</span>
                 </div>
-                <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {fritture.items.map((item, i) => (
-                    <div key={i} className="glass rounded-2xl px-4 py-3 text-sm font-semibold text-ink/85">
+                    <div
+                      key={i}
+                      className="glass-card reveal flex items-center justify-center rounded-3xl px-5 py-5 text-center font-display text-base uppercase text-ink"
+                      style={{ transitionDelay: `${i * 30}ms` }}
+                    >
                       {item}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="glass-card reveal rounded-3xl p-6 md:p-8">
-                <h3 className="font-display text-2xl uppercase text-ink">Patatine (Piccola / Grande)</h3>
-                <div className="mt-5 grid gap-3 sm:grid-cols-1 md:grid-cols-2">
+              <div>
+                <h3 className="mb-4 px-1 font-display text-2xl uppercase text-ink">Patatine (Piccola / Grande)</h3>
+                <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
                   {fritture.chips.map((chip, i) => (
-                    <div key={i} className="glass flex items-center justify-between rounded-2xl px-5 py-3.5">
-                      <span className="text-sm font-semibold text-ink/90">{chip.name}</span>
-                      <span className="font-display text-sm font-bold text-primary">{chip.price}</span>
+                    <div
+                      key={i}
+                      className="glass-card reveal flex items-center justify-between rounded-3xl px-6 py-5"
+                      style={{ transitionDelay: `${i * 40}ms` }}
+                    >
+                      <span className="text-sm font-bold text-ink/90">{chip.name}</span>
+                      <span className="font-display text-base font-bold text-primary">{chip.price}</span>
                     </div>
                   ))}
                 </div>
@@ -240,16 +247,20 @@ function MenuPage() {
           ) : null}
 
           {tab === "carne" ? (
-            <div className="glass-card reveal rounded-3xl p-6 md:p-8">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+            <div>
+              <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between px-1 gap-1">
                 <h3 className="font-display text-2xl uppercase text-ink">Piatti di carne</h3>
                 <span className="text-xs font-semibold uppercase text-ink/60">*prodotti a -20°C ove contrassegnati</span>
               </div>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-5 sm:grid-cols-2">
                 {piattiCarne.map((item, i) => (
-                  <div key={i} className="glass reveal flex flex-col justify-between rounded-2xl p-5" style={{ transitionDelay: `${i * 40}ms` }}>
-                    <span className="text-sm font-semibold leading-snug text-ink/90">{item.name}</span>
-                    <span className="mt-3 text-right font-display text-base font-bold text-primary">
+                  <div
+                    key={i}
+                    className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
+                    style={{ transitionDelay: `${i * 40}ms` }}
+                  >
+                    <span className="text-sm font-bold leading-snug text-ink/90">{item.name}</span>
+                    <span className="mt-4 text-right font-display text-lg font-bold text-primary">
                       {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
                     </span>
                   </div>
