@@ -45,9 +45,27 @@ function MenuPage() {
           <h1 className="font-display text-4xl uppercase text-paper text-stroke-ink md:text-6xl">
             Il Menu
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-sm font-semibold text-ink/75 md:text-base">
-            Numeri originali della carta. *prodotto a temperatura -20°. Coperto € 2,00, aggiunte e varianti calcolate a parte.
-          </p>
+          
+          {/* Box info e costi con gerarchia visiva */}
+          <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-ink/10 bg-paper/50 p-5 text-center shadow-sm">
+            {/* LIVELLO 1: Regole di prezzo */}
+            <p className="font-display text-lg uppercase text-ink md:text-xl">
+              Coperto € 2,00
+              <span className="mt-1 block font-sans text-sm font-semibold normal-case text-ink/80 md:ml-2 md:mt-0 md:inline">
+                (Aggiunte e varianti calcolate a parte)
+              </span>
+            </p>
+            
+            {/* LIVELLO 2 e 3: Info tecniche */}
+            <div className="mt-3 flex flex-col gap-0.5">
+              <p className="text-sm font-medium text-ink/70">
+                Numeri originali della carta.
+              </p>
+              <p className="text-xs text-ink/50">
+                *prodotto a temperatura -20°.
+              </p>
+            </div>
+          </div>
         </header>
 
         {/* Barra categorie principali */}
@@ -67,7 +85,7 @@ function MenuPage() {
         </div>
 
         {/* Pulsante Allergeni separato */}
-        <div className="mt-4 flex justify-center relative z-30">
+        <div className="relative z-30 mt-4 flex justify-center">
           <button
             type="button"
             onClick={() => setTab("allergeni")}
