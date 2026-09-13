@@ -35,7 +35,7 @@ function Home() {
   useReveal();
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-30">
       <div className="blob blob-a" aria-hidden="true" />
       <div className="blob blob-b" aria-hidden="true" />
 
