@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Phone, Clock, Star, BriefcaseBusiness, ArrowRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
-import { useEffect } from "react";
 import heroBurger from "@/assets/hero-burger.png";
 import fries from "@/assets/fries.png";
 import cola from "@/assets/cola.png";
@@ -34,15 +33,6 @@ const isHiring = true;
 
 function Home() {
   useReveal();
-
-  // Registrazione Service Worker per la Web App
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('Service Worker registrato'))
-        .catch((err) => console.error('Errore Service Worker:', err));
-    }
-  }, []);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-sun">
