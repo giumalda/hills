@@ -68,20 +68,26 @@ function MenuPage() {
   }));
 
   let fCount = 1;
-  const frittureItems: MenuItem[] = [
-    ...fritture.items.map((str) => {
-      const match = str.match(/\(/);
-      const name = match ? str.substring(0, match.index).trim() : str;
-      const desc = match ? str.substring(match.index).trim() : "";
-      return { n: fCount++, name, desc, price: 6.0 };
-    }),
-    ...fritture.chips.map((chip) => {
-      const match = chip.name.match(/\(/);
-      const name = match ? chip.name.substring(0, match.index).trim() : chip.name;
-      const desc = match ? chip.name.substring(match.index).trim() : "";
-      return { n: fCount++, name, desc, price: chip.price };
-    }),
-  ];
+  const frittureNormali: MenuItem[] = fritture.items.map((str) => {
+    const match = str.match(/\(/);
+    const name = match ? str.substring(0, match.index).trim() : str;
+    const desc = match ? str.substring(match.index).trim() : "";
+    return { n: fCount++, name, desc, price: 6.0 };
+  });
+
+  const chipsItems: MenuItem[] = fritture.chips.map((chip) => {
+    const match = chip.name.match(/\(/);
+    const name = match ? chip.name.substring(0, match.index).trim() : chip.name;
+    const desc = match ? chip.name.substring(match.index).trim() : "";
+    return { n: fCount++, name, desc, price: chip.price };
+  });
+
+  const maxiTagliereAlette: MenuItem = {
+    n: fCount++,
+    name: "MAXI TAGLIERE ALETTE SPEZIATE FRITTE + CHIPS",
+    desc: "20 pz",
+    price: 25.0,
+  };
 
   const carneItems: MenuItem[] = piattiCarne.map((c, i) => {
     let mainName = c.name;
@@ -221,7 +227,7 @@ function MenuPage() {
                 </div>
               </div>
 
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
                 {burgers.map((b, i) => (
                   <MenuCard
                     key={b.name}
@@ -235,7 +241,7 @@ function MenuPage() {
           ) : null}
 
           {tab === "special" ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               {specials.map((s, i) => (
                 <MenuCard key={s.name} item={s} index={i} />
               ))}
@@ -247,7 +253,7 @@ function MenuPage() {
               <p className="reveal mb-8 text-center font-display text-2xl text-ink">
                 Ogni menu combo costa <span className="text-primary">€ 10</span>. Tutto compreso.
               </p>
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
                 {combos.map((c, i) => (
                   <MenuCard key={c.name} item={c} index={i} />
                 ))}
@@ -256,7 +262,7 @@ function MenuPage() {
           ) : null}
 
           {tab === "piadine" ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               {piadineItems.map((p, i) => (
                 <MenuCard key={p.name} item={p} index={i} />
               ))}
@@ -264,22 +270,52 @@ function MenuPage() {
           ) : null}
 
           {tab === "fritture" ? (
-            <div>
-              <div className="mb-4 flex items-center justify-between px-1">
-                <span className="text-xs font-semibold uppercase text-ink/60">
-                  {fritture.note.replace(" (-20°C)", "")}
-                </span>
+            <div className="space-y-12">
+              {/* In evidenza: Maxi Tagliere Alette */}
+              <div>
+                <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-primary">
+                  Speciale in evidenza
+                </h3>
+                <div className="max-w-md">
+                  <MenuCard
+                    item={maxiTagliereAlette}
+                    index={0}
+                    className="border-2 border-primary bg-primary/5"
+                  />
+                </div>
               </div>
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {frittureItems.map((f, i) => (
-                  <MenuCard key={`${f.name}-${i}`} item={f} index={i} />
-                ))}
+
+              {/* Fritture miste / classiche */}
+              <div>
+                <div className="mb-4 flex items-center justify-between px-1">
+                  <span className="text-xs font-semibold uppercase text-ink/60">
+                    {fritture.note.replace(" (-20°C)", "")}
+                  </span>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
+                  {frittureNormali.map((f, i) => (
+                    <MenuCard key={`${f.name}-${i}`} item={f} index={i} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Distacco netto prima delle chips */}
+              <div className="my-8 h-px w-full bg-ink/15" />
+
+              {/* Sezione Chips separate */}
+              <div>
+                <h3 className="mb-4 font-display text-lg uppercase text-ink">Chips</h3>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
+                  {chipsItems.map((c, i) => (
+                    <MenuCard key={`chip-${c.name}-${i}`} item={c} index={i} />
+                  ))}
+                </div>
               </div>
             </div>
           ) : null}
 
           {tab === "carne" ? (
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               {carneItems.map((c, i) => (
                 <MenuCard key={`${c.name}-${i}`} item={c} index={i} />
               ))}
@@ -287,7 +323,7 @@ function MenuPage() {
           ) : null}
 
           {tab === "insalate" ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
               {insalateItems.map((ins, i) => (
                 <MenuCard key={`insalata-${i}`} item={ins} index={i} />
               ))}
