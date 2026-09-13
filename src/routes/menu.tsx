@@ -82,11 +82,20 @@ function MenuPage() {
     return { n: fCount++, name, desc, price: 6.0 };
   });
 
-  const chipsItems: MenuItem[] = fritture.chips.map((chip) => {
-    const match = chip.name.match(/\(/);
-    const name = match ? chip.name.substring(0, match.index).trim() : chip.name;
-    const desc = match ? chip.name.substring(match.index).trim() : "";
-    return { n: fCount++, name, desc, price: chip.price };
+const chipsItems: MenuItem[] = [];
+  fritture.chips.forEach((chip) => {
+    chipsItems.push({
+      n: fCount++,
+      name: `${chip.name} (Piccola)`,
+      desc: "Porzione piccola",
+      price: 5.0,
+    });
+    chipsItems.push({
+      n: fCount++,
+      name: `${chip.name} (Grande)`,
+      desc: "Porzione maxi/grande",
+      price: 10.0,
+    });
   });
 
   const maxiTagliereAlette: Omit<MenuItem, "n"> & { n?: number } = {
