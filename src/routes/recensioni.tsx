@@ -59,29 +59,34 @@ function ReviewsPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-display text-sm uppercase text-primary-foreground transition-transform hover:scale-105"
             >
-              Scrivi su Google
+              Lascia il segno su Google
               <ExternalLink className="size-4" />
             </a>
           </div>
         </header>
 
-        <section aria-label="Recensioni dei clienti" className="mt-12 grid gap-5 md:grid-cols-2">
-          {reviews.map((r, i) => (
-            <article
-              key={r.name}
-              className="reveal glass-card relative rounded-3xl p-6"
-              style={{ transitionDelay: `${i * 80}ms` }}
-            >
-              <Quote className="absolute right-5 top-5 size-8 text-ink/10" />
-              <div className="flex items-center gap-1 text-primary">
-                {Array.from({ length: r.stars }).map((_, s) => (
-                  <Star key={s} className="size-4 fill-current" />
-                ))}
-              </div>
-              <p className="mt-3 text-sm font-medium leading-relaxed text-ink/80">“{r.text}”</p>
-              <p className="mt-4 font-display text-base uppercase text-ink">{r.name}</p>
-            </article>
-          ))}
+        <section aria-label="Recensioni dei clienti" className="mt-12">
+          <div className="grid gap-5 md:grid-cols-2">
+            {reviews.map((r, i) => (
+              <article
+                key={r.name}
+                className="reveal glass-card relative rounded-3xl p-6"
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                <Quote className="absolute right-5 top-5 size-8 text-ink/10" />
+                <div className="flex items-center gap-1 text-primary">
+                  {Array.from({ length: r.stars }).map((_, s) => (
+                    <Star key={s} className="size-4 fill-current" />
+                  ))}
+                </div>
+                <p className="mt-3 text-sm font-medium leading-relaxed text-ink/80">“{r.text}”</p>
+                <p className="mt-4 font-display text-base uppercase text-ink">{r.name}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-xs font-medium text-ink/50">
+            Recensioni verificate da piattaforme esterne. Dati gestiti a norma GDPR.
+          </p>
         </section>
 
         <div className="reveal mt-12 flex flex-wrap justify-center gap-3">
