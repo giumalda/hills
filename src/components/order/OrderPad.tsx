@@ -4,7 +4,7 @@ import { useOrder } from "./OrderProvider";
 
 /** Post-it style order pad, docked on the side (desktop) or as a sheet (mobile). */
 export function OrderPad() {
-  const { lines, remove, clear, total, count, open, setOpen } = useOrder();
+  const { lines, add, remove, clear, total, count, open, setOpen } = useOrder();
   const [guests, setGuests] = useState(1);
 
   // Calcolo dinamico: (Costo dei piatti) + (Coperti * 2 euro)
@@ -36,6 +36,9 @@ export function OrderPad() {
             <p className="mt-1 text-xs font-semibold text-ink/60">
               {count === 0 ? "Blocchetto vuoto" : `${count} pezzi segnati`}
             </p>
+            <p className="mt-1 text-[10px] font-bold uppercase text-primary">
+              * Le bibite si calcolano a parte
+            </p>
           </div>
           <button
             type="button"
@@ -54,24 +57,42 @@ export function OrderPad() {
               come sul blocchetto del cameriere.
             </p>
           ) : (
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {lines.map((l) => (
-                <li key={l.name} className="flex items-start gap-2">
-                  <span className="font-display text-base text-primary">{l.qty}×</span>
-                  <span className="flex-1 text-sm font-semibold leading-snug text-ink">
-                    {l.name}
-                  </span>
-                  <span className="text-sm font-bold tabular-nums text-ink">
-                    € {(l.price * l.qty).toFixed(2)}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => remove(l.name)}
-                    className="rounded-full p-1 text-ink/50 hover:bg-ink/10 hover:text-primary transition-colors"
-                    aria-label={`Togli un ${l.name}`}
-                  >
-                    <Minus className="size-4" />
-                  </button>
+                <li key={l.name} className="flex flex-col gap-2 border-b border-ink/5 pb-3 last:border-0 last:pb-0">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="flex-1 text-sm font-semibold leading-snug text-ink">
+                      {l.name}
+                    </span>
+                    <span className="text-sm font-bold tabular-nums text-ink">
+                      € {(l.price * l.qty).toFixed(2)}
+                    </span>
+                  </div>
+                  
+                  {/* Tasti Quantità Piatto */}
+                  <div className="flex items-center justify-end">
+                    <div className="flex items-center gap-3 rounded-full border border-ink/10 bg-white/50 px-2 py-1 shadow-sm">
+                      <button
+                        type="button"
+                        onClick={() => remove(l.name)}
+                        className="rounded-full p-1 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
+                        aria-label={`Rimuovi un ${l.name}`}
+                      >
+                        <Minus className="size-3.5" />
+                      </button>
+                      <span className="font-display text-sm font-bold w-3 text-center text-ink">
+                        {l.qty}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => add(l.name, l.price)}
+                        className="rounded-full p-1 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
+                        aria-label={`Aggiungi un ${l.name}`}
+                      >
+                        <Plus className="size-3.5" />
+                      </button>
+                    </div>
+                  </div>
                 </li>
               ))}
             </ul>
