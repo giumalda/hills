@@ -34,7 +34,7 @@ const tabs = [
   { id: "special", label: "Special Burger" },
   { id: "combo", label: "Menu Combo" },
   { id: "piadine", label: "Piadine" },
-  { id: "fritture", label: "Fritture" },
+  { id: "fritture", label: "Fritture & Chips" },
   { id: "carne", label: "Piatti di carne" },
   { id: "insalate", label: "Insalate" },
 ] as const;
@@ -61,7 +61,7 @@ function MenuPage() {
   };
 
   const specialsItems: MenuItem[] = specials.map((s, i) => ({
-    n: 50 + i,
+    n: 1 + i, // Da 1 a 8
     name: s.name,
     desc: "ingredients" in s ? (s as any).ingredients : (s as any).desc,
     price: s.price,
@@ -89,8 +89,7 @@ function MenuPage() {
     return { n: fCount++, name, desc, price: chip.price };
   });
 
-  const maxiTagliereAlette: MenuItem = {
-    n: 0,
+  const maxiTagliereAlette: Omit<MenuItem, "n"> & { n?: number } = {
     name: "MAXI TAGLIERE ALETTE SPEZIATE FRITTE + CHIPS",
     desc: "20 pz",
     price: 25.0,
@@ -109,7 +108,7 @@ function MenuPage() {
   });
 
   const insalateItems: MenuItem[] = insalate.map((ins, i) => ({
-    n: 60 + i,
+    n: 1 + i,
     name: "INSALATA",
     desc: ins.ingredients,
     price: ins.price,
@@ -284,7 +283,7 @@ function MenuPage() {
                 </h3>
                 <div className="max-w-md">
                   <MenuCard
-                    item={maxiTagliereAlette}
+                    item={maxiTagliereAlette as MenuItem}
                     index={0}
                     className="border-2 border-primary bg-primary/5"
                   />
@@ -307,7 +306,6 @@ function MenuPage() {
               <div className="my-8 h-px w-full bg-ink/15" />
 
               <div>
-                <h3 className="mb-4 font-display text-lg uppercase text-ink">Chips</h3>
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
                   {chipsItems.map((c, i) => (
                     <MenuCard key={`chip-${c.name}-${i}`} item={c} index={i} />
