@@ -27,7 +27,8 @@ export const Route = createFileRoute("/recensioni")({
 function ReviewsPage() {
   useReveal();
 
-  const avg = (reviews.reduce((s, r) => s + r.stars, 0) / reviews.length).toFixed(1);
+  const googleRating = "4.2";
+  const googleTotalReviews = "2200+";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28">
@@ -42,17 +43,26 @@ function ReviewsPage() {
           <p className="mx-auto mt-4 max-w-xl text-sm font-semibold text-ink/75 md:text-base">
             Chi passa da Hill&apos;s torna. Ecco cosa raccontano.
           </p>
-          <div className="glass mx-auto mt-6 inline-flex items-center gap-3 rounded-full px-5 py-3">
-            <span className="font-display text-2xl text-ink">{avg}</span>
+          <div className="glass mx-auto mt-6 inline-flex flex-wrap items-center justify-center gap-3 rounded-full px-5 py-3">
+            <span className="font-display text-2xl text-ink">{googleRating}</span>
             <span className="flex text-primary">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} className="size-4 fill-current" />
               ))}
             </span>
-            <span className="text-sm font-semibold text-ink/70">{reviews.length} recensioni</span>
+            <span className="text-sm font-semibold text-ink/70">{googleTotalReviews} su Google</span>
           </div>
 
-          <div className="mt-5">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="https://www.google.com/search?sca_esv=0ff91bc7c8ba95c7&rlz=1C1GCEA_itIT1228IT1228&sxsrf=APpeQnuAhoxB2Wkff9dlBR86jJ_11eYc6w:1789313646103&q=Hill%27s+Burger+%26+CHIPS+by+Antonio+revuiews&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_xoIzyRvOB8jOSi0OoO8L3eDWbPQviMyblJ8v63uFz2gtQ9j36Zs474oEMzu8sNUixbk-10%3D&uds=AJ5uw1-tbjUcePkIaC2yI56QR5nXicXdZHPM0jooeDz9iWvoKUEPVY1CopOna-MLWw_PmTunYTGKENE7LtlCIHZaRFDM26O7tqYhZWjARavtfiON1kY9lBRfU_Cqob2_902eXpn3-1vFFQ2lZ2JYEJS3iJCFjcxLbw&sa=X&ved=2ahUKEwjc5pHi8OuWAxW787sIHWG7FzAQ3PALegQILhAF&biw=1536&bih=776&dpr=1.25#sv=CAESzQEKuQEStgEKd0FKaVQ0dEkyN3hfU00xN2FoRWNqV0xRVE9yQzdURnUzX0lpOGhDX2pZNGxPNGdmQzRPQ01HZWxBYlhLTlUzTEtNd1BiWHRUYWN6NmVVdlV1WkFUMWNGOGpDYzhDbTRyeTVtb2szQzNpSDBkUzZCeXNteFp5Nm9zEhdnc0ttYXBpS0NMbTY5dThQeU9UTGdRcxoiQURzcjlmVDlXVFRqT0FRNVFxLVRyQlVzQUtaUWtWUjJOdxIEODA1MRoBMyoAMAA4AUAAGAAg2t7a3ApKAhAB"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-ink px-6 py-3 font-display text-sm uppercase text-ink transition-transform hover:scale-105"
+            >
+              Vedi tutte su Google
+              <ExternalLink className="size-4" />
+            </a>
             <a
               href="https://www.google.com/maps/place/Hill's+Burger+%26+CHIPS+by+Antonio/@40.6355936,17.0320148,17z/data=!4m8!3m7!1s0x134709dcc8e7aabf:0xc2ed2ec058dee742!8m2!3d40.6355896!4d17.0345897!9m1!1b1!16s%2Fg%2F11c1xgmy67?entry=ttu&g_ep=EgoyMDI2MDkwOS4wIKXMDSoASAFQAw%3D%3D"
               target="_blank"
