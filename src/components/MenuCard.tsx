@@ -1,15 +1,9 @@
 import { Plus } from "lucide-react";
 import type { MenuItem } from "@/data/menu";
 import { useOrder } from "./order/OrderProvider";
-import classic from "@/assets/burger-classic.png";
-import chicken from "@/assets/burger-chicken.png";
-import combo from "@/assets/combo-tray.png";
-
-const imgs = { classic, chicken, combo };
 
 export function MenuCard({ item, index = 0 }: { item: MenuItem; index?: number }) {
   const { add, setOpen } = useOrder();
-  const src = item.img ? imgs[item.img] : null;
   const short = item.name.split(" ")[0] ?? item.name;
 
   return (
@@ -17,26 +11,13 @@ export function MenuCard({ item, index = 0 }: { item: MenuItem; index?: number }
       className="reveal glass-card group relative flex flex-col overflow-hidden rounded-3xl p-5"
       style={{ transitionDelay: `${(index % 6) * 60}ms` }}
     >
-      {src ? (
-        <img
-          src={src}
-          alt={`Panino ${item.name}`}
-          width={768}
-          height={768}
-          loading="lazy"
-          className="pointer-events-none absolute -right-6 -top-6 w-28 rotate-6 opacity-90 transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110 md:w-32"
-        />
-      ) : null}
-
       <div className="flex items-center gap-2">
         {item.n !== undefined ? (
           <span className="glass-chip flex size-8 items-center justify-center rounded-full font-display text-sm text-ink">
             {item.n}
           </span>
         ) : null}
-        <h3
-          className={`font-display text-xl uppercase leading-tight text-ink ${src ? "max-w-[62%]" : ""}`}
-        >
+        <h3 className="font-display text-xl uppercase leading-tight text-ink">
           {item.name}
         </h3>
       </div>
