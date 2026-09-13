@@ -2,6 +2,20 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useReveal } from "@/hooks/use-reveal";
 import { MapPin, Phone, Clock, Instagram, Facebook } from "lucide-react";
 
+// Icona TikTok personalizzata pulita
+function TikTokIcon({ className = "size-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+    </svg>
+  );
+}
+
 export const Route = createFileRoute("/contatti")({
   head: () => ({
     meta: [
@@ -83,35 +97,49 @@ function ContattiPage() {
 
             <div className="glass-card reveal rounded-3xl p-6">
               <h3 className="font-display text-lg uppercase text-ink">Seguici</h3>
-              <div className="mt-3 flex gap-3">
+              <div className="mt-3 flex flex-col gap-2.5">
+                {/* Instagram in evidenza e più grande */}
                 <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 rounded-full bg-ink/10 px-4 py-2 font-display text-xs uppercase text-ink hover:bg-ink hover:text-sun transition-colors"
+                  className="flex items-center justify-center gap-2.5 rounded-full bg-ink px-5 py-3 font-display text-sm uppercase text-sun transition-transform hover:scale-[1.02] shadow-sm"
                 >
-                  <Instagram className="size-4" />
-                  Instagram
+                  <Instagram className="size-5" />
+                  Instagram Ufficiale
                 </a>
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 rounded-full bg-ink/10 px-4 py-2 font-display text-xs uppercase text-ink hover:bg-ink hover:text-sun transition-colors"
-                >
-                  <Facebook className="size-4" />
-                  Facebook
-                </a>
+
+                {/* Secondaria riga con Facebook e TikTok */}
+                <div className="grid grid-cols-2 gap-2">
+                  <a
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-center gap-1.5 rounded-full bg-ink/10 px-3 py-2.5 font-display text-xs uppercase text-ink hover:bg-ink hover:text-sun transition-colors"
+                  >
+                    <Facebook className="size-4" />
+                    Facebook
+                  </a>
+                  <a
+                    href="https://tiktok.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-center gap-1.5 rounded-full bg-ink/10 px-3 py-2.5 font-display text-xs uppercase text-ink hover:bg-ink hover:text-sun transition-colors"
+                  >
+                    <TikTokIcon className="size-4" />
+                    TikTok
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Mappa grande interattiva */}
+          {/* Mappa grande interattiva con pin preciso su Mottola */}
           <div className="glass-card reveal lg:col-span-2 overflow-hidden rounded-3xl p-3 flex flex-col">
             <div className="relative w-full h-[450px] lg:h-full min-h-[420px] rounded-2xl overflow-hidden shadow-inner">
               <iframe
                 title="Mappa Hill's Burger & Chips"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3027.697072555776!2d17.0253!3d40.6386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1347395000000001%3A0x0!2sMottola%20TA!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit"
+                src="https://www.google.com/maps?q=40.6385,17.0250&hl=it&z=17&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -124,7 +152,7 @@ function ContattiPage() {
             <div className="mt-3 px-3 pb-1 flex items-center justify-between text-xs font-semibold text-ink/60">
               <span>Mottola (TA), Puglia</span>
               <a
-                href="https://maps.google.com/?q=Mottola+TA"
+                href="https://maps.google.com/?q=40.6385,17.0250"
                 target="_blank"
                 rel="noreferrer"
                 className="text-primary hover:underline font-bold"
