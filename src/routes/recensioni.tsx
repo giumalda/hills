@@ -54,7 +54,7 @@ function ReviewsPage() {
 
           <div className="mt-5">
             <a
-              href="https://g.page/r/YOUR_GOOGLE_PLACE_ID/review"
+              href="https://www.google.com/maps/place/Hill's+Burger+%26+CHIPS+by+Antonio/@40.6355936,17.0320148,17z/data=!4m8!3m7!1s0x134709dcc8e7aabf:0xc2ed2ec058dee742!8m2!3d40.6355896!4d17.0345897!9m1!1b1!16s%2Fg%2F11c1xgmy67?entry=ttu&g_ep=EgoyMDI2MDkwOS4wIKXMDSoASAFQAw%3D%3D"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-display text-sm uppercase text-primary-foreground transition-transform hover:scale-105"
