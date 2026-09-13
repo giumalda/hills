@@ -94,6 +94,104 @@ export const allergeni: [string, string][] = [
   ["14", "Molluschi e prodotti a base di molluschi"],
 ];
 
+export const allergeni = [
+  ["1", "Glutine"],
+  ["2", "Crostacei"],
+  ["3", "Uova"],
+  ["4", "Pesce"],
+  ["5", "Arachidi"],
+  ["6", "Soia"],
+  ["7", "Latte"],
+  ["8", "Frutta a guscio"],
+  ["9", "Sedano"],
+  ["10", "Senape"],
+  ["11", "Semi di sesamo"],
+  ["12", "Anidride solforosa e solfiti"],
+  ["13", "Lupini"],
+  ["14", "Molluschi"],
+];
+
+export const reviews = [
+  { name: "Marco V.", stars: 5, text: "Il Big Simpson è una roba illegale. Porzioni giganti e staff top." },
+  { name: "Giulia R.", stars: 5, text: "Menu combo a 10€ imbattibile, patatine croccanti e locale bellissimo." },
+  { name: "Davide S.", stars: 4, text: "Griglia pazzesca, locale in stile Springfield carinissimo." },
+  { name: "Alessia T.", stars: 5, text: "I migliori burger di Mottola e dintorni. Consigliatissimo!" },
+];
+
+export const burgers = [
+  { name: "01. Classic Burger", desc: "Hamburger di scottona 200g, insalata, pomodoro, salsa Hill's", price: 9.0 },
+  { name: "02. Cheeseburger", desc: "Hamburger di scottona 200g, cheddar fuso, insalata, salsa", price: 10.0 },
+  { name: "03. Bacon & Cheddar", desc: "Hamburger di scottona 200g, bacon croccante, cheddar, salsa BBQ", price: 11.0 },
+  { name: "04. La Sfida Hill's", desc: "Triplo smash, triplo cheddar, bacon extra, salse piccanti e cipolla caramellata. Per veri eroi.", price: 16.0, isChallenge: true },
+];
+
+export const specials = [
+  { name: "50. Big Simpson", desc: "Doppio burger, pulled pork, coleslaw, cheddar, salsa segreta", price: 14.0 },
+  { name: "51. Springfield Special", desc: "Scottona, cipolla croccante, bacon, salsa cheddar colata", price: 13.5 },
+];
+
+export const combos = [
+  { name: "Combo Classic", desc: "Burger a scelta + patatine classica + bibita 33cl", price: 10.0 },
+  { name: "Combo Porketta", desc: "Panino porchetta + patatine + bibita", price: 10.0 },
+];
+
+export const piadine = [
+  { name: "RALPH", ingredients: "Crudo, mozzarella, funghi, insalata, pomodoro", price: 7.0 },
+  { name: "HABRAHAM", ingredients: "Cotto, scamorza affumicata, funghi, rucola", price: 7.0 },
+  { name: "LOVE JOY", ingredients: "Crudo, mozzarella, pomodoro, rucola", price: 7.0 },
+  { name: "SPADA", ingredients: "Pollo alla piastra, insalata, pomodoro, mozzarella, salsa hill's", price: 9.0 },
+  { name: "FAJITAS MEXICANA", ingredients: "Tagliata di pollo, cipolla, insalata, pomodoro, curry, salsa messicana", price: 9.0 },
+];
+
+export const fritture = {
+  note: "Prodotti a temperatura -20°C — 6 PZ € 6,00",
+  items: [
+    "*MOZZ. STICK BEER BATTERED",
+    "*ANELLONI DI CIPOLLA",
+    "*NUGGETS DI POLLO",
+    "*STRIP CHICKEN (HOME MADE)",
+    "*CREAM CHEESE JALAPENO",
+    "*CROCCHETTE DI PATATE",
+    "*POLPETTINE DI CARNE",
+    "*DISCHI DI CAMEMBERT",
+    "*BITES PULLED PORK",
+    "*ANELLI DI FORMAGGIO GOUDA CON BACON",
+    "*STICK DI CHEDDAR",
+  ],
+  chips: [
+    { name: "*PATATINE CLASSICHE", price: "€ 4,00 / € 8,00" },
+    { name: "*RIBBLE FRIES (patata rossa dolce)", price: "€ 5,00 / € 10,00" },
+    { name: "*DIPPERS (patata con buccia)", price: "€ 5,00 / € 10,00" },
+    { name: "*CRISS CUTS (patata grigliata)", price: "€ 5,00 / € 10,00" },
+    { name: "*DIPPERS (con cheddar fuso e bacon croccante)", price: "€ 8,00 / € 16,00" },
+  ],
+};
+
+export const piattiCarne = [
+  { name: "*BURGER DI SCOTTONA 200g + verdure", price: 13.0 },
+  { name: "*BURGER DI MANZO 200g + verdure", price: 13.0 },
+  { name: "*BURGER DI ANGUS 200g + verdure", price: 13.0 },
+  { name: "ZAMPINA + BOMBETTE + *chips", price: 10.0 },
+  { name: "COTOLETTA DI POLLO (HOME MADE) + *chips", price: 7.0 },
+  { name: "COSTATA DI SCOTTONA (600g circa) + *chips (chiedere disponib.)", price: 25.0 },
+  { name: "COSTINE DI MAIALE IN SALSA BBQ + *chips", price: 17.0 },
+  { name: "*ALETTE SPEZIATE FRITTE", price: "€ 8,00 / 8pz" },
+  { name: "*ALETTE SPEZIATE FRITTE ALLA N'DUJA DI SPILINGA", price: "€ 10,00 / 8pz" },
+  { name: "MAXI TAGLIERE DI *ALETTE SPEZIATE FRITTE + *chips", price: "€ 25,00 / 20pz" },
+  { name: "*ALETTE PIÙ PICCANTI AL MONDO (chiedere disponib.)", price: "€ 10,00 / 6pz" },
+  { name: "TAGLIATA DI MANZO CONDITA (300/350g) rucola, grana, pomodorino e glassa", price: 18.0 },
+  { name: "TARTARE DI CARNE CRUDA ABBATTUTA DI SCOTTONA 150g CONDITA CON OLIO DI OLIVA BIO, PEPE NERO E LIME, ACCOMPAGNATO CON CAVOLO ROSSO ALLA PIASTRA (chiedere disponib.)", price: 13.0 },
+];
+
+export const insalate = [
+  { ingredients: "INSALATA VERDE, POMODORINO, RUCOLA, OLIVE NERE, GRANA PADANO, PULLED PORK, GOCCE DI SALSA BBQ.", price: 10.0 },
+  { ingredients: "INSALATA VERDE, RUCOLA, POMODORINO, GAMBERETTI, TONNO, SALSA COCKTAIL.", price: 10.0 },
+  { ingredients: "INSALATA VERDE, FUNGHI SOTT'OLIO, CRUDO, GRANA PADANO, POMODORINO, MOZZARELLA DI BUFALA.", price: 10.0 },
+  { ingredients: "INSALATA VERDE, TONNO, POMODORINO, GRANA PADANO, SALMONE AFFUMICATO, SALSA HILL'S.", price: 11.0 },
+  { ingredients: "INSALATA VERDE, PETTO DI POLLO, MAIS, POMODORINO, MOZZARELLA DI BUFALA.", price: 11.0 },
+  { ingredients: "INSALATA VERDE, *KEBAB, FUNGHI SOTT'OLIO, GRANA PADANO, SALSA YOGURT.", price: 11.0 },
+];
+
 export const reviews = [
   {
     name: "Marco D.",
