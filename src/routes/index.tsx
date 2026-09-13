@@ -45,7 +45,7 @@ function Home() {
         aria-hidden="true"
         width={512}
         height={512}
-        className="animate-float pointer-events-none absolute left-[3%] top-[20%] w-28 opacity-95 md:w-36"
+        className="animate-float pointer-events-none absolute left-[3%] top-[20%] w-32 opacity-95 sm:w-40 md:w-48"
         style={{ animationDelay: "0.5s" }}
       />
       <img
@@ -54,7 +54,7 @@ function Home() {
         aria-hidden="true"
         width={512}
         height={512}
-        className="animate-float pointer-events-none absolute right-[5%] top-[14%] w-28 opacity-95 md:w-36"
+        className="animate-float pointer-events-none absolute right-[5%] top-[14%] w-32 opacity-95 sm:w-40 md:w-48"
         style={{ animationDelay: "1.6s" }}
       />
 
@@ -110,17 +110,17 @@ function Home() {
 
         <div className="mt-10 grid w-full gap-3 sm:grid-cols-3">
           {[
-            { k: "10€", v: "Menu combo completi" },
-            { k: "55", v: "Panini in carta" },
-            { k: "4.2/5", v: "Oltre 2200 recensioni" },
+            { v: "Menu combo completi" },
+            { v: "Panini in carta" },
+            { v: "Oltre 2200 recensioni" },
           ].map((s, i) => (
             <div
-              key={s.k}
-              className="reveal glass-card rounded-3xl px-5 py-6"
+              key={s.v}
+              className="reveal glass-card flex items-center justify-center gap-2.5 rounded-3xl px-5 py-6"
               style={{ transitionDelay: `${i * 90}ms` }}
             >
-              <p className="font-display text-3xl text-primary">{s.k}</p>
-              <p className="mt-1 text-sm font-semibold text-ink/70">{s.v}</p>
+              <span className="size-2.5 rounded-full bg-primary" />
+              <p className="text-base font-bold text-ink">{s.v}</p>
             </div>
           ))}
         </div>
