@@ -21,7 +21,7 @@ export const Route = createFileRoute("/menu")({
       {
         name: "description",
         content:
-          "Tutti i panini Hill's: 49 burger numerati, gli special, i menu combo a 10€, piadine, fritture, piatti di carne e insalate.",
+          "Tutti i panini Hill's: burger numerati, gli special, i menu combo a 10€, piadine, fritture, piatti di carne e insalate.",
       },
     ],
   }),
@@ -38,16 +38,24 @@ const tabs = [
   { id: "insalate", label: "Insalate" },
 ] as const;
 
-function CircularAddButton({ name, priceLabel }: { name: string; priceLabel: string }) {
+function CircularAddButton({
+  onClick,
+  label = "Aggiungi",
+}: {
+  onClick: () => void;
+  label?: string;
+}) {
   const [added, setAdded] = useState(false);
   return (
     <button
+      type="button"
       onClick={() => {
+        onClick();
         setAdded(true);
         setTimeout(() => setAdded(false), 1200);
       }}
       className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-sun transition-all duration-300 hover:w-28 active:scale-95"
-      title={`Aggiungi ${name} (${priceLabel})`}
+      title={label}
     >
       {added ? (
         <span className="font-display text-xs">✓</span>
@@ -63,6 +71,42 @@ function CircularAddButton({ name, priceLabel }: { name: string; priceLabel: str
   );
 }
 
+function parseCarneItem(name: string) {
+  // Separa eventuali specifiche tra parentesi o note lunghe
+  const parenIdx = name.indexOf("(");
+  const plusIdx = name.indexOf(" + ");
+  let mainName = name;
+  let secondary: string | null = null;
+
+  if (parenIdx !== -1) {
+    mainName = name.slice(0, parenIdx).trim();
+    secondary = name.slice(parenIdx).trim();
+  } else if (plusIdx !== -1) {
+    mainName = name.slice(0, plusIdx).trim();
+    secondary = name.slice(plusIdx + 3).trim();
+  }
+
+  // Se contiene dettagli come CONDITA CON / grammi lunghi, splitta pulito
+  const conditaIdx = name.toUpperCase().indexOf(" CONDITA CON ");
+  if (conditaIdx !== -1 && parenIdx === -1) {
+    mainName = name.slice(0, conditaIdx).trim();
+    secondary = name.slice(conditaIdx + 1).trim();
+  }
+
+  return { mainName, secondary };
+}
+
+function parseFritturaItem(text: string) {
+  const parenIdx = text.indexOf("(");
+  if (parenIdx !== -1) {
+    return {
+      main: text.slice(0, parenIdx).trim(),
+      sub: text.slice(parenIdx).trim(),
+    };
+  }
+  return { main: text, sub: null };
+}
+
 function MenuPage() {
   useReveal();
   const [tab, setTab] = useState<string>("burger");
@@ -71,7 +115,7 @@ function MenuPage() {
   const scrollTabs = (direction: "left" | "right") => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({
-        left: direction === "left" ? -220 : 220,
+        left: direction === "left" ? -180 : 180,
         behavior: "smooth",
       });
     }
@@ -83,6 +127,21 @@ function MenuPage() {
       document.getElementById("item-49")?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 100);
   };
+
+  const handleAddToCart = (name: string, price: number | string) => {
+    // Gestione mock post-it carrello
+    window.dispatchEvent(
+      new CustomEvent("hills-add-to-cart", {
+        detail: { name, price },
+      })
+    );
+  };
+
+  // Unisce fritture e chips in un'unica lista numerata progressiva
+  const allFrittureList = [
+    ...fritture.items.map((item) => ({ label: item, price: "€ 6,00", type: "item" })),
+    ...fritture.chips.map((chip) => ({ label: chip.name, price: chip.price, type: "chip" })),
+  ];
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28">
@@ -113,27 +172,27 @@ function MenuPage() {
           </div>
         </header>
 
-        {/* Barra categorie con scorrimento e frecce compatte */}
-        <div className="sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-3xl items-center gap-1.5 px-2">
+        {/* Barra categorie stretta con frecce */}
+        <div className="sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-xl items-center gap-1.5 px-2">
           <button
             type="button"
             onClick={() => scrollTabs("left")}
             aria-label="Scorri sinistra"
-            className="glass flex size-9 shrink-0 items-center justify-center rounded-full text-ink transition-transform hover:scale-105 active:scale-95"
+            className="glass flex size-8 shrink-0 items-center justify-center rounded-full text-ink transition-transform hover:scale-105 active:scale-95"
           >
             <ChevronLeft className="size-4" />
           </button>
 
           <div
             ref={scrollRef}
-            className="glass flex flex-1 items-center gap-1 overflow-x-auto rounded-full p-1.5 scrollbar-none"
+            className="glass flex flex-1 items-center gap-1 overflow-x-auto rounded-full p-1 scrollbar-none"
           >
             {tabs.map((t) => (
               <button
                 key={t.id}
                 type="button"
                 onClick={() => setTab(t.id)}
-                className={`whitespace-nowrap rounded-full px-4 py-2 font-display text-xs uppercase transition-colors md:text-sm ${
+                className={`whitespace-nowrap rounded-full px-3 py-1.5 font-display text-xs uppercase transition-colors md:text-sm ${
                   tab === t.id
                     ? "bg-ink text-sun shadow-sm"
                     : "text-ink/70 hover:bg-paper/60"
@@ -148,7 +207,7 @@ function MenuPage() {
             type="button"
             onClick={() => scrollTabs("right")}
             aria-label="Scorri destra"
-            className="glass flex size-9 shrink-0 items-center justify-center rounded-full text-ink transition-transform hover:scale-105 active:scale-95"
+            className="glass flex size-8 shrink-0 items-center justify-center rounded-full text-ink transition-transform hover:scale-105 active:scale-95"
           >
             <ChevronRight className="size-4" />
           </button>
@@ -172,30 +231,30 @@ function MenuPage() {
         <div className="mt-10">
           {tab === "burger" ? (
             <div className="space-y-6">
-              {/* Box sfida evidenziata con jump button */}
-              <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              {/* Box sfida estesa in orizzontale */}
+              <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6 md:p-8">
+                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
                   <div className="flex items-start sm:items-center gap-4">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
-                      <Flame className="size-6" />
+                    <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+                      <Flame className="size-7" />
                     </div>
                     <div>
                       <span className="inline-block rounded-full bg-primary/15 px-3 py-1 font-display text-xs uppercase text-primary font-bold">
                         Challenge · N. 49 Big Simpson
                       </span>
-                      <h3 className="mt-1 font-display text-xl uppercase text-ink">
+                      <h3 className="mt-1 font-display text-2xl uppercase text-ink">
                         Il Panino Sfida Hill&apos;s
                       </h3>
-                      <p className="mt-1 text-sm font-semibold text-ink/75">
-                        Chiudi la griglia in 20 minuti o non lo paghi. Porzioni da record, zero scuse.
+                      <p className="mt-1 text-sm font-semibold text-ink/75 max-w-2xl">
+                        3 Burger di bovino 100gr, porchetta, bombette, maxi uccelletto, cheddar, bacon e patatine. Se lo mangi in 20 minuti non lo paghi!
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={jumpToChallenge}
-                    className="shrink-0 rounded-full bg-primary px-5 py-2.5 font-display text-xs uppercase text-primary-foreground transition-transform hover:scale-105 active:scale-95 shadow-sm"
+                    className="shrink-0 rounded-full bg-primary px-6 py-3 font-display text-xs uppercase text-primary-foreground transition-transform hover:scale-105 active:scale-95 shadow-sm"
                   >
-                    Vai alla sfida ↓
+                    Vai al N. 49 Big Simpson ↓
                   </button>
                 </div>
               </div>
@@ -241,13 +300,17 @@ function MenuPage() {
                 >
                   <div>
                     <div className="flex items-start justify-between gap-3">
-                      <div>
+                      <span className="font-display text-xs font-bold text-ink/40">#{i + 1}</span>
+                      <div className="flex-1">
                         <h3 className="font-display text-xl uppercase text-ink">{p.name}</h3>
                         <p className="mt-2 text-sm font-semibold text-ink/75">{p.ingredients}</p>
                       </div>
-                      <CircularAddButton name={p.name} priceLabel={`€ ${p.price.toFixed(2)}`} />
+                      <CircularAddButton
+                        onClick={() => handleAddToCart(p.name, p.price)}
+                        label={`Aggiungi ${p.name}`}
+                      />
                     </div>
-                    <div className="mt-4 text-right">
+                    <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
                       <span className="font-display text-lg text-primary">€ {p.price.toFixed(2)}</span>
                     </div>
                   </div>
@@ -257,81 +320,84 @@ function MenuPage() {
           ) : null}
 
           {tab === "fritture" ? (
-            <div className="space-y-8">
-              <div>
-                <div className="mb-4 flex items-center justify-between px-1">
-                  <h3 className="font-display text-2xl uppercase text-ink">Fritture</h3>
-                  <span className="text-xs font-semibold uppercase text-primary">6 PZ — € 6,00</span>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {fritture.items.map((item, i) => (
+            <div>
+              <div className="mb-4 flex items-center justify-between px-1">
+                <span className="text-xs font-semibold uppercase text-ink/60">{fritture.note}</span>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {allFrittureList.map((item, i) => {
+                  const { main, sub } = parseFritturaItem(item.label);
+                  return (
                     <div
                       key={i}
-                      className="glass-card reveal flex items-center justify-between rounded-3xl px-5 py-4"
+                      className="glass-card reveal flex flex-col justify-between rounded-3xl p-5"
                       style={{ transitionDelay: `${i * 30}ms` }}
                     >
-                      <span className="font-display text-lg uppercase text-ink">{item}</span>
-                      <div className="flex items-center gap-3">
-                        <span className="font-display text-base font-bold text-primary">€ 6,00</span>
-                        <CircularAddButton name={item} priceLabel="€ 6,00" />
+                      <div className="flex items-start justify-between gap-3">
+                        <span className="font-display text-xs font-bold text-ink/40 mt-1">
+                          #{i + 1}
+                        </span>
+                        <div className="flex-1">
+                          <span className="font-display text-lg uppercase text-ink block leading-tight">
+                            {main}
+                          </span>
+                          {sub && (
+                            <p className="mt-1 text-xs font-semibold text-ink/65 leading-relaxed">
+                              {sub}
+                            </p>
+                          )}
+                        </div>
+                        <CircularAddButton
+                          onClick={() => handleAddToCart(main, item.price)}
+                          label={`Aggiungi ${main}`}
+                        />
+                      </div>
+                      <div className="mt-4 text-right border-t border-ink/10 pt-2">
+                        <span className="font-display text-base font-bold text-primary">
+                          {item.price}
+                        </span>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="mb-4 px-1 font-display text-2xl uppercase text-ink">Patatine (Piccola / Grande)</h3>
-                <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-                  {fritture.chips.map((chip, i) => (
-                    <div
-                      key={i}
-                      className="glass-card reveal flex items-center justify-between rounded-3xl px-6 py-4"
-                      style={{ transitionDelay: `${i * 40}ms` }}
-                    >
-                      <span className="font-display text-lg font-bold uppercase text-ink/90">{chip.name}</span>
-                      <div className="flex items-center gap-3">
-                        <span className="font-display text-base font-bold text-primary">{chip.price}</span>
-                        <CircularAddButton name={chip.name} priceLabel={chip.price} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
             </div>
           ) : null}
 
           {tab === "carne" ? (
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2">
               {piattiCarne.map((item, i) => {
-                const parts = item.name.split(" CONDITA CON ");
-                const mainName = parts[0];
-                const desc = parts.length > 1 ? `CONDITA CON ${parts[1]}` : null;
+                const { mainName, secondary } = parseCarneItem(item.name);
+                const priceFormatted =
+                  typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price;
                 return (
                   <div
                     key={i}
                     className="glass-card reveal flex flex-col justify-between rounded-3xl p-5"
-                    style={{ transitionDelay: `${i * 30}ms` }}
+                    style={{ transitionDelay: `${i * 40}ms` }}
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <span className="font-display text-xl uppercase leading-snug text-ink/90 block">
+                      <span className="font-display text-xs font-bold text-ink/40 mt-1">
+                        #{i + 1}
+                      </span>
+                      <div className="flex-1">
+                        <span className="font-display text-base font-bold uppercase leading-snug text-ink/90 block">
                           {mainName}
                         </span>
-                        {desc && (
-                          <p className="mt-1 text-xs font-semibold leading-relaxed text-ink/65">
-                            {desc}
+                        {secondary && (
+                          <p className="mt-1.5 text-xs font-semibold leading-relaxed text-ink/70">
+                            {secondary}
                           </p>
                         )}
                       </div>
                       <CircularAddButton
-                        name={mainName}
-                        priceLabel={typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
+                        onClick={() => handleAddToCart(mainName, priceFormatted)}
+                        label={`Aggiungi ${mainName}`}
                       />
                     </div>
-                    <div className="mt-3 text-right">
+                    <div className="mt-4 text-right border-t border-ink/10 pt-2">
                       <span className="font-display text-lg font-bold text-primary">
-                        {typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price}
+                        {priceFormatted}
                       </span>
                     </div>
                   </div>
@@ -345,12 +411,20 @@ function MenuPage() {
               {insalate.map((ins, i) => (
                 <div key={i} className="glass-card reveal flex flex-col justify-between rounded-3xl p-6">
                   <div className="flex items-start justify-between gap-3">
-                    <p className="text-sm font-semibold leading-relaxed text-ink/85">{ins.ingredients}</p>
-                    <CircularAddButton name="Insalata" priceLabel={`€ ${ins.price.toFixed(2)}`} />
+                    <span className="font-display text-xs font-bold text-ink/40">#{i + 1}</span>
+                    <p className="text-sm font-semibold leading-relaxed text-ink/85 flex-1">
+                      {ins.ingredients}
+                    </p>
+                    <CircularAddButton
+                      onClick={() => handleAddToCart(`Insalata #${i + 1}`, ins.price)}
+                      label={`Aggiungi insalata #${i + 1}`}
+                    />
                   </div>
-                  <p className="mt-4 text-right font-display text-lg text-primary">
-                    € {ins.price.toFixed(2)}
-                  </p>
+                  <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
+                    <span className="font-display text-lg text-primary">
+                      € {ins.price.toFixed(2)}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
