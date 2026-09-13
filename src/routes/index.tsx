@@ -79,26 +79,46 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Hero Visual con fondo patatine/cola ridimensionate */}
+          {/* Hero Visual con Burger, Patatine e Bibita */}
           <div className="reveal relative flex items-center justify-center md:col-span-5">
-            <div className="relative flex w-full max-w-sm items-center justify-center py-6 sm:max-w-md">
-              <img
-                src={fries}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute -left-2 top-0 z-0 w-28 -rotate-12 drop-shadow-xl sm:w-36 md:-left-8 md:top-0 md:w-44"
-              />
-              <img
-                src={cola}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-2 bottom-2 z-0 w-24 rotate-12 drop-shadow-xl sm:w-32 md:-right-6 md:bottom-2 md:w-36"
-              />
-              <img
-                src={heroBurger}
-                alt="Big Simpson Burger"
-                className="relative z-10 w-full max-w-[280px] drop-shadow-2xl sm:max-w-[340px]"
-              />
+            <div className="relative w-full max-w-sm sm:max-w-md">
+              <div className="relative z-10 flex flex-col items-center">
+                <img
+                  src={heroBurger}
+                  alt="Big Simpson Burger"
+                  className="w-full max-w-[280px] drop-shadow-2xl sm:max-w-[340px]"
+                />
+              </div>
+
+              {/* Contenitore laterale patatine e bibita rimodulato mobile / pc */}
+              <div className="z-20 mt-4 flex items-center justify-center gap-6 sm:mt-6 sm:gap-8 md:absolute md:-bottom-6 md:-left-10 md:mt-0 md:flex-col md:items-start md:gap-4">
+                <div className="glass-chip flex items-center gap-2.5 rounded-2xl p-2.5 sm:rounded-3xl sm:p-3 md:scale-110">
+                  <img
+                    src={fries}
+                    alt="Patatine"
+                    className="size-16 object-contain sm:size-20 md:size-24"
+                  />
+                  <div className="pr-2">
+                    <span className="block font-display text-sm uppercase text-ink sm:text-base">
+                      Chips Croccanti
+                    </span>
+                    <span className="text-xs font-semibold text-ink/60">Sempre calde</span>
+                  </div>
+                </div>
+                <div className="glass-chip flex items-center gap-2.5 rounded-2xl p-2.5 sm:rounded-3xl sm:p-3 md:ml-12 md:scale-110">
+                  <img
+                    src={cola}
+                    alt="Bibita"
+                    className="size-14 object-contain sm:size-16 md:size-20"
+                  />
+                  <div className="pr-2">
+                    <span className="block font-display text-sm uppercase text-ink sm:text-base">
+                      Bibita Ghiacciata
+                    </span>
+                    <span className="text-xs font-semibold text-ink/60">Formato 33cl / 1L</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
