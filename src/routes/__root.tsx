@@ -6,8 +6,10 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useLocation,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { MapPin, Phone, Clock } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -76,6 +78,51 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+function SiteFooter() {
+  const location = useLocation();
+  if (location.pathname === "/contatti") return null;
+
+  return (
+    <footer className="w-full border-t border-ink/10 bg-paper/80 px-4 py-10 text-ink/75 md:px-6">
+      <div className="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 md:grid-cols-3">
+        <div>
+          <p className="font-display text-lg uppercase text-ink">Hill's Burger & Chips</p>
+          <p className="mt-2 text-sm">
+            Il regno del panino fatto come comanda la griglia. A Mottola (TA) da sempre.
+          </p>
+        </div>
+        <div>
+          <p className="font-display text-base uppercase text-ink">Dove e quando</p>
+          <ul className="mt-2 space-y-1.5 text-sm">
+            <li className="flex items-center gap-2">
+              <MapPin className="size-4 shrink-0 text-primary" />
+              Corso Vittorio Emanuele, Mottola (TA)
+            </li>
+            <li className="flex items-center gap-2">
+              <Clock className="size-4 shrink-0 text-primary" />
+              Mar–Dom: 18:00 – 00:30
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p className="font-display text-base uppercase text-ink">Contatti Rapidi</p>
+          <ul className="mt-2 space-y-1.5 text-sm">
+            <li className="flex items-center gap-2">
+              <Phone className="size-4 shrink-0 text-primary" />
+              <a href="tel:+393332968401" className="hover:underline">
+                +39 333 296 8401
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="mx-auto mt-8 max-w-6xl border-t border-ink/10 pt-6 text-center text-xs text-ink/50">
+        © {new Date().getFullYear()} Hill's Burger. Tutti i diritti riservati.
+      </div>
+    </footer>
+  );
+}
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -119,6 +166,7 @@ function RootComponent() {
       <OrderProvider>
         <SiteNav />
         <Outlet />
+        <SiteFooter />
         <OrderPad />
         <WhatsAppFab />
       </OrderProvider>
@@ -130,7 +178,6 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="it">
       <head>
-        {/* Inseriamo i dati fondamentali scritti nella pietra per Safari */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <title>Hill's Burger</title>
@@ -138,8 +185,6 @@ function RootShell({ children }: { children: ReactNode }) {
         <meta name="application-name" content="Hill's Burger" />
         <meta name="theme-color" content="#fef39e" />
         <link rel="stylesheet" href={appCss} />
-        
-        {/* Qui React aggiungerà il resto */}
         <HeadContent />
       </head>
       <body>
