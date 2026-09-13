@@ -1,10 +1,11 @@
 {
-  "name": "Hill's Burger & Chips",
+  "name": "Hill's Burger",
   "short_name": "Hill's Burger",
+  "description": "Menu e ordini Hill's Burger",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#fef39e",
+  "theme_color": "#fef39e",
   "icons": [
     {
       "src": "/logo-192.png",
