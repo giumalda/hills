@@ -1,15 +1,35 @@
 import { useState } from "react";
-import { Minus, Plus, Trash2, X } from "lucide-react";
+import { Minus, Plus, Trash2, X, MessageCircle, Clock } from "lucide-react";
 import { useOrder } from "./OrderProvider";
 
 /** Post-it style order pad, docked on the side (desktop) or as a sheet (mobile). */
 export function OrderPad() {
   const { lines, add, remove, clear, total, count, open, setOpen } = useOrder();
   const [guests, setGuests] = useState(1);
+  const [pickupTime, setPickupTime] = useState("20:30");
 
   // Calcolo dinamico: (Costo dei piatti) + (Coperti * 2 euro)
   const copertoCosto = guests * 2.0;
   const totalWithCoperto = total + copertoCosto;
+
+  // Costruisce il messaggio per WhatsApp
+  const handleWhatsAppOrder = () => {
+    const phoneNumber = "393332968401"; // Inserisci il numero reale di Hill's Burger se diverso
+    const itemsText =
+      lines.length > 0
+        ? lines.map((l) => `• ${l.qty}x ${l.name} — € ${(l.price * l.qty).toFixed(2)}`).join("\n")
+        : "Nessun piatto selezionato";
+
+    const message = `🍔 *NUOVO ORDINE DA RITIRO IN NEGOZIO* — Hill's Burger & Chips\n\n` +
+      `🕒 *Orario ritiro:* ${pickupTime}\n` +
+      `👥 *Persone (coperto €2.00/uno):* ${guests} (tavolo/coperto: € ${copertoCosto.toFixed(2)})\n\n` +
+      `🛒 *Riepilogo Piatti:*\n${itemsText}\n\n` +
+      `ℹ️ _Note: Le bibite si calcolano a parte._\n` +
+      `💰 *TOTALE ESTIMATIVO:* € ${totalWithCoperto.toFixed(2)}`;
+
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
 
   return (
     <>
@@ -24,9 +44,9 @@ export function OrderPad() {
 
       <aside
         aria-label="Il tuo ordine"
-        className={`fixed z-[80] flex max-h-[85vh] flex-col transition-all duration-300 bg-[#fef39e] p-5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] border border-[#e6dc85] rounded-sm rounded-br-3xl ${
+        className={`fixed z-[80] flex max-h-[88vh] flex-col transition-all duration-300 bg-[#fef39e] p-5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] border border-[#e6dc85] rounded-sm rounded-br-3xl ${
           open ? "translate-x-0 translate-y-0" : "translate-y-[130%] md:translate-x-[130%] md:translate-y-0"
-        } inset-x-3 bottom-3 md:inset-x-auto md:bottom-auto md:right-8 md:top-24 md:w-[350px] md:rotate-2`}
+        } inset-x-3 bottom-3 md:inset-x-auto md:bottom-auto md:right-8 md:top-20 md:w-[350px] md:rotate-2`}
       >
         <div className="flex items-start justify-between gap-2 border-b-2 border-dashed border-ink/20 pb-3">
           <div>
@@ -102,10 +122,24 @@ export function OrderPad() {
         </div>
 
         <div className="border-t-2 border-dashed border-ink/20 pt-3">
+          {/* Orario ritiro */}
+          <div className="mb-2.5 flex items-center justify-between rounded-xl bg-ink/5 px-3 py-2">
+            <div className="flex items-center gap-1.5 text-ink">
+              <Clock className="size-3.5 text-primary" />
+              <span className="font-display text-xs uppercase">Ritiro ore</span>
+            </div>
+            <input
+              type="time"
+              value={pickupTime}
+              onChange={(e) => setPickupTime(e.target.value)}
+              className="rounded-lg border border-ink/15 bg-white/80 px-2 py-1 font-display text-xs font-bold text-ink focus:outline-none focus:ring-1 focus:ring-primary"
+            />
+          </div>
+
           {/* Sezione Coperto (Gestione Persone) */}
           <div className="mb-2.5 flex items-center justify-between rounded-xl bg-ink/5 px-3 py-2">
             <div className="flex flex-col">
-              <span className="font-display text-xs uppercase text-ink">Persone al tavolo</span>
+              <span className="font-display text-xs uppercase text-ink">Persone (Ritiro/Tavolo)</span>
               <span className="text-[10px] font-semibold text-ink/60">Coperto € 2,00 / p.</span>
             </div>
             
@@ -136,12 +170,15 @@ export function OrderPad() {
           </div>
 
           <div className="mt-3 flex gap-2">
-            <a
-              href="tel:+393332968401"
-              className="flex-1 rounded-full bg-ink px-4 py-2 text-center font-display text-xs uppercase text-sun transition-transform hover:scale-[1.03]"
+            <button
+              type="button"
+              onClick={handleWhatsAppOrder}
+              disabled={lines.length === 0}
+              className="flex-1 flex items-center justify-center gap-1.5 rounded-full bg-[#25D366] px-4 py-2.5 text-center font-display text-xs uppercase text-white shadow-sm transition-transform hover:scale-[1.03] disabled:opacity-50"
             >
-              Chiama subito
-            </a>
+              <MessageCircle className="size-4" />
+              Invia su WhatsApp
+            </button>
             <button
               type="button"
               onClick={() => {
