@@ -45,7 +45,7 @@ function Home() {
         aria-hidden="true"
         width={512}
         height={512}
-        className="animate-float pointer-events-none absolute left-[4%] top-[22%] w-16 opacity-90 md:w-24"
+        className="animate-float pointer-events-none absolute left-[3%] top-[20%] w-20 opacity-90 sm:w-24 md:left-[4%] md:w-32"
         style={{ animationDelay: "0.5s" }}
       />
       <img
@@ -54,7 +54,7 @@ function Home() {
         aria-hidden="true"
         width={512}
         height={512}
-        className="animate-float pointer-events-none absolute right-[6%] top-[16%] w-16 opacity-90 md:w-24"
+        className="animate-float pointer-events-none absolute right-[5%] top-[14%] w-20 opacity-90 sm:w-24 md:right-[6%] md:w-32"
         style={{ animationDelay: "1.6s" }}
       />
 
@@ -135,7 +135,7 @@ function Home() {
           >
             I nostri panini
           </h2>
-  <div className="mt-8 grid gap-5 md:grid-cols-2">
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
             {[
               {
                 img: gourmet,
