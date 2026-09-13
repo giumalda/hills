@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Receipt } from "lucide-react";
 import { useOrder } from "./order/OrderProvider";
+import logoBlack from "@/assets/logoblack.png";
 
 const links = [
   { to: "/", label: "Home" },
@@ -15,7 +16,6 @@ export function SiteNav() {
   const [open, setOpen] = useState(false);
   const { total, count, setOpen: setOrderOpen } = useOrder();
 
-  // Calcola il totale compreso il coperto (se c'è almeno un elemento nel carrello)
   const coperto = count > 0 ? 2 : 0;
   const grandTotal = total + coperto;
 
@@ -30,11 +30,15 @@ export function SiteNav() {
     <>
       <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-5">
         <nav className="glass mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-full px-4 py-2.5 md:px-6">
-          <Link
-            to="/"
-            className="font-display text-lg uppercase leading-none tracking-tight text-ink md:text-xl"
-          >
-            Hill&apos;s <span className="text-primary">Burger</span>
+          <Link to="/" className="flex items-center gap-2.5">
+            <img
+              src={logoBlack}
+              alt="Hill's Burger"
+              className="size-9 rounded-xl object-cover shadow-sm md:size-10"
+            />
+            <span className="font-display text-lg uppercase leading-none tracking-tight text-ink md:text-xl">
+              Hill&apos;s Burger
+            </span>
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">
