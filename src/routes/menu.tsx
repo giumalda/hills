@@ -29,12 +29,11 @@ const tabs = [
   { id: "burger", label: "Burger" },
   { id: "special", label: "Special Burger" },
   { id: "combo", label: "Menu Combo" },
-  { id: "allergeni", label: "Allergeni" },
 ] as const;
 
 function MenuPage() {
   useReveal();
-  const [tab, setTab] = useState<(typeof tabs)[number]["id"]>("burger");
+  const [tab, setTab] = useState<string>("burger");
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28">
@@ -51,19 +50,35 @@ function MenuPage() {
           </p>
         </header>
 
+        {/* Barra categorie principali */}
         <div className="glass sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-2xl gap-1 overflow-x-auto rounded-full p-1.5">
           {tabs.map((t) => (
             <button
               key={t.id}
               type="button"
               onClick={() => setTab(t.id)}
-              className={`whitespace-nowrap rounded-full px-4 py-2.5 font-display text-sm uppercase transition-colors md:text-base ${
+              className={`flex-1 whitespace-nowrap rounded-full px-4 py-2.5 font-display text-sm uppercase transition-colors md:text-base ${
                 tab === t.id ? "bg-ink text-sun" : "text-ink/70 hover:bg-paper/60"
-              } ${t.id === "allergeni" ? "ml-auto" : ""}`}
+              }`}
             >
               {t.label}
             </button>
           ))}
+        </div>
+
+        {/* Pulsante Allergeni separato */}
+        <div className="mt-4 flex justify-center relative z-30">
+          <button
+            type="button"
+            onClick={() => setTab("allergeni")}
+            className={`rounded-full border-2 px-6 py-2 font-display text-sm uppercase transition-colors md:text-base ${
+              tab === "allergeni"
+                ? "border-ink bg-ink text-sun"
+                : "border-ink/20 text-ink/70 hover:border-ink hover:text-ink"
+            }`}
+          >
+            Tabella Allergeni
+          </button>
         </div>
 
         <div className="mt-10">
