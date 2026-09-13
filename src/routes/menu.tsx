@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef } from "react";
-import { ChevronLeft, ChevronRight, Flame, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Flame } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { MenuCard } from "@/components/MenuCard";
 import {
@@ -12,6 +12,7 @@ import {
   fritture,
   piattiCarne,
   insalate,
+  type MenuItem,
 } from "../data/menu";
 
 export const Route = createFileRoute("/menu")({
@@ -38,73 +39,6 @@ const tabs = [
   { id: "insalate", label: "Insalate" },
 ] as const;
 
-function CircularAddButton({
-  onClick,
-  label = "Aggiungi",
-}: {
-  onClick: () => void;
-  label?: string;
-}) {
-  const [added, setAdded] = useState(false);
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        onClick();
-        setAdded(true);
-        setTimeout(() => setAdded(false), 1200);
-      }}
-      className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-sun transition-all duration-300 hover:w-28 active:scale-95"
-      title={label}
-    >
-      {added ? (
-        <span className="font-display text-xs">✓</span>
-      ) : (
-        <>
-          <Plus className="size-5 shrink-0" />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap font-display text-xs uppercase transition-all duration-300 group-hover:max-w-20 group-hover:ml-1.5">
-            Aggiungi
-          </span>
-        </>
-      )}
-    </button>
-  );
-}
-
-function parseCarneItem(name: string) {
-  const parenIdx = name.indexOf("(");
-  const plusIdx = name.indexOf(" + ");
-  let mainName = name;
-  let secondary: string | null = null;
-
-  if (parenIdx !== -1) {
-    mainName = name.slice(0, parenIdx).trim();
-    secondary = name.slice(parenIdx).trim();
-  } else if (plusIdx !== -1) {
-    mainName = name.slice(0, plusIdx).trim();
-    secondary = name.slice(plusIdx + 3).trim();
-  }
-
-  const conditaIdx = name.toUpperCase().indexOf(" CONDITA CON ");
-  if (conditaIdx !== -1 && parenIdx === -1) {
-    mainName = name.slice(0, conditaIdx).trim();
-    secondary = name.slice(conditaIdx + 1).trim();
-  }
-
-  return { mainName, secondary };
-}
-
-function parseFritturaItem(text: string) {
-  const parenIdx = text.indexOf("(");
-  if (parenIdx !== -1) {
-    return {
-      main: text.slice(0, parenIdx).trim(),
-      sub: text.slice(parenIdx).trim(),
-    };
-  }
-  return { main: text, sub: null };
-}
-
 function MenuPage() {
   useReveal();
   const [tab, setTab] = useState<string>("burger");
@@ -126,22 +60,50 @@ function MenuPage() {
     }, 100);
   };
 
-  const handleAddToCart = (name: string, price: number | string) => {
-    window.dispatchEvent(
-      new CustomEvent("hills-add-to-cart", {
-        detail: { name, price },
-      })
-    );
-  };
+  // --- PARSERS PER ADATTARE I DATI AL MENU CARD FORMAT ---
 
-  const allFrittureList = [
-    ...fritture.items.map((item) => ({ label: item, price: 6.0, type: "item" })),
-    ...fritture.chips.map((chip) => ({
-      label: chip.name,
-      price: chip.price,
-      type: "chip",
-    })),
+  const piadineItems: MenuItem[] = piadine.map((p, i) => ({
+    n: i + 1,
+    name: p.name,
+    desc: p.ingredients,
+    price: p.price,
+  }));
+
+  let fCount = 1;
+  const frittureItems: MenuItem[] = [
+    ...fritture.items.map((str) => {
+      const match = str.match(/\(/);
+      const name = match ? str.substring(0, match.index).trim() : str;
+      const desc = match ? str.substring(match.index).trim() : "";
+      return { n: fCount++, name, desc, price: 6.0 };
+    }),
+    ...fritture.chips.map((chip) => {
+      const match = chip.name.match(/\(/);
+      const name = match ? chip.name.substring(0, match.index).trim() : chip.name;
+      const desc = match ? chip.name.substring(match.index).trim() : "";
+      return { n: fCount++, name, desc, price: chip.price };
+    }),
   ];
+
+  const carneItems: MenuItem[] = piattiCarne.map((c, i) => {
+    let mainName = c.name;
+    let desc = "";
+    // Intercetta grammi, parentesi, " + chips", e "CONDITA CON" per mandarli giù
+    const match = c.name.match(/( 150g| 200g| 250g| 300| 600g|\(| \+ | CONDITA CON )/i);
+    if (match) {
+      mainName = c.name.substring(0, match.index).trim();
+      desc = c.name.substring(match.index).trim();
+      if (desc.startsWith("+")) desc = desc.substring(1).trim();
+    }
+    return { n: i + 1, name: mainName, desc, price: c.price };
+  });
+
+  const insalateItems: MenuItem[] = insalate.map((ins, i) => ({
+    n: i + 1,
+    name: "INSALATA",
+    desc: ins.ingredients,
+    price: ins.price,
+  }));
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28">
@@ -172,8 +134,8 @@ function MenuPage() {
           </div>
         </header>
 
-        {/* Barra categorie stretta con frecce */}
-        <div className="sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-xl items-center gap-1.5 px-2">
+        {/* Barra categorie stretta (max-w-lg) con frecce */}
+        <div className="sticky top-20 z-30 mx-auto mt-8 flex w-full max-w-lg items-center gap-1.5 px-2">
           <button
             type="button"
             onClick={() => scrollTabs("left")}
@@ -231,22 +193,22 @@ function MenuPage() {
         <div className="mt-10">
           {tab === "burger" ? (
             <div className="space-y-6">
-              {/* Box sfida ripristinata compatta */}
+              {/* Box sfida ripristinata */}
               <div className="glass-card reveal rounded-3xl border-2 border-primary/70 p-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                   <div className="flex items-start sm:items-center gap-4">
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
                       <Flame className="size-6" />
                     </div>
                     <div>
                       <span className="inline-block rounded-full bg-primary/15 px-3 py-1 font-display text-xs uppercase text-primary font-bold">
-                        Challenge · La Sfida
+                        Challenge · N. 49 Big Simpson
                       </span>
                       <h3 className="mt-1 font-display text-xl uppercase text-ink">
                         Il Panino Sfida Hill&apos;s
                       </h3>
                       <p className="mt-1 text-sm font-semibold text-ink/75">
-                        Chiudi la griglia o alza bandiera bianca: porzioni da record, zero scuse.
+                        Chiudi la griglia in 20 minuti o non lo paghi. Porzioni da record, zero scuse.
                       </p>
                     </div>
                   </div>
@@ -259,20 +221,15 @@ function MenuPage() {
                 </div>
               </div>
 
-              {/* Casella allungata per la sfida N.49 e griglia espansa sotto */}
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {burgers.map((b, i) => {
-                  const isChallengeCard = b.n === 49;
-                  return (
-                    <div
-                      key={b.name}
-                      id={isChallengeCard ? "item-49" : undefined}
-                      className={isChallengeCard ? "sm:col-span-2 lg:col-span-3" : ""}
-                    >
-                      <MenuCard item={b} index={i} />
-                    </div>
-                  );
-                })}
+                {burgers.map((b, i) => (
+                  <MenuCard 
+                    key={b.name} 
+                    item={b} 
+                    index={i}
+                    className={b.n === 49 ? "sm:col-span-2 lg:col-span-3" : ""}
+                  />
+                ))}
               </div>
             </div>
           ) : null}
@@ -300,30 +257,8 @@ function MenuPage() {
 
           {tab === "piadine" ? (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {piadine.map((p, i) => (
-                <div
-                  key={p.name}
-                  className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink">
-                      {i + 1}
-                    </span>
-                    <div className="flex-1">
-                      <h3 className="font-display text-xl uppercase text-ink">{p.name}</h3>
-                      <p className="mt-2 text-sm font-semibold text-ink/75">{p.ingredients}</p>
-                    </div>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
-                    <span className="font-display text-lg text-ink">
-                      € {p.price.toFixed(2)}
-                    </span>
-                    <CircularAddButton
-                      onClick={() => handleAddToCart(p.name, p.price)}
-                      label={`Aggiungi ${p.name}`}
-                    />
-                  </div>
-                </div>
+              {piadineItems.map((p, i) => (
+                <MenuCard key={p.name} item={p} index={i} />
               ))}
             </div>
           ) : null}
@@ -331,117 +266,30 @@ function MenuPage() {
           {tab === "fritture" ? (
             <div>
               <div className="mb-4 flex items-center justify-between px-1">
-                <span className="text-xs font-semibold uppercase text-ink/60">{fritture.note}</span>
+                <span className="text-xs font-semibold uppercase text-ink/60">
+                  {fritture.note.replace(" (-20°C)", "")}
+                </span>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {allFrittureList.map((item, i) => {
-                  const { main, sub } = parseFritturaItem(item.label);
-                  const priceStr =
-                    typeof item.price === "number"
-                      ? `€ ${item.price.toFixed(2)}`
-                      : item.price;
-                  return (
-                    <div
-                      key={i}
-                      className="glass-card reveal flex flex-col justify-between rounded-3xl p-5"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink mt-0.5">
-                          {i + 1}
-                        </span>
-                        <div className="flex-1">
-                          <span className="font-display text-lg uppercase text-ink block leading-tight">
-                            {main}
-                          </span>
-                          {sub && (
-                            <p className="mt-1 text-xs font-semibold text-ink/65 leading-relaxed">
-                              {sub}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
-                        <span className="font-display text-base font-bold text-ink">
-                          {priceStr}
-                        </span>
-                        <CircularAddButton
-                          onClick={() => handleAddToCart(main, priceStr)}
-                          label={`Aggiungi ${main}`}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {frittureItems.map((f, i) => (
+                  <MenuCard key={`${f.name}-${i}`} item={f} index={i} />
+                ))}
               </div>
             </div>
           ) : null}
 
           {tab === "carne" ? (
             <div className="grid gap-5 sm:grid-cols-2">
-              {piattiCarne.map((item, i) => {
-                const { mainName, secondary } = parseCarneItem(item.name);
-                const priceFormatted =
-                  typeof item.price === "number" ? `€ ${item.price.toFixed(2)}` : item.price;
-                return (
-                  <div
-                    key={i}
-                    className="glass-card reveal flex flex-col justify-between rounded-3xl p-5"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink mt-0.5">
-                        {i + 1}
-                      </span>
-                      <div className="flex-1">
-                        <span className="font-display text-lg uppercase leading-snug text-ink block">
-                          {mainName}
-                        </span>
-                        {secondary && (
-                          <p className="mt-1.5 text-xs font-semibold leading-relaxed text-ink/70">
-                            {secondary}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
-                      <span className="font-display text-lg font-bold text-ink">
-                        {priceFormatted}
-                      </span>
-                      <CircularAddButton
-                        onClick={() => handleAddToCart(mainName, priceFormatted)}
-                        label={`Aggiungi ${mainName}`}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+              {carneItems.map((c, i) => (
+                <MenuCard key={`${c.name}-${i}`} item={c} index={i} />
+              ))}
             </div>
           ) : null}
 
           {tab === "insalate" ? (
-            <div className="grid gap-5 md:grid-cols-2">
-              {insalate.map((ins, i) => (
-                <div
-                  key={i}
-                  className="glass-card reveal flex flex-col justify-between rounded-3xl p-6"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink/10 font-display text-xs font-bold text-ink mt-0.5">
-                      {i + 1}
-                    </span>
-                    <p className="font-display text-lg uppercase leading-relaxed text-ink flex-1">
-                      {ins.ingredients}
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
-                    <span className="font-display text-lg font-bold text-ink">
-                      € {ins.price.toFixed(2)}
-                    </span>
-                    <CircularAddButton
-                      onClick={() => handleAddToCart(`Insalata #${i + 1}`, ins.price)}
-                      label={`Aggiungi insalata #${i + 1}`}
-                    />
-                  </div>
-                </div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {insalateItems.map((ins, i) => (
+                <MenuCard key={`insalata-${i}`} item={ins} index={i} />
               ))}
             </div>
           ) : null}
