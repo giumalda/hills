@@ -8,11 +8,11 @@ import {
   burgers,
   combos,
   specials,
-  piadine = [],
-  fritture = { note: "", items: [], chips: [] },
-  piattiCarne = [],
-  insalate = [],
-} from "@/data/menu";
+  piadine,
+  fritture,
+  piattiCarne,
+  insalate,
+} from "../data/menu";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
