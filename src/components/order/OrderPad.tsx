@@ -12,43 +12,43 @@ export function OrderPad() {
           type="button"
           aria-label="Chiudi il blocco ordini"
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-[70] bg-ink/30 backdrop-blur-sm"
+          className="fixed inset-0 z-[70] bg-ink/5 backdrop-blur-[2px] transition-all"
         />
       ) : null}
 
       <aside
         aria-label="Il tuo ordine"
-        className={`postit fixed z-[80] flex max-h-[80vh] flex-col transition-transform duration-300 ${
+        className={`fixed z-[80] flex max-h-[80vh] flex-col transition-all duration-300 bg-[#fef39e] p-5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] border border-[#e6dc85] rounded-sm rounded-br-3xl ${
           open ? "translate-x-0 translate-y-0" : "translate-y-[130%] md:translate-x-[130%] md:translate-y-0"
-        } inset-x-3 bottom-3 md:inset-x-auto md:bottom-auto md:right-5 md:top-24 md:w-80`}
+        } inset-x-3 bottom-3 md:inset-x-auto md:bottom-auto md:right-8 md:top-28 md:w-80 md:rotate-2`}
       >
-        <div className="flex items-start justify-between gap-2 border-b-2 border-dashed border-ink/30 pb-3">
+        <div className="flex items-start justify-between gap-2 border-b-2 border-dashed border-ink/20 pb-3">
           <div>
             <h2 className="font-display text-2xl uppercase leading-none text-ink">
               Il mio ordine
             </h2>
-            <p className="text-xs font-semibold text-ink/60">
+            <p className="mt-1 text-xs font-semibold text-ink/60">
               {count === 0 ? "Blocchetto vuoto" : `${count} pezzi segnati`}
             </p>
           </div>
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="rounded-full p-1.5 text-ink/70 hover:bg-ink/10"
+            className="rounded-full p-1.5 text-ink/70 hover:bg-ink/10 transition-colors"
             aria-label="Chiudi"
           >
-            <X className="size-4" />
+            <X className="size-5" />
           </button>
         </div>
 
-        <div className="-mr-1 flex-1 overflow-y-auto py-3 pr-1">
+        <div className="-mr-1 flex-1 overflow-y-auto py-4 pr-1">
           {lines.length === 0 ? (
             <p className="py-6 text-center text-sm font-medium text-ink/60">
               Premi <span className="font-bold">Aggiungi</span> su un panino e finirà qui,
               come sul blocchetto del cameriere.
             </p>
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {lines.map((l) => (
                 <li key={l.name} className="flex items-start gap-2">
                   <span className="font-display text-base text-primary">{l.qty}×</span>
@@ -61,7 +61,7 @@ export function OrderPad() {
                   <button
                     type="button"
                     onClick={() => remove(l.name)}
-                    className="rounded-full p-1 text-ink/50 hover:bg-ink/10 hover:text-primary"
+                    className="rounded-full p-1 text-ink/50 hover:bg-ink/10 hover:text-primary transition-colors"
                     aria-label={`Togli un ${l.name}`}
                   >
                     <Minus className="size-4" />
@@ -72,15 +72,15 @@ export function OrderPad() {
           )}
         </div>
 
-        <div className="border-t-2 border-dashed border-ink/30 pt-3">
+        <div className="border-t-2 border-dashed border-ink/20 pt-4">
           <div className="flex items-baseline justify-between font-display text-xl uppercase text-ink">
             <span>Totale</span>
             <span className="text-primary tabular-nums">€ {total.toFixed(2)}</span>
           </div>
-          <p className="mt-1 text-[11px] font-medium text-ink/55">
+          <p className="mt-1.5 text-[11px] font-medium text-ink/55">
             Coperto € 2,00 escluso. Aggiunte e varianti a parte.
           </p>
-          <div className="mt-3 flex gap-2">
+          <div className="mt-4 flex gap-2">
             <a
               href="tel:+393332968401"
               className="flex-1 rounded-full bg-ink px-4 py-2.5 text-center font-display text-sm uppercase text-sun transition-transform hover:scale-[1.03]"
@@ -90,7 +90,7 @@ export function OrderPad() {
             <button
               type="button"
               onClick={clear}
-              className="rounded-full border-2 border-ink/20 p-2.5 text-ink/60 hover:border-primary hover:text-primary"
+              className="rounded-full border-2 border-ink/20 p-2.5 text-ink/60 hover:border-primary hover:text-primary transition-colors"
               aria-label="Svuota l'ordine"
             >
               <Trash2 className="size-4" />
