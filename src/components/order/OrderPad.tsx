@@ -26,7 +26,7 @@ export function OrderPad() {
         aria-label="Il tuo ordine"
         className={`fixed z-[80] flex max-h-[85vh] flex-col transition-all duration-300 bg-[#fef39e] p-5 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] border border-[#e6dc85] rounded-sm rounded-br-3xl ${
           open ? "translate-x-0 translate-y-0" : "translate-y-[130%] md:translate-x-[130%] md:translate-y-0"
-        } inset-x-3 bottom-3 md:inset-x-auto md:bottom-auto md:right-8 md:top-24 md:w-[340px] md:rotate-2`}
+        } inset-x-3 bottom-3 md:inset-x-auto md:bottom-auto md:right-8 md:top-24 md:w-[350px] md:rotate-2`}
       >
         <div className="flex items-start justify-between gap-2 border-b-2 border-dashed border-ink/20 pb-3">
           <div>
@@ -50,48 +50,50 @@ export function OrderPad() {
           </button>
         </div>
 
-        <div className="-mr-1 flex-1 overflow-y-auto py-4 pr-1">
+        <div className="-mr-1 flex-1 overflow-y-auto py-3 pr-1">
           {lines.length === 0 ? (
             <p className="py-6 text-center text-sm font-medium text-ink/60">
               Premi <span className="font-bold">Aggiungi</span> su un panino e finirà qui,
               come sul blocchetto del cameriere.
             </p>
           ) : (
-            <ul className="space-y-4">
+            <ul className="space-y-2">
               {lines.map((l) => (
-                <li key={l.name} className="flex flex-col gap-2 border-b border-ink/5 pb-3 last:border-0 last:pb-0">
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="flex-1 text-sm font-semibold leading-snug text-ink">
-                      {l.name}
-                    </span>
-                    <span className="text-sm font-bold tabular-nums text-ink">
-                      € {(l.price * l.qty).toFixed(2)}
-                    </span>
-                  </div>
-                  
-                  {/* Tasti Quantità Piatto */}
-                  <div className="flex items-center justify-end">
-                    <div className="flex items-center gap-3 rounded-full border border-ink/10 bg-white/50 px-2 py-1 shadow-sm">
+                <li
+                  key={l.name}
+                  className="flex items-center justify-between gap-2 border-b border-ink/5 py-1.5 last:border-0"
+                >
+                  <span className="flex-1 text-xs font-semibold leading-tight text-ink line-clamp-1">
+                    {l.name}
+                  </span>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    {/* Tasti compatti +/- */}
+                    <div className="flex items-center gap-1 rounded-full border border-ink/15 bg-white/60 px-1.5 py-0.5 shadow-2xs">
                       <button
                         type="button"
                         onClick={() => remove(l.name)}
-                        className="rounded-full p-1 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
+                        className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
                         aria-label={`Rimuovi un ${l.name}`}
                       >
-                        <Minus className="size-3.5" />
+                        <Minus className="size-3" />
                       </button>
-                      <span className="font-display text-sm font-bold w-3 text-center text-ink">
+                      <span className="font-display text-xs font-bold w-4 text-center text-ink">
                         {l.qty}
                       </span>
                       <button
                         type="button"
                         onClick={() => add(l.name, l.price)}
-                        className="rounded-full p-1 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
+                        className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
                         aria-label={`Aggiungi un ${l.name}`}
                       >
-                        <Plus className="size-3.5" />
+                        <Plus className="size-3" />
                       </button>
                     </div>
+
+                    <span className="w-14 text-right text-xs font-bold tabular-nums text-ink">
+                      € {(l.price * l.qty).toFixed(2)}
+                    </span>
                   </div>
                 </li>
               ))}
@@ -99,44 +101,44 @@ export function OrderPad() {
           )}
         </div>
 
-        <div className="border-t-2 border-dashed border-ink/20 pt-4">
+        <div className="border-t-2 border-dashed border-ink/20 pt-3">
           {/* Sezione Coperto (Gestione Persone) */}
-          <div className="mb-3 flex items-center justify-between rounded-xl bg-ink/5 p-2.5">
+          <div className="mb-2.5 flex items-center justify-between rounded-xl bg-ink/5 px-3 py-2">
             <div className="flex flex-col">
-              <span className="font-display text-sm uppercase text-ink">Persone al tavolo</span>
-              <span className="text-[10px] font-semibold text-ink/60">Coperto € 2,00 a persona</span>
+              <span className="font-display text-xs uppercase text-ink">Persone al tavolo</span>
+              <span className="text-[10px] font-semibold text-ink/60">Coperto € 2,00 / p.</span>
             </div>
             
-            <div className="flex items-center gap-3 rounded-full border border-ink/10 bg-white/50 px-2 py-1 shadow-sm">
+            <div className="flex items-center gap-2 rounded-full border border-ink/10 bg-white/60 px-2 py-0.5 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setGuests(Math.max(1, guests - 1))}
-                className="rounded-full p-1 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors disabled:opacity-30"
+                className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors disabled:opacity-30"
                 disabled={guests <= 1}
               >
-                <Minus className="size-3.5" />
+                <Minus className="size-3" />
               </button>
-              <span className="font-display text-sm font-bold w-3 text-center text-ink">{guests}</span>
+              <span className="font-display text-xs font-bold w-3 text-center text-ink">{guests}</span>
               <button
                 type="button"
                 onClick={() => setGuests(guests + 1)}
-                className="rounded-full p-1 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
+                className="rounded-full p-0.5 text-ink/70 hover:bg-ink/10 hover:text-primary transition-colors"
               >
-                <Plus className="size-3.5" />
+                <Plus className="size-3" />
               </button>
             </div>
           </div>
 
           {/* Totale Finale */}
-          <div className="flex items-baseline justify-between font-display text-2xl uppercase text-ink">
+          <div className="flex items-baseline justify-between font-display text-xl uppercase text-ink">
             <span>Totale</span>
             <span className="text-primary tabular-nums">€ {totalWithCoperto.toFixed(2)}</span>
           </div>
 
-          <div className="mt-4 flex gap-2">
+          <div className="mt-3 flex gap-2">
             <a
               href="tel:+393332968401"
-              className="flex-1 rounded-full bg-ink px-4 py-2.5 text-center font-display text-sm uppercase text-sun transition-transform hover:scale-[1.03]"
+              className="flex-1 rounded-full bg-ink px-4 py-2 text-center font-display text-xs uppercase text-sun transition-transform hover:scale-[1.03]"
             >
               Chiama subito
             </a>
@@ -146,10 +148,10 @@ export function OrderPad() {
                 clear();
                 setGuests(1);
               }}
-              className="rounded-full border-2 border-ink/20 p-2.5 text-ink/60 hover:border-primary hover:text-primary transition-colors"
+              className="rounded-full border-2 border-ink/20 p-2 text-ink/60 hover:border-primary hover:text-primary transition-colors"
               aria-label="Svuota l'ordine"
             >
-              <Trash2 className="size-4" />
+              <Trash2 className="size-3.5" />
             </button>
           </div>
         </div>
