@@ -133,11 +133,9 @@ function MenuPage() {
             <div id="allergeni" className="glass-card reveal rounded-3xl p-6 md:p-8">
               <h2 className="font-display text-2xl uppercase text-ink">Tabella allergeni</h2>
               <ul className="mt-5 grid gap-3 md:grid-cols-2">
-                {allergeni.map(([n, text]) => (
-                  <li key={n} className="flex gap-3">
-                    <span className="glass-chip flex size-7 shrink-0 items-center justify-center rounded-full font-display text-xs text-ink">
-                      {n}
-                    </span>
+                {allergeni.map(([, text], i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <span className="size-2 shrink-0 rounded-full bg-primary" />
                     <span className="text-sm font-medium text-ink/75">{text}</span>
                   </li>
                 ))}
