@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Instagram, Facebook, MessageCircle, MapPin, Phone, Clock } from "lucide-react";
+import { Instagram, Facebook, MessageCircle, MapPin, Phone, Clock, Video } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 
 export const Route = createFileRoute("/contatti")({
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/contatti")({
       {
         name: "description",
         content:
-          "Dove trovarci a Mottola (TA), orari di apertura, telefono e i profili Instagram, Facebook e WhatsApp di Hill's Burger & Chips.",
+          "Dove trovarci a Mottola (TA), orari di apertura, telefono e i profili Instagram, Facebook, TikTok e WhatsApp di Hill's Burger & Chips.",
       },
       { property: "og:title", content: "Contatti e social | Hill's Burger & Chips" },
       {
@@ -32,6 +32,7 @@ const socials = [
     featured: true,
   },
   { label: "Facebook", handle: "Hill's Burger & Chips", href: "https://facebook.com/", Icon: Facebook },
+  { label: "TikTok", handle: "@hillsburger", href: "https://tiktok.com/@hillsburger", Icon: Video },
   { label: "WhatsApp", handle: "Ordina in chat", href: "https://wa.me/393332968401", Icon: MessageCircle },
 ];
 
@@ -57,7 +58,7 @@ function ContactsPage() {
           <h2 className="reveal text-center font-display text-3xl uppercase text-ink md:text-4xl">
             Seguici
           </h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {socials.map((s, i) => (
               <a
                 key={s.label}
