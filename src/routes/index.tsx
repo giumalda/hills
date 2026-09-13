@@ -135,7 +135,7 @@ function Home() {
           >
             I nostri panini
           </h2>
-       <div className="mt-8 grid gap-5 md:grid-cols-2">
+  <div className="mt-8 grid gap-5 md:grid-cols-2">
             {[
               {
                 img: gourmet,
