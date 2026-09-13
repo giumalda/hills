@@ -33,11 +33,11 @@ function Home() {
   useReveal();
 
   return (
-    <main
+  <main
       className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28"
       style={{
-        backgroundImage: `radial-gradient(rgba(45, 27, 14, 0.05) 1px, transparent 1px)`,
-        backgroundSize: "20px 20px",
+        backgroundImage: `radial-gradient(rgba(30, 20, 10, 0.15) 1px, transparent 1px)`,
+        backgroundSize: "16px 16px",
       }}
     >
       <div className="blob blob-a" aria-hidden="true" />
