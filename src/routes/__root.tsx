@@ -139,3 +139,27 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
+function RootShell({ children }: { children: ReactNode }) {
+  return (
+    <html lang="it">
+      <head>
+        {/* Inseriamo i dati fondamentali scritti nella pietra per Safari */}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>Hill's Burger</title>
+        <meta name="apple-mobile-web-app-title" content="Hill's Burger" />
+        <meta name="application-name" content="Hill's Burger" />
+        <meta name="theme-color" content="#fef39e" />
+        <link rel="stylesheet" href={appCss} />
+        
+        {/* Qui React aggiungerà il resto */}
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
