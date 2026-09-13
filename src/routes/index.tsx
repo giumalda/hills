@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Paninoteca Hill's Burger & Chips a Mottola (TA): burger di scottona, porchetta, combo a 10€ e 55 panini in carta. Qui comanda il Panino!",
+          "Paninoteca Hill's Burger & Chips a Mottola (TA): burger di scottona, porchetta, combo a 10€ e panini in carta. Qui comanda il Panino!",
       },
       { property: "og:title", content: "Hill's Burger & Chips | Qui comanda il Panino!" },
       {
@@ -35,7 +35,7 @@ function Home() {
   useReveal();
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-sun">
+    <main className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-40">
       <div className="blob blob-a" aria-hidden="true" />
       <div className="blob blob-b" aria-hidden="true" />
 
@@ -59,7 +59,7 @@ function Home() {
       />
 
       {/* HERO */}
-      <section className="relative mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-5 pb-20 pt-28 text-center">
+      <section className="relative mx-auto flex min-h-[85vh] max-w-5xl flex-col items-center justify-center px-5 pb-20 pt-8 text-center">
         <span className="glass animate-spring rounded-full px-5 py-2 font-display text-sm uppercase tracking-wide text-ink md:text-base">
           Paninoteca · Dal 1° panino
         </span>
@@ -91,19 +91,19 @@ function Home() {
           alt="Doppio hamburger illustrato in stile cartoon"
           width={1024}
           height={1024}
-          className="animate-wobble mt-4 w-[68%] max-w-md drop-shadow-[14px_18px_0_rgba(0,0,0,0.2)]"
+          className="animate-wobble mt-6 w-[68%] max-w-md drop-shadow-[14px_18px_0_rgba(0,0,0,0.2)]"
         />
 
         <Link
           to="/menu"
-          className="animate-spring group mt-2 flex w-full max-w-2xl flex-col items-center rounded-[2.5rem] bg-ink px-8 py-8 text-sun transition-transform hover:scale-[1.03] md:py-10"
+          className="animate-spring group mt-4 flex w-full max-w-2xl flex-col items-center rounded-[2.5rem] bg-ink px-8 py-8 text-sun transition-transform hover:scale-[1.03] md:py-10"
           style={{ animationDelay: "0.45s" }}
         >
           <span className="font-display text-6xl uppercase leading-none sm:text-7xl md:text-8xl">
             Menu
           </span>
           <span className="mt-2 inline-flex items-center gap-2 font-display text-base uppercase text-sun/80 md:text-xl">
-            55 panini, combo e special
+            Panini, combo e special
             <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>
@@ -255,7 +255,7 @@ function Home() {
               {
                 Icon: MapPin,
                 title: "Indirizzo",
-                body: ["Corso Vittorio Emanuele", "74017 Mottola (TA)"],
+                body: ["Piazza Trieste, 35", "74017 Mottola (TA)"],
               },
               {
                 Icon: Phone,
@@ -263,7 +263,7 @@ function Home() {
                 body: ["+39 333 296 8401"],
                 href: "tel:+393332968401",
               },
-              { Icon: Clock, title: "Orari", body: ["Mar – Dom", "18:00 – 00:30"] },
+              { Icon: Clock, title: "Orari", body: ["Tutti i giorni", "18:00 – 00:30"] },
             ].map((c, i) => (
               <div
                 key={c.title}
