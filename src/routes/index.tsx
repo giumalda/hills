@@ -135,12 +135,12 @@ function Home() {
           >
             I nostri panini
           </h2>
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
+       <div className="mt-8 grid gap-5 md:grid-cols-2">
             {[
               {
                 img: gourmet,
-                title: "Big Simpson",
-                body: "3 burger di bovino, porchetta, bombette, maxi uccelletto, cheddar, bacon e patatine.",
+                title: "Smash Burger",
+                body: "Double smash burger di scottona, doppia fetta di cheddar sciolto, salsa burger segreta e bacon croccante.",
               },
               {
                 img: porchetta,
