@@ -5,6 +5,7 @@ export type MenuItem = {
   price: number;
   tag?: string;
   img?: "classic" | "chicken" | "combo";
+  isChallenge?: boolean;
 };
 
 export const burgers: MenuItem[] = [
@@ -56,7 +57,7 @@ export const burgers: MenuItem[] = [
   { n: 46, name: "HOT DOG AMERICANO", desc: "Wurstel, cheddar, bacon, insalata, pomodoro, cipolla croccante, ketch./maion.", price: 6 },
   { n: 47, name: "U'VUCCIR", tag: "Finalista Burger Battle 2025", desc: "*Burger di bovino 100gr, formaggio cheddar, bacon, uccelletti, zucchine alla poverella, salsa barbecue.", price: 8, img: "classic" },
   { n: 48, name: "HILLS BOMBA", desc: "Doppio burger di bovino 200gr, scamorza affumicata, doppio bacon, pulled pork, salsa hill's.", price: 15 },
-  { n: 49, name: "BIG SIMPSON", tag: "Panino Sfida — se lo mangi in 20 minuti non lo paghi!!!", desc: "3 Burger di bovino 100gr, 2 fette di porchetta di ariccia, bombette, maxi uccelletto, formaggio cheddar, bacon, insalata, pomodoro, salsa a scelta (contorno di *patatine).", price: 30, img: "classic" },
+  { n: 49, name: "BIG SIMPSON", tag: "Panino Sfida — se lo mangi in 20 minuti non lo paghi!!!", desc: "3 Burger di bovino 100gr, 2 fette di porchetta di ariccia, bombette, maxi uccelletto, formaggio cheddar, bacon, insalata, pomodoro, salsa a scelta (contorno di *patatine).", price: 30, img: "classic", isChallenge: true },
 ];
 
 export const specials: MenuItem[] = [
@@ -94,47 +95,6 @@ export const allergeni: [string, string][] = [
   ["14", "Molluschi e prodotti a base di molluschi"],
 ];
 
-export const allergeni = [
-  ["1", "Glutine"],
-  ["2", "Crostacei"],
-  ["3", "Uova"],
-  ["4", "Pesce"],
-  ["5", "Arachidi"],
-  ["6", "Soia"],
-  ["7", "Latte"],
-  ["8", "Frutta a guscio"],
-  ["9", "Sedano"],
-  ["10", "Senape"],
-  ["11", "Semi di sesamo"],
-  ["12", "Anidride solforosa e solfiti"],
-  ["13", "Lupini"],
-  ["14", "Molluschi"],
-];
-
-export const reviews = [
-  { name: "Marco V.", stars: 5, text: "Il Big Simpson è una roba illegale. Porzioni giganti e staff top." },
-  { name: "Giulia R.", stars: 5, text: "Menu combo a 10€ imbattibile, patatine croccanti e locale bellissimo." },
-  { name: "Davide S.", stars: 4, text: "Griglia pazzesca, locale in stile Springfield carinissimo." },
-  { name: "Alessia T.", stars: 5, text: "I migliori burger di Mottola e dintorni. Consigliatissimo!" },
-];
-
-export const burgers = [
-  { name: "01. Classic Burger", desc: "Hamburger di scottona 200g, insalata, pomodoro, salsa Hill's", price: 9.0 },
-  { name: "02. Cheeseburger", desc: "Hamburger di scottona 200g, cheddar fuso, insalata, salsa", price: 10.0 },
-  { name: "03. Bacon & Cheddar", desc: "Hamburger di scottona 200g, bacon croccante, cheddar, salsa BBQ", price: 11.0 },
-  { name: "04. La Sfida Hill's", desc: "Triplo smash, triplo cheddar, bacon extra, salse piccanti e cipolla caramellata. Per veri eroi.", price: 16.0, isChallenge: true },
-];
-
-export const specials = [
-  { name: "50. Big Simpson", desc: "Doppio burger, pulled pork, coleslaw, cheddar, salsa segreta", price: 14.0 },
-  { name: "51. Springfield Special", desc: "Scottona, cipolla croccante, bacon, salsa cheddar colata", price: 13.5 },
-];
-
-export const combos = [
-  { name: "Combo Classic", desc: "Burger a scelta + patatine classica + bibita 33cl", price: 10.0 },
-  { name: "Combo Porketta", desc: "Panino porchetta + patatine + bibita", price: 10.0 },
-];
-
 export const piadine = [
   { name: "RALPH", ingredients: "Crudo, mozzarella, funghi, insalata, pomodoro", price: 7.0 },
   { name: "HABRAHAM", ingredients: "Cotto, scamorza affumicata, funghi, rucola", price: 7.0 },
@@ -144,7 +104,7 @@ export const piadine = [
 ];
 
 export const fritture = {
-  note: "Prodotti a temperatura -20°C — 6 PZ € 6,00",
+  note: "6 PZ € 6,00",
   items: [
     "*MOZZ. STICK BEER BATTERED",
     "*ANELLONI DI CIPOLLA",
