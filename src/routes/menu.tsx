@@ -86,14 +86,14 @@ const chipsItems: MenuItem[] = [];
   fritture.chips.forEach((chip) => {
     chipsItems.push({
       n: fCount++,
-      name: `${chip.name} (Piccola)`,
-      desc: "Porzione piccola",
+      name: `${chip.name} — Piccola`,
+      desc: "Porzione piccola (5,00€)",
       price: 5.0,
     });
     chipsItems.push({
       n: fCount++,
-      name: `${chip.name} (Grande)`,
-      desc: "Porzione maxi/grande",
+      name: `${chip.name} — Grande`,
+      desc: "Porzione maxi/grande (10,00€)",
       price: 10.0,
     });
   });
