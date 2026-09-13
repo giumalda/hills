@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
-import { BriefcaseBusiness, CheckCircle2, Loader2 } from "lucide-react";
+import { BriefcaseBusiness, CheckCircle2, Loader2, Upload } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useReveal } from "@/hooks/use-reveal";
 
@@ -43,6 +43,7 @@ function JobsPage() {
   useReveal();
   const [sent, setSent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [cvFile, setCvFile] = useState<File | null>(null);
 
   const settings = useQuery({
     queryKey: ["site_settings"],
@@ -61,6 +62,23 @@ function JobsPage() {
 
   const submit = useMutation({
     mutationFn: async (values: z.infer<typeof schema>) => {
+      let cvUrl: string | null = null;
+
+      if (cvFile) {
+        const fileExt = cvFile.name.split(".").pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+        const filePath = `${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("cvs") // Assicurati di avere un bucket Supabase chiamato 'cvs'
+          .upload(filePath, cvFile);
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabase.storage.from("cvs").getPublicUrl(filePath);
+        cvUrl = publicUrlData.publicUrl;
+      }
+
       const { error } = await supabase.from("job_applications").insert({
         full_name: values.full_name,
         email: values.email,
@@ -68,6 +86,7 @@ function JobsPage() {
         role_wanted: values.role_wanted,
         experience: values.experience || null,
         message: values.message || null,
+        cv_url: cvUrl,
       });
       if (error) throw error;
     },
@@ -185,6 +204,29 @@ function JobsPage() {
                 maxLength={500}
                 placeholder="Es. 2 anni in pizzeria"
               />
+            </label>
+
+            <label className="mt-4 block text-sm font-bold uppercase text-ink/80">
+              Carica CV (PDF)
+              <div className="mt-1 flex items-center justify-center rounded-2xl border-2 border-dashed border-ink/20 bg-paper/50 px-4 py-5 transition hover:border-ink/40">
+                <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-ink/75">
+                  <Upload className="size-5 text-primary" />
+                  <span>{cvFile ? cvFile.name : "Scegli file PDF (max 5MB)"}</span>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file && file.size <= 5 * 1024 * 1024) {
+                        setCvFile(file);
+                      } else if (file) {
+                        toast.error("Il file supera i 5MB");
+                      }
+                    }}
+                  />
+                </label>
+              </div>
             </label>
 
             <label className="mt-4 block text-sm font-bold uppercase text-ink/80">
