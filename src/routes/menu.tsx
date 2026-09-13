@@ -82,20 +82,11 @@ function MenuPage() {
     return { n: fCount++, name, desc, price: 6.0 };
   });
 
-const chipsItems: MenuItem[] = [];
-  fritture.chips.forEach((chip) => {
-    chipsItems.push({
-      n: fCount++,
-      name: `${chip.name} (Piccola)`,
-      desc: "Porzione piccola",
-      price: 5.0,
-    });
-    chipsItems.push({
-      n: fCount++,
-      name: `${chip.name} (Grande)`,
-      desc: "Porzione maxi/grande",
-      price: 10.0,
-    });
+  const chipsItems: MenuItem[] = fritture.chips.map((chip, i) => {
+    const match = chip.name.match(/\(/);
+    const name = match ? chip.name.substring(0, match.index).trim() : chip.name;
+    const desc = match ? chip.name.substring(match.index).trim() : "Porzione croccante";
+    return { n: fCount++, name, desc, price: 5.0 };
   });
 
   const maxiTagliereAlette: Omit<MenuItem, "n"> & { n?: number } = {
@@ -286,20 +277,16 @@ const chipsItems: MenuItem[] = [];
 
           {tab === "fritture" ? (
             <div className="space-y-12">
-             <div>
-                <h3 className="mb-4 font-display text-lg uppercase text-ink">Chips</h3>
-                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
-                  {fritture.chips.map((chip, i) => (
-                    <MenuCard
-                      key={`chip-${chip.name}-${i}`}
-                      item={{
-                        name: chip.name,
-                        desc: "Porzione croccante",
-                        price: 5.0,
-                      }}
-                      index={i}
-                    />
-                  ))}
+              <div>
+                <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-primary">
+                  Speciale in evidenza
+                </h3>
+                <div className="max-w-md">
+                  <MenuCard
+                    item={maxiTagliereAlette as MenuItem}
+                    index={0}
+                    className="border-2 border-primary bg-primary/5"
+                  />
                 </div>
               </div>
 
@@ -319,6 +306,7 @@ const chipsItems: MenuItem[] = [];
               <div className="my-8 h-px w-full bg-ink/15" />
 
               <div>
+                <h3 className="mb-4 font-display text-lg uppercase text-ink">Patatine & Chips</h3>
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
                   {chipsItems.map((c, i) => (
                     <MenuCard key={`chip-${c.name}-${i}`} item={c} index={i} />
