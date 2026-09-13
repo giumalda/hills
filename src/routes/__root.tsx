@@ -82,6 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
       { title: "Hill's Burger" },
+      { name: "apple-mobile-web-app-title", content: "Hill's Burger" },
       {
         name: "description",
         content: "Hill's Burger: panini, combo e special burger in stile Springfield a Mottola (TA).",
@@ -109,7 +110,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@400;500;600;800&display=swap",
       },
-      // MANIFEST DISATTIVATO TEMPORANEAMENTE
       // { rel: "manifest", href: "/manifest.json" },
       { rel: "apple-touch-icon", href: "/logo-192.png" },
       { rel: "icon", href: "/logo.png", type: "image/png" },
