@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, ExternalLink } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import { reviews } from "@/data/menu";
 
@@ -50,6 +50,18 @@ function ReviewsPage() {
               ))}
             </span>
             <span className="text-sm font-semibold text-ink/70">{reviews.length} recensioni</span>
+          </div>
+
+          <div className="mt-5">
+            <a
+              href="https://g.page/r/YOUR_GOOGLE_PLACE_ID/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-display text-sm uppercase text-primary-foreground transition-transform hover:scale-105"
+            >
+              Scrivi su Google
+              <ExternalLink className="size-4" />
+            </a>
           </div>
         </header>
 
