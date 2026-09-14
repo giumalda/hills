@@ -93,35 +93,35 @@ function Home() {
           Qui comanda il panino!
         </p>
 
-        {/* CONTAINER HERO IMAGE CON COCCARDA SOVRAPPOSTA SUL BORDO DEL PANINO */}
+        {/* CONTAINER HERO IMAGE CON COCCARDA E PANINO MAGGIORE */}
         <div className="relative mt-5 inline-flex items-center justify-center">
           <img
             src={heroBurger}
             alt="Doppio hamburger illustrato in stile cartoon"
             width={1024}
             height={1024}
-            className="animate-wobble w-[75%] max-w-[280px] sm:max-w-md drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
+            className="animate-wobble w-[90%] max-w-[340px] sm:max-w-lg drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
           />
 
-          {/* Coccarda Nera sovrapposta in alto a destra rispetto all'immagine */}
+          {/* Coccarda Nera con testo non ripetuto e logo bianco */}
           <div
-            className="animate-spring absolute -top-2 right-4 sm:right-10 z-20 flex size-20 sm:size-24 items-center justify-center rounded-full bg-ink text-sun shadow-xl ring-4 ring-sun/30"
+            className="animate-spring absolute -top-3 right-2 sm:right-6 z-25 flex size-20 sm:size-24 items-center justify-center rounded-full bg-ink text-sun shadow-xl ring-4 ring-sun/30"
             style={{ animationDelay: "0.22s" }}
           >
             <svg
               viewBox="0 0 100 100"
-              className="absolute inset-0 size-full animate-[spin_20s_linear_infinite] text-white/90"
+              className="absolute inset-0 size-full animate-[spin_25s_linear_infinite] text-white/95"
               aria-hidden="true"
             >
               <defs>
                 <path
-                  id="circlePath"
-                  d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
+                  id="circlePathFixed"
+                  d="M 50, 50 m -34, 0 a 34,34 0 1,1 68,0 a 34,34 0 1,1 -68,0"
                 />
               </defs>
-              <text fontSize="11" fontWeight="bold" letterSpacing="2.5" fill="currentColor">
-                <textPath xlinkHref="#circlePath" startOffset="0%">
-                  SEMIFINALISTA · SEMIFINALISTA ·
+              <text fontSize="10.5" fontWeight="bold" letterSpacing="4" fill="currentColor">
+                <textPath xlinkHref="#circlePathFixed" startOffset="0%">
+                  SEMIFINALISTA
                 </textPath>
               </text>
             </svg>
@@ -138,7 +138,7 @@ function Home() {
 
         <Link
           to="/menu"
-          className="animate-spring group mt-4 flex w-full max-w-xl flex-col items-center rounded-[2rem] bg-ink px-6 py-6 text-sun transition-transform hover:scale-[1.03] md:py-8"
+          className="animate-spring group mt-6 flex w-full max-w-xl flex-col items-center rounded-[2rem] bg-ink px-6 py-6 text-sun transition-transform hover:scale-[1.03] md:py-8"
           style={{ animationDelay: "0.45s" }}
         >
           <span className="font-display text-5xl uppercase leading-none sm:text-6xl md:text-7xl">
