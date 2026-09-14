@@ -114,6 +114,15 @@ function ReviewsPage() {
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <a
+              href="https://www.google.com/search?q=Hill's+Burger+&+CHIPS+by+Antonio+reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-ink px-6 py-3 font-display text-sm uppercase text-ink transition-transform hover:scale-105"
+            >
+              Vedi tutte su Google
+              <ExternalLink className="size-4" />
+            </a>
+            <a
               href="https://search.google.com/local/writereview?placeid=ChIJv6rnyNwJRxMRQufeWMAu7cI"
               target="_blank"
               rel="noopener noreferrer"
