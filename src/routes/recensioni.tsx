@@ -12,12 +12,34 @@ const fullReviews = [
     details: "Food: 5/5  |  Service: 5/5  |  Atmosphere: 5/5",
   },
   {
-    name: "Gaetano G.",
-    badge: "3 recensioni",
-    time: "4 months ago",
-    stars: 1,
-    text: "Esperienza pessima !!! Prenotato alle 21:10 da Taranto per le 22:30 arrivati alle 22:00 abbiamo aspettato con due bambini il tavolo ma arrivati al momento si è scelto offrire favoritismi ad amici del paese appena arrivati salutandosi in cucina .abbiamo aspettato l orario giusto ma dovevamo continuare ad aspettare dei ragazzini che finissero di mangiare davvero ridicoli …. Avrei voluto dire tutto buono ma forse lo faranno altri",
-    details: "Wait time\n10-30 min",
+    name: "Francesco P.",
+    badge: "Local Guide · 16 recensioni · 7 foto",
+    time: "a year ago",
+    stars: 5,
+    priceRange: "€10–20",
+    text: "Panini buonissimi e con una ampia scelta servizio ottimo, complimenti ai proprietari Antonio e Pina, tutto buonissimo",
+    details: `Food: 5/5  |  Service: 5/5  |  Atmosphere: 4/5
+
+Noise level
+Quiet, easy to talk
+
+Group size
+5-8 people
+
+Wait time
+No wait
+
+Parking space
+Plenty of parking
+
+Parking options
+Free parking lot e Free street parking
+
+Kid-friendliness
+Si
+
+Wheelchair accessibility
+No`,
   },
   {
     name: "Tokio18",
