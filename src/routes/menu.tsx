@@ -57,7 +57,7 @@ function MenuPage() {
     setTab("burger");
     setTimeout(() => {
       document.getElementById("item-49")?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 100);
+    }, 150);
   };
 
   const specialsItems: MenuItem[] = specials.map((s, i) => ({
@@ -240,12 +240,13 @@ function MenuPage() {
 
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
                 {burgers.map((b, i) => (
-                  <MenuCard
-                    key={b.name}
-                    item={b}
-                    index={i}
-                    className={b.n === 49 ? "sm:col-span-2 lg:col-span-3" : ""}
-                  />
+                  <div key={b.name} id={b.n === 49 ? "item-49" : undefined}>
+                    <MenuCard
+                      item={b}
+                      index={i}
+                      className={b.n === 49 ? "sm:col-span-2 lg:col-span-3" : ""}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
