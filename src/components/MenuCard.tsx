@@ -13,12 +13,16 @@ export function MenuCard({ item, index = 0, className = "" }: MenuCardProps) {
   const { add, setOpen } = useOrder();
 
   const nameUpper = item.name.toUpperCase();
+  const descUpper = (item.desc || "").toUpperCase();
   const isMaxiTagliere = nameUpper.includes("MAXI TAGLIERE");
-  
+
   const hasSizes = !isMaxiTagliere && (
     nameUpper.includes("PATATINE") || 
     nameUpper.includes("RIPPLE") || 
-    nameUpper.includes("CRISS")
+    nameUpper.includes("CRISS") ||
+    nameUpper.includes("DIPPER") ||
+    descUpper.includes("DIPPER") ||
+    descUpper.includes("RIPPLE")
   );
 
   const [size, setSize] = useState<"piccola" | "grande">("piccola");
