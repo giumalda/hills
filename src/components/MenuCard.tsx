@@ -22,7 +22,7 @@ export function MenuCard({ item, index = 0, className = "" }: MenuCardProps) {
     nameUpper.includes("RIBBLE") || 
     nameUpper.includes("CRISS") ||
     nameUpper.includes("DIPPER") ||
-    nameUpper.includes("CHIPS") ||
+    nameUpper.includes("FRIES") ||
     descUpper.includes("DIPPER") ||
     descUpper.includes("RIPPLE") ||
     descUpper.includes("RIBBLE")
