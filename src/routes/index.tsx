@@ -93,14 +93,21 @@ function Home() {
           Qui comanda il panino!
         </p>
 
-        {/* CONTAINER HERO IMAGE CON COCCARDA SEMIFINALISTA */}
-        <div className="relative mt-5 flex flex-col items-center">
-          {/* Coccarda Nera con Testo Circolare e Logo Bianco */}
+        {/* CONTAINER HERO IMAGE CON COCCARDA SOVRAPPOSTA SUL BORDO DEL PANINO */}
+        <div className="relative mt-5 inline-flex items-center justify-center">
+          <img
+            src={heroBurger}
+            alt="Doppio hamburger illustrato in stile cartoon"
+            width={1024}
+            height={1024}
+            className="animate-wobble w-[75%] max-w-[280px] sm:max-w-md drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
+          />
+
+          {/* Coccarda Nera sovrapposta in alto a destra rispetto all'immagine */}
           <div
-            className="animate-spring relative z-20 mb-[-24px] sm:mb-[-28px] flex size-24 sm:size-28 items-center justify-center rounded-full bg-ink text-sun shadow-xl ring-4 ring-sun/30"
+            className="animate-spring absolute -top-2 right-4 sm:right-10 z-20 flex size-20 sm:size-24 items-center justify-center rounded-full bg-ink text-sun shadow-xl ring-4 ring-sun/30"
             style={{ animationDelay: "0.22s" }}
           >
-            {/* SVG per testo circolare intorno */}
             <svg
               viewBox="0 0 100 100"
               className="absolute inset-0 size-full animate-[spin_20s_linear_infinite] text-white/90"
@@ -119,23 +126,14 @@ function Home() {
               </text>
             </svg>
 
-            {/* Logo Bianco Burger Battle */}
             <img
               src="/burger-battle.png"
               alt="Burger Battle Logo"
-              width={48}
-              height={48}
-              className="relative z-10 size-11 sm:size-12 object-contain brightness-0 invert drop-shadow"
+              width={40}
+              height={40}
+              className="relative z-10 size-9 sm:size-10 object-contain brightness-0 invert drop-shadow"
             />
           </div>
-
-          <img
-            src={heroBurger}
-            alt="Doppio hamburger illustrato in stile cartoon"
-            width={1024}
-            height={1024}
-            className="animate-wobble w-[75%] max-w-[280px] sm:max-w-md drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
-          />
         </div>
 
         <Link
