@@ -100,28 +100,28 @@ function Home() {
             alt="Doppio hamburger illustrato in stile cartoon"
             width={1024}
             height={1024}
-            className="animate-wobble w-[90%] max-w-[340px] sm:max-w-lg drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
+            className="animate-wobble w-[95%] max-w-[380px] sm:max-w-xl drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
           />
 
-          {/* Coccarda Nera con testo non ripetuto e logo bianco */}
+          {/* Coccarda Nera con testo curvo elegante */}
           <div
-            className="animate-spring absolute -top-3 right-2 sm:right-6 z-25 flex size-20 sm:size-24 items-center justify-center rounded-full bg-ink text-sun shadow-xl ring-4 ring-sun/30"
+            className="animate-spring absolute -top-4 right-1 sm:right-4 z-25 flex size-24 sm:size-28 items-center justify-center rounded-full bg-ink text-sun shadow-2xl ring-4 ring-sun/30"
             style={{ animationDelay: "0.22s" }}
           >
             <svg
               viewBox="0 0 100 100"
-              className="absolute inset-0 size-full animate-[spin_25s_linear_infinite] text-white/95"
+              className="absolute inset-0 size-full animate-[spin_30s_linear_infinite] text-white/95"
               aria-hidden="true"
             >
               <defs>
                 <path
-                  id="circlePathFixed"
-                  d="M 50, 50 m -34, 0 a 34,34 0 1,1 68,0 a 34,34 0 1,1 -68,0"
+                  id="circlePathNice"
+                  d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
                 />
               </defs>
-              <text fontSize="10.5" fontWeight="bold" letterSpacing="4" fill="currentColor">
-                <textPath xlinkHref="#circlePathFixed" startOffset="0%">
-                  SEMIFINALISTA
+              <text fontSize="9.5" fontWeight="bold" letterSpacing="2.8" fill="currentColor">
+                <textPath xlinkHref="#circlePathNice" startOffset="0%">
+                  SEMIFINALISTA — 2025 —
                 </textPath>
               </text>
             </svg>
@@ -129,9 +129,9 @@ function Home() {
             <img
               src="/burger-battle.png"
               alt="Burger Battle Logo"
-              width={40}
-              height={40}
-              className="relative z-10 size-9 sm:size-10 object-contain brightness-0 invert drop-shadow"
+              width={42}
+              height={42}
+              className="relative z-10 size-10 sm:size-11 object-contain brightness-0 invert drop-shadow"
             />
           </div>
         </div>
