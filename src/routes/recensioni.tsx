@@ -63,7 +63,7 @@ function ReviewsPage() {
               <ExternalLink className="size-4" />
             </a>
             <a
-              href="https://www.google.com/maps/place/Hill's+Burger+&+CHIPS+by+Antonio/@40.6355896,17.0345897,17z"
+              href="https://search.google.com/local/writereview?placeid=ChIJv6rnyNwJRxMRQufeWMAu7cI"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-display text-sm uppercase text-primary-foreground transition-transform hover:scale-105"
