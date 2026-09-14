@@ -93,13 +93,50 @@ function Home() {
           Qui comanda il panino!
         </p>
 
-        <img
-          src={heroBurger}
-          alt="Doppio hamburger illustrato in stile cartoon"
-          width={1024}
-          height={1024}
-          className="animate-wobble mt-5 w-[75%] max-w-[280px] sm:max-w-md drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
-        />
+        {/* CONTAINER HERO IMAGE CON COCCARDA SEMIFINALISTA */}
+        <div className="relative mt-5 flex flex-col items-center">
+          {/* Coccarda Nera con Testo Circolare e Logo Bianco */}
+          <div
+            className="animate-spring relative z-20 mb-[-24px] sm:mb-[-28px] flex size-24 sm:size-28 items-center justify-center rounded-full bg-ink text-sun shadow-xl ring-4 ring-sun/30"
+            style={{ animationDelay: "0.22s" }}
+          >
+            {/* SVG per testo circolare intorno */}
+            <svg
+              viewBox="0 0 100 100"
+              className="absolute inset-0 size-full animate-[spin_20s_linear_infinite] text-white/90"
+              aria-hidden="true"
+            >
+              <defs>
+                <path
+                  id="circlePath"
+                  d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
+                />
+              </defs>
+              <text fontSize="11" fontWeight="bold" letterSpacing="2.5" fill="currentColor">
+                <textPath xlinkHref="#circlePath" startOffset="0%">
+                  SEMIFINALISTA · SEMIFINALISTA ·
+                </textPath>
+              </text>
+            </svg>
+
+            {/* Logo Bianco Burger Battle */}
+            <img
+              src="/burger-battle.png"
+              alt="Burger Battle Logo"
+              width={48}
+              height={48}
+              className="relative z-10 size-11 sm:size-12 object-contain brightness-0 invert drop-shadow"
+            />
+          </div>
+
+          <img
+            src={heroBurger}
+            alt="Doppio hamburger illustrato in stile cartoon"
+            width={1024}
+            height={1024}
+            className="animate-wobble w-[75%] max-w-[280px] sm:max-w-md drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
+          />
+        </div>
 
         <Link
           to="/menu"
