@@ -82,11 +82,16 @@ function MenuPage() {
     return { n: fCount++, name, desc, price: 6.0 };
   });
 
-  const chipsItems: MenuItem[] = fritture.chips.map((chip, i) => {
-    const match = chip.name.match(/\(/);
-    const name = match ? chip.name.substring(0, match.index).trim() : chip.name;
-    const desc = match ? chip.name.substring(match.index).trim() : "Porzione croccante";
-    return { n: fCount++, name, desc, price: 5.0 };
+  const chipsItems: MenuItem[] = fritture.chips.map((chip) => {
+    let name = chip.name;
+    const upper = name.toUpperCase();
+    if (upper.includes("DIPPER") && (upper.includes("CHEDDAR") || upper.includes("BACON"))) {
+      name = "Dippers C&B";
+    }
+    const match = name.match(/\(/);
+    const mainName = match ? name.substring(0, match.index).trim() : name;
+    const desc = match ? name.substring(match.index).trim() : "Porzione croccante";
+    return { n: fCount++, name: mainName, desc, price: 5.0 };
   });
 
   const maxiTagliereAlette: Omit<MenuItem, "n"> & { n?: number } = {
@@ -346,7 +351,7 @@ function MenuPage() {
             </div>
           ) : null}
         </div>
-      </div> 
+      </div>
     </main>
   );
 }
