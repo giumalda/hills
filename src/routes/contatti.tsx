@@ -132,7 +132,7 @@ function ContattiPage() {
             <div className="relative w-full h-[450px] lg:h-full min-h-[420px] rounded-2xl overflow-hidden shadow-inner">
               <iframe
                 title="Mappa Hill's Burger & Chips"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3027.697072555776!2d17.0253!3d40.6386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13473957b4f535a3%3A0x6b803fcd3a826bc!2sPiazza%20Trieste%2C%2035%2C%2074017%20Mottola%20TA!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit&output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3027.697072555776!2d17.0253!3d40.6386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13473957b4f535a3%3A0x6b803fcd3a826bc!2sHill%27s%20Burger%20%26%20Chips%20Mottola!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -145,7 +145,7 @@ function ContattiPage() {
             <div className="mt-3 px-3 pb-1 flex items-center justify-between text-xs font-semibold text-ink/60">
               <span>Piazza Trieste, 35 — Mottola (TA)</span>
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Piazza+Trieste+35+Mottola+TA"
+                href="https://www.google.com/maps/search/?api=1&query=Hill's+Burger+&+Chips+Mottola+TA"
                 target="_blank"
                 rel="noreferrer"
                 className="text-primary hover:underline font-bold"
