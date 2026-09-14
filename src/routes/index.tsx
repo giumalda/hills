@@ -103,7 +103,7 @@ function Home() {
             className="animate-wobble w-[95%] max-w-[420px] sm:max-w-xl drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
           />
 
-          {/* Coccarda Nera con SEMIFINALISTA intorno e 2025 centrato sotto */}
+     {/* Coccarda Nera con SEMIFINALISTA ad arco e 2025 centrato sotto */}
           <div
             className="animate-spring absolute -top-4 right-1 sm:right-4 z-25 flex flex-col items-center"
             style={{ animationDelay: "0.22s" }}
@@ -111,18 +111,18 @@ function Home() {
             <div className="relative flex size-28 sm:size-32 items-center justify-center rounded-full bg-ink text-sun shadow-2xl ring-4 ring-sun/30">
               <svg
                 viewBox="0 0 100 100"
-                className="absolute inset-0 size-full animate-[spin_35s_linear_infinite] text-white/95"
+                className="absolute inset-0 size-full overflow-visible text-white/95"
                 aria-hidden="true"
               >
                 <defs>
                   <path
-                    id="circlePathTop"
-                    d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
+                    id="circlePathSingleTop"
+                    d="M 18, 50 A 32,32 0 0,1 82,50"
                   />
                 </defs>
-                <text fontSize="11" fontWeight="bold" letterSpacing="3.5" fill="currentColor">
-                  <textPath xlinkHref="#circlePathTop" startOffset="0%">
-                    · SEMIFINALISTA · SEMIFINALISTA
+                <text fontSize="10.5" fontWeight="bold" letterSpacing="3" fill="currentColor">
+                  <textPath xlinkHref="#circlePathSingleTop" startOffset="50%" textAnchor="middle">
+                    SEMIFINALISTA
                   </textPath>
                 </text>
               </svg>
@@ -130,9 +130,9 @@ function Home() {
               <img
                 src="/burger-battle.png"
                 alt="Burger Battle Logo"
-                width={44}
-                height={44}
-                className="relative z-10 size-11 sm:size-12 object-contain brightness-0 invert drop-shadow"
+                width={42}
+                height={42}
+                className="relative z-10 size-10 sm:size-11 object-contain brightness-0 invert drop-shadow mt-1"
               />
 
               <span className="absolute -bottom-2.5 z-30 rounded-full bg-primary px-3 py-0.5 font-display text-[10px] font-bold uppercase tracking-widest text-primary-foreground shadow-md ring-2 ring-ink">
@@ -140,7 +140,6 @@ function Home() {
               </span>
             </div>
           </div>
-        </div>
 
         <Link
           to="/menu"
