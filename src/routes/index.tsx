@@ -93,33 +93,17 @@ function Home() {
           Qui comanda il panino!
         </p>
 
-       {/* Coccarda Nera pulita senza troncamenti SVG */}
-          <div
-            className="animate-spring absolute -top-4 right-1 sm:right-4 z-25 flex flex-col items-center"
-            style={{ animationDelay: "0.22s" }}
-          >
-            <div className="relative flex size-28 sm:size-32 flex-col items-center justify-center rounded-full bg-ink text-sun shadow-2xl ring-4 ring-sun/35 p-2 text-center">
-              <span className="font-display text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-white">
-                Semifinalista
-              </span>
-
-              <img
-                src="/burger-battle.png"
-                alt="Burger Battle Logo"
-                width={36}
-                height={36}
-                className="my-0.5 size-8 sm:size-9 object-contain brightness-0 invert drop-shadow"
-              />
-
-              <span className="rounded-full bg-primary px-2.5 py-0.5 font-display text-[9px] font-bold uppercase tracking-widest text-primary-foreground shadow">
-                2025
-              </span>
-            </div>
-          </div>
+        <img
+          src={heroBurger}
+          alt="Doppio hamburger illustrato in stile cartoon"
+          width={1024}
+          height={1024}
+          className="animate-wobble mt-5 w-[75%] max-w-[280px] sm:max-w-md drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
+        />
 
         <Link
           to="/menu"
-          className="animate-spring group mt-6 flex w-full max-w-xl flex-col items-center rounded-[2rem] bg-ink px-6 py-6 text-sun transition-transform hover:scale-[1.03] md:py-8"
+          className="animate-spring group mt-4 flex w-full max-w-xl flex-col items-center rounded-[2rem] bg-ink px-6 py-6 text-sun transition-transform hover:scale-[1.03] md:py-8"
           style={{ animationDelay: "0.45s" }}
         >
           <span className="font-display text-5xl uppercase leading-none sm:text-6xl md:text-7xl">
