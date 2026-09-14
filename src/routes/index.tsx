@@ -12,9 +12,9 @@ const homeReviews = [
     text: "Ottima paninoteca! Hamburger davvero gustosi, preparati con ingredienti freschi e di qualità. Il pane era morbido, la carne cotta alla perfezione e le patatine …",
   },
   {
-    name: "Gaetano G.",
-    stars: 1,
-    text: "Esperienza pessima !!! Prenotato alle 21:10 da Taranto per le 22:30 arrivati alle 22:00 abbiamo aspettato con due bambini il tavolo ma arrivati al momento si è …",
+    name: "Francesco P.",
+    stars: 5,
+    text: "Panini buonissimi e con una ampia scelta servizio ottimo, complimenti ai proprietari Antonio e Pina, tutto buonissimo",
   },
   {
     name: "Tokio18",
