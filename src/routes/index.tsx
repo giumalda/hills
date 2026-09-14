@@ -103,7 +103,7 @@ function Home() {
             className="animate-wobble w-[95%] max-w-[420px] sm:max-w-xl drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
           />
 
-          {/* Coccarda Nera con SEMIFINALISTA sopra e 2025 centrato sotto */}
+          {/* Coccarda Nera con SEMIFINALISTA intorno e 2025 centrato sotto */}
           <div
             className="animate-spring absolute -top-4 right-1 sm:right-4 z-25 flex flex-col items-center"
             style={{ animationDelay: "0.22s" }}
