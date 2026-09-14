@@ -1,5 +1,5 @@
 const WA_LINK =
-  "https://wa.me/393332968401?text=Ciao%20Hill's!%20Vorrei%20ordinare%20un%20panino";
+  "https://wa.me/393332968401?text=Buonasera!%20Vorrei%20ordinare:";
 
 /** Persistent circular WhatsApp button, always visible bottom-right. */
 export function WhatsAppFab() {
