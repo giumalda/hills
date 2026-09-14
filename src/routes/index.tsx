@@ -93,49 +93,25 @@ function Home() {
           Qui comanda il panino!
         </p>
 
-        {/* CONTAINER HERO IMAGE CON COCCARDA E PANINO MAGGIORE */}
-        <div className="relative mt-5 inline-flex items-center justify-center">
-          <img
-            src={heroBurger}
-            alt="Doppio hamburger illustrato in stile cartoon"
-            width={1024}
-            height={1024}
-            className="animate-wobble w-[95%] max-w-[420px] sm:max-w-xl drop-shadow-[10px_14px_0_rgba(0,0,0,0.18)]"
-          />
-
-     {/* Coccarda Nera con SEMIFINALISTA ad arco e 2025 centrato sotto */}
+       {/* Coccarda Nera pulita senza troncamenti SVG */}
           <div
             className="animate-spring absolute -top-4 right-1 sm:right-4 z-25 flex flex-col items-center"
             style={{ animationDelay: "0.22s" }}
           >
-            <div className="relative flex size-28 sm:size-32 items-center justify-center rounded-full bg-ink text-sun shadow-2xl ring-4 ring-sun/30">
-              <svg
-                viewBox="0 0 100 100"
-                className="absolute inset-0 size-full overflow-visible text-white/95"
-                aria-hidden="true"
-              >
-                <defs>
-                  <path
-                    id="circlePathSingleTop"
-                    d="M 18, 50 A 32,32 0 0,1 82,50"
-                  />
-                </defs>
-                <text fontSize="10.5" fontWeight="bold" letterSpacing="3" fill="currentColor">
-                  <textPath xlinkHref="#circlePathSingleTop" startOffset="50%" textAnchor="middle">
-                    SEMIFINALISTA
-                  </textPath>
-                </text>
-              </svg>
+            <div className="relative flex size-28 sm:size-32 flex-col items-center justify-center rounded-full bg-ink text-sun shadow-2xl ring-4 ring-sun/35 p-2 text-center">
+              <span className="font-display text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-white">
+                Semifinalista
+              </span>
 
               <img
                 src="/burger-battle.png"
                 alt="Burger Battle Logo"
-                width={42}
-                height={42}
-                className="relative z-10 size-10 sm:size-11 object-contain brightness-0 invert drop-shadow mt-1"
+                width={36}
+                height={36}
+                className="my-0.5 size-8 sm:size-9 object-contain brightness-0 invert drop-shadow"
               />
 
-              <span className="absolute -bottom-2.5 z-30 rounded-full bg-primary px-3 py-0.5 font-display text-[10px] font-bold uppercase tracking-widest text-primary-foreground shadow-md ring-2 ring-ink">
+              <span className="rounded-full bg-primary px-2.5 py-0.5 font-display text-[9px] font-bold uppercase tracking-widest text-primary-foreground shadow">
                 2025
               </span>
             </div>
