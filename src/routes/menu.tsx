@@ -53,11 +53,23 @@ function MenuPage() {
     }
   };
 
-  const specialsItems: MenuItem[] = specials.map((s, i) => ({
-    n: 1 + i,
+  const smashBurgerSpecial: MenuItem = {
+    name: "SMASH BURGER",
+    desc: "Doppio smash di scottona, doppio cheddar, bacon, cipolla fritta, salsa Hill's.",
+    price: 9.0,
+    tag: "In Evidenza",
+  };
+
+  const specialsItems: MenuItem[] = specials.map((s) => ({
     name: s.name,
     desc: "ingredients" in s ? (s as any).ingredients : (s as any).desc,
     price: s.price,
+  }));
+
+  const combosItems: MenuItem[] = combos.map((c) => ({
+    name: c.name,
+    desc: c.desc,
+    price: c.price,
   }));
 
   const piadineItems: MenuItem[] = piadine.map((p, i) => ({
@@ -69,9 +81,16 @@ function MenuPage() {
 
   let fCount = 1;
   const frittureNormali: MenuItem[] = fritture.items.map((str) => {
-    const match = str.match(/\(/);
-    const name = match ? str.substring(0, match.index).trim() : str;
-    const desc = match ? str.substring(match.index).trim() : "";
+    let cleanStr = str;
+    if (cleanStr.startsWith("0")) {
+      cleanStr = cleanStr.substring(1).trim();
+    }
+    const match = cleanStr.match(/\(/);
+    let name = match ? cleanStr.substring(0, match.index).trim() : cleanStr;
+    if (name.toUpperCase().includes("MENU CHICKEN")) {
+      name = "Menu Chicken";
+    }
+    const desc = match ? cleanStr.substring(match.index).trim() : "";
     return { n: fCount++, name, desc, price: 6.0 };
   });
 
@@ -87,7 +106,7 @@ function MenuPage() {
     return { n: fCount++, name: mainName, desc, price: 5.0 };
   });
 
-  const maxiTagliereAlette: Omit<MenuItem, "n"> & { n?: number } = {
+  const maxiTagliereAlette: Omit<MenuItem, "n"> = {
     name: "MAXI TAGLIERE ALETTE SPEZIATE FRITTE + CHIPS",
     desc: "20 pz",
     price: 25.0,
@@ -242,10 +261,25 @@ function MenuPage() {
           ) : null}
 
           {tab === "special" ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
-              {specialsItems.map((s, i) => (
-                <MenuCard key={`${s.name}-${i}`} item={s} index={i} />
-              ))}
+            <div className="space-y-6">
+              <div>
+                <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-primary">
+                  Speciale in evidenza
+                </h3>
+                <div className="max-w-md">
+                  <MenuCard
+                    item={smashBurgerSpecial}
+                    index={0}
+                    className="border-2 border-primary bg-primary/5"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
+                {specialsItems.map((s, i) => (
+                  <MenuCard key={`${s.name}-${i}`} item={s} index={i} />
+                ))}
+              </div>
             </div>
           ) : null}
 
@@ -255,8 +289,8 @@ function MenuPage() {
                 Ogni menu combo costa <span className="text-primary">€ 10</span>. Tutto compreso.
               </p>
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 [&>*]:flex [&>*]:flex-col [&>*]:justify-between">
-                {combos.map((c, i) => (
-                  <MenuCard key={c.name} item={c} index={i} />
+                {combosItems.map((c, i) => (
+                  <MenuCard key={`${c.name}-${i}`} item={c} index={i} />
                 ))}
               </div>
             </>
