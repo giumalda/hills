@@ -346,7 +346,7 @@ function MenuPage() {
             </div>
           ) : null}
         </div>
-      </div>
+      </div> 
     </main>
   );
 }
