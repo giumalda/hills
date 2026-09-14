@@ -1,7 +1,67 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Star, Quote, ExternalLink } from "lucide-react";
+import { Star, ExternalLink } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
-import { reviews } from "@/data/menu";
+
+const fullReviews = [
+  {
+    name: "Carmine P.",
+    badge: "Local Guide · 12 recensioni · 12 foto",
+    time: "a month ago",
+    stars: 5,
+    text: "Ottima paninoteca! Hamburger davvero gustosi, preparati con ingredienti freschi e di qualità. Il pane era morbido, la carne cotta alla perfezione e le patatine croccanti e saporite. Anche il personale è stato gentile, disponibile e veloce nel servizio. Locale pulito e accogliente, perfetto per una cena tra amici o in famiglia. Sicuramente ci tornerò e lo consiglio a chi cerca un ottimo hamburger!",
+    details: "Food: 5/5  |  Service: 5/5  |  Atmosphere: 5/5",
+  },
+  {
+    name: "Gaetano G.",
+    badge: "3 recensioni",
+    time: "4 months ago",
+    stars: 1,
+    text: "Esperienza pessima !!! Prenotato alle 21:10 da Taranto per le 22:30 arrivati alle 22:00 abbiamo aspettato con due bambini il tavolo ma arrivati al momento si è scelto offrire favoritismi ad amici del paese appena arrivati salutandosi in cucina .abbiamo aspettato l orario giusto ma dovevamo continuare ad aspettare dei ragazzini che finissero di mangiare davvero ridicoli …. Avrei voluto dire tutto buono ma forse lo faranno altri",
+    details: "Wait time\n10-30 min",
+  },
+  {
+    name: "Tokio18",
+    badge: "Local Guide · 77 recensioni · 74 foto",
+    time: "Edited 3 months ago",
+    stars: 5,
+    priceRange: "€10–20",
+    text: `Un ambiente molto tranquillo,alla mano,molto ospitali,accogliente,staff abbastanza organizzato
+Cibo molto buono e di ottima qualità
+Staff simpatico e veloce
+Non abbiamo atteso tanto ed era un venerdì`,
+    details: `Food: 5/5  |  Service: 4/5  |  Atmosphere: 5/5
+
+Noise level
+Quiet, easy to talk
+
+Group size
+Suitable for all group sizes
+
+Wait time
+10-30 min`,
+  },
+  {
+    name: "Lucia L.",
+    badge: "5 recensioni",
+    time: "5 months ago",
+    stars: 5,
+    priceRange: "€10–20",
+    text: "Panini magnifici, grande opportunità di scelta in base ai propri gusti, ricchi e con prodotti di prima scelta. Persone gentilissime e professionali. Siamo stati benissimo",
+    details: `Food: 5/5  |  Service: 5/5  |  Atmosphere: 4/5
+
+Noise level
+Moderate noise
+
+Group size
+Suitable for all group sizes
+
+Wait time
+Up to 10 min
+
+Vegetarian options
+Indubbiamente accessibili per vegetariani, oltre alla presenza di panini specifici puoi scegliere cosa inserire nel panino`,
+  },
+];
 
 export const Route = createFileRoute("/recensioni")({
   head: () => ({
@@ -10,7 +70,7 @@ export const Route = createFileRoute("/recensioni")({
       {
         name: "description",
         content:
-          "Le recensioni di chi ha già assaggiato i panini di Hill's Burger & Chips a Mottola (TA): combo, special burger e il mitico Big Simpson.",
+          "Le recensioni complete di chi ha già assaggiato i panini di Hill's Burger & Chips a Mottola (TA).",
       },
     ],
   }),
@@ -34,13 +94,13 @@ function ReviewsPage() {
       <div className="blob blob-a" aria-hidden="true" />
       <div className="blob blob-b" aria-hidden="true" />
 
-      <div className="relative mx-auto max-w-5xl px-4 md:px-6">
+      <div className="relative mx-auto max-w-4xl px-4 md:px-6">
         <header className="text-center">
           <h1 className="font-display text-4xl uppercase text-paper text-stroke-ink md:text-6xl">
-            Recensioni
+            Recensioni Complete
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-sm font-semibold text-ink/75 md:text-base">
-            Chi passa da Hill&apos;s torna. Ecco cosa raccontano.
+            Chi passa da Hill&apos;s torna. Trasparenza totale dalla community Google.
           </p>
           <div className="glass mx-auto mt-6 inline-flex flex-wrap items-center justify-center gap-3 rounded-full px-5 py-3">
             <span className="font-display text-2xl text-ink">{googleRating}</span>
@@ -54,15 +114,6 @@ function ReviewsPage() {
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="https://www.google.com/search?q=Hill's+Burger+&+CHIPS+by+Antonio+reviews"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-ink px-6 py-3 font-display text-sm uppercase text-ink transition-transform hover:scale-105"
-            >
-              Vedi tutte
-              <ExternalLink className="size-4" />
-            </a>
-            <a
               href="https://search.google.com/local/writereview?placeid=ChIJv6rnyNwJRxMRQufeWMAu7cI"
               target="_blank"
               rel="noopener noreferrer"
@@ -74,28 +125,41 @@ function ReviewsPage() {
           </div>
         </header>
 
-        <section aria-label="Recensioni dei clienti" className="mt-12">
-          <div className="grid gap-5 md:grid-cols-2">
-            {reviews.map((r, i) => (
-              <article
-                key={r.name}
-                className="reveal glass-card relative rounded-3xl p-6"
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <Quote className="absolute right-5 top-5 size-8 text-ink/10" />
-                <div className="flex items-center gap-1 text-primary">
-                  {Array.from({ length: r.stars }).map((_, s) => (
-                    <Star key={s} className="size-4 fill-current" />
-                  ))}
+        <section aria-label="Recensioni dei clienti" className="mt-12 space-y-6">
+          {fullReviews.map((r, i) => (
+            <article
+              key={`${r.name}-${i}`}
+              className="reveal glass-card rounded-3xl p-6 md:p-8 flex flex-col gap-4"
+              style={{ transitionDelay: `${i * 80}ms` }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-ink/10 pb-4">
+                <div>
+                  <h3 className="font-display text-xl uppercase text-ink">{r.name}</h3>
+                  <p className="text-xs font-semibold text-ink/60">{r.badge}</p>
                 </div>
-                <p className="mt-3 text-sm font-medium leading-relaxed text-ink/80">“{r.text}”</p>
-                <p className="mt-4 font-display text-base uppercase text-ink">{r.name}</p>
-              </article>
-            ))}
-          </div>
-          <p className="mt-8 text-center text-xs font-medium text-ink/50">
-            Recensioni verificate da piattaforme esterne. Dati gestiti a norma GDPR.
-          </p>
+                <div className="text-right text-xs font-semibold text-ink/70">
+                  <span>{r.time}</span>
+                  {r.priceRange ? <span> · {r.priceRange}</span> : null}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1 text-primary">
+                {Array.from({ length: r.stars }).map((_, s) => (
+                  <Star key={s} className="size-4 fill-current" />
+                ))}
+              </div>
+
+              <p className="text-sm font-medium leading-relaxed text-ink/85 whitespace-pre-line">
+                {r.text}
+              </p>
+
+              {r.details ? (
+                <div className="rounded-2xl bg-ink/5 p-4 text-xs font-medium text-ink/75 whitespace-pre-line">
+                  {r.details}
+                </div>
+              ) : null}
+            </article>
+          ))}
         </section>
 
         <div className="reveal mt-12 flex flex-wrap justify-center gap-3">
