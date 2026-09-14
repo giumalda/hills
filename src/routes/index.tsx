@@ -12,11 +12,6 @@ const homeReviews = [
     text: "Ottima paninoteca! Hamburger davvero gustosi, preparati con ingredienti freschi e di qualità. Il pane era morbido, la carne cotta alla perfezione e le patatine …",
   },
   {
-    name: "Francesco P.",
-    stars: 5,
-    text: "Panini buonissimi e con una ampia scelta servizio ottimo, complimenti ai proprietari Antonio e Pina, tutto buonissimo",
-  },
-  {
     name: "Tokio18",
     stars: 5,
     text: "Un ambiente molto tranquillo,alla mano,molto ospitali,accogliente,staff abbastanza organizzato …",
@@ -25,6 +20,11 @@ const homeReviews = [
     name: "Lucia L.",
     stars: 5,
     text: "Panini magnifici, grande opportunità di scelta in base ai propri gusti, ricchi e con prodotti di prima scelta. Persone gentilissime e professionali. Siamo …",
+  },
+  {
+    name: "Francesco P.",
+    stars: 5,
+    text: "Panini buonissimi e con una ampia scelta servizio ottimo, complimenti ai proprietari Antonio e Pina, tutto buonissimo",
   },
 ];
 
