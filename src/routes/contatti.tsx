@@ -95,7 +95,7 @@ function ContattiPage() {
               <h3 className="font-display text-lg uppercase text-ink">Seguici</h3>
               <div className="mt-3 flex flex-col gap-2.5">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/hill_s_burger/"
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center justify-center gap-2.5 rounded-full bg-ink px-5 py-3 font-display text-sm uppercase text-sun transition-transform hover:scale-[1.02] shadow-sm"
@@ -106,7 +106,7 @@ function ContattiPage() {
 
                 <div className="grid grid-cols-2 gap-2">
                   <a
-                    href="https://facebook.com"
+                    href="https://www.facebook.com/HILLSBURGER/?ref=PROFILE_EDIT_xav_ig_profile_page_web#"
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center justify-center gap-1.5 rounded-full bg-ink/10 px-3 py-2.5 font-display text-xs uppercase text-ink hover:bg-ink hover:text-sun transition-colors"
@@ -115,7 +115,7 @@ function ContattiPage() {
                     Facebook
                   </a>
                   <a
-                    href="https://tiktok.com"
+                    href="https://www.tiktok.com/@hillsburger"
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center justify-center gap-1.5 rounded-full bg-ink/10 px-3 py-2.5 font-display text-xs uppercase text-ink hover:bg-ink hover:text-sun transition-colors"
