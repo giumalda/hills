@@ -55,9 +55,14 @@ function MenuPage() {
 
   const jumpToChallenge = () => {
     setTab("burger");
-    setTimeout(() => {
-      document.getElementById("item-49")?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 150);
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const el = document.getElementById("item-49");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 50);
+    });
   };
 
   const specialsItems: MenuItem[] = specials.map((s, i) => ({
