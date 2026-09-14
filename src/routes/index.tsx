@@ -68,7 +68,7 @@ function Home() {
           style={{ animationDelay: "0.3s" }}
         >
           Griglia accesa, salse che colano, porzioni da Springfield. Un solo motto:
-          niente panini timidi.
+          Qui comanda il panino!
         </p>
 
         <img
