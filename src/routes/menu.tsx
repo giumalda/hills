@@ -53,20 +53,8 @@ function MenuPage() {
     }
   };
 
-  const jumpToChallenge = () => {
-    setTab("burger");
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        const el = document.getElementById("item-49");
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      }, 50);
-    });
-  };
-
   const specialsItems: MenuItem[] = specials.map((s, i) => ({
-    n: 1 + i, // Da 1 a 8
+    n: 1 + i,
     name: s.name,
     desc: "ingredients" in s ? (s as any).ingredients : (s as any).desc,
     price: s.price,
@@ -234,12 +222,9 @@ function MenuPage() {
                       </p>
                     </div>
                   </div>
-                  <button
-                    onClick={jumpToChallenge}
-                    className="shrink-0 rounded-full bg-primary px-5 py-2.5 font-display text-xs uppercase text-primary-foreground transition-transform hover:scale-105 active:scale-95 shadow-sm"
-                  >
-                    Vai al N. 49 Big Simpson ↓
-                  </button>
+                  <div className="shrink-0 rounded-full bg-primary/20 border border-primary/40 px-5 py-2.5 font-display text-xs uppercase text-primary font-bold shadow-sm">
+                    N. 49 in basso ↓
+                  </div>
                 </div>
               </div>
 
@@ -247,7 +232,6 @@ function MenuPage() {
                 {burgers.map((b, i) => (
                   <MenuCard
                     key={b.name}
-                    id={b.n === 49 ? "item-49" : undefined}
                     item={b}
                     index={i}
                     className={b.n === 49 ? "sm:col-span-2 lg:col-span-3" : ""}
