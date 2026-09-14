@@ -2,9 +2,31 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Phone, Clock, Star, BriefcaseBusiness, ArrowRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
 import heroBurger from "@/assets/hero-burger.png";
-import gourmet from "@/assets/gourmet-burger.jpg";
+import gourmet from "@/assets/smash-burger.jpg";
 import porchetta from "@/assets/porchetta-panino.jpg";
-import { reviews } from "@/data/menu";
+
+const homeReviews = [
+  {
+    name: "Carmine P.",
+    stars: 5,
+    text: "Ottima paninoteca! Hamburger davvero gustosi, preparati con ingredienti freschi e di qualità. Il pane era morbido, la carne cotta alla perfezione e le patatine …",
+  },
+  {
+    name: "Gaetano G.",
+    stars: 1,
+    text: "Esperienza pessima !!! Prenotato alle 21:10 da Taranto per le 22:30 arrivati alle 22:00 abbiamo aspettato con due bambini il tavolo ma arrivati al momento si è …",
+  },
+  {
+    name: "Tokio18",
+    stars: 5,
+    text: "Un ambiente molto tranquillo,alla mano,molto ospitali,accogliente,staff abbastanza organizzato …",
+  },
+  {
+    name: "Lucia L.",
+    stars: 5,
+    text: "Panini magnifici, grande opportunità di scelta in base ai propri gusti, ricchi e con prodotti di prima scelta. Persone gentilissime e professionali. Siamo …",
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,7 +55,7 @@ function Home() {
   useReveal();
 
   return (
-<main
+    <main
       className="relative min-h-screen overflow-hidden bg-sun pb-32 pt-28"
       style={{
         backgroundImage: `radial-gradient(rgba(30, 20, 10, 0.08) 1px, transparent 1px)`,
@@ -46,7 +68,7 @@ function Home() {
       {/* HERO */}
       <section className="relative z-10 mx-auto flex min-h-[75vh] max-w-5xl flex-col items-center justify-center px-5 pb-16 pt-4 text-center">
         <span className="glass animate-spring rounded-full px-5 py-2 font-display text-sm uppercase tracking-wide text-ink md:text-base">
-          Hill's Burger & Chips
+          Hill&apos;s Burger & Chips
         </span>
 
         <h1 className="animate-spring mt-6 font-display text-4xl uppercase leading-[0.92] text-paper text-stroke-ink sm:text-6xl md:text-8xl">
@@ -201,7 +223,7 @@ function Home() {
           </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {reviews.map((r, i) => (
+            {homeReviews.map((r, i) => (
               <article
                 key={r.name}
                 className="reveal glass-card rounded-3xl p-5"
@@ -223,7 +245,7 @@ function Home() {
               to="/recensioni"
               className="glass rounded-full px-6 py-3 font-display text-base uppercase text-ink transition-transform hover:scale-105"
             >
-              Tutte le recensioni
+              Le recensioni complete
             </Link>
           </div>
         </div>
