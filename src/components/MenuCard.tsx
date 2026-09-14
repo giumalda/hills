@@ -19,10 +19,13 @@ export function MenuCard({ item, index = 0, className = "" }: MenuCardProps) {
   const hasSizes = !isMaxiTagliere && (
     nameUpper.includes("PATATINE") || 
     nameUpper.includes("RIPPLE") || 
+    nameUpper.includes("RIBBLE") || 
     nameUpper.includes("CRISS") ||
     nameUpper.includes("DIPPER") ||
+    nameUpper.includes("CHIPS") ||
     descUpper.includes("DIPPER") ||
-    descUpper.includes("RIPPLE")
+    descUpper.includes("RIPPLE") ||
+    descUpper.includes("RIBBLE")
   );
 
   const [size, setSize] = useState<"piccola" | "grande">("piccola");
